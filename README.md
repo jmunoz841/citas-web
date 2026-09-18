@@ -19,7 +19,6 @@ Generado con Google AI Studio a partir del diseño aprobado en Stitch e importad
 ## Ejecutar
 
 ```powershell
-Copy-Item .env.example .env   # primera vez
 npm install
 npm run dev                   # http://localhost:5174
 ```
@@ -32,6 +31,13 @@ npm run dev                   # http://localhost:5174
 | `npm run preview` | Sirve el build en el puerto 5174 |
 
 ## Configuración (`.env`)
+
+Único archivo de entorno, **local y no versionado**. En un equipo nuevo créalo en esta carpeta con:
+
+```dotenv
+VITE_API_URL=http://localhost:8081
+VITE_AUTH_MODE=api
+```
 
 | Variable | Valores | Uso |
 |---|---|---|

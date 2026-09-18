@@ -40,7 +40,7 @@ npm run build       # tsc -b && vite build
 
 ## Configuración
 
-`.env` (copia de `.env.example`, ignorado por Git; sin secretos):
+`.env` (único archivo de entorno, local y no versionado; no existe `.env.example` por indicación del instructor, D-017; contenido documentado en `README.md`):
 
 | Variable | Uso |
 |---|---|
