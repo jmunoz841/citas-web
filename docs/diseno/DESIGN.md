@@ -21,7 +21,7 @@ Señalética hospitalaria serena: orden, alta legibilidad, superficies tranquila
 | Acción | `#0F6E6E` · hover `#0B5858` · pressed `#084747` |
 | Tinte de acción (lista de requisitos, chips) | `#E6F2F1` |
 | Anillo de foco | `#2B8C8C`, 3px sólido, offset 2px |
-| Panel de orientación | fondo `#0F3B3F`, texto `#F2F7F7`, secundario `#A9C5C5` |
+| Panel de orientación | fondo `#0F3B3F`, texto `#F2F7F7`, secundario `#A9C5C5`; fichas y chips de sedes sobre `#002020` translúcido con ícono `#A1F0EF` (tonos de las capturas aprobadas) |
 | Error | texto/borde `#B42318` sobre `#FEF3F2` |
 | Éxito | `#1E7B4F` sobre `#ECF7F1` |
 | Advertencia | `#A15C00` sobre `#FFF8ED` |
