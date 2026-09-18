@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_blank" name="shell-type"/>
+<title>CitaClara — Portal de Citas Médicas</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    .focus-ring-custom:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 5px #2B8C8C;
+      border-color: #2B8C8C;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "tertiary-fixed-dim": "#ffb692",
+            "surface-bright": "#f8f9ff",
+            "on-tertiary-fixed": "#341100",
+            "on-secondary-fixed-variant": "#244d51",
+            "surface-container-highest": "#dbe3f3",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002020",
+            "secondary-fixed": "#c0eaef",
+            "on-tertiary-container": "#ffd8c6",
+            "primary": "#0F6E6E",
+            "primary-hover": "#0B5858",
+            "primary-active": "#084747",
+            "brand-teal": "#2B8C8C",
+            "surface-container-lowest": "#ffffff",
+            "on-background": "#141c28",
+            "inverse-primary": "#85d4d3",
+            "on-primary": "#ffffff",
+            "tertiary-fixed": "#ffdbcb",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "outline-variant": "#bec9c8",
+            "surface-dim": "#d2daeb",
+            "secondary-container": "#E6F2F1",
+            "on-secondary-container": "#0F6E6E",
+            "on-error-container": "#93000a",
+            "outline": "#6e7979",
+            "border-custom": "#D9DDE3",
+            "app-text": "#1C2430",
+            "surface": "#F7F6F2",
+            "on-surface": "#1C2430",
+            "on-surface-variant": "#5A6772"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          fontFamily: {
+            sans: ["Public Sans", "sans-serif"],
+            body: ["Public Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#F7F6F2] font-sans text-app-text antialiased min-h-screen">
+<div class="min-h-screen w-full flex flex-col lg:flex-row">
+<!-- Left Panel (Responsive: Desktop 5/12 min-h-screen, Tablet ~160px band, Mobile ~64px compact bar) -->
+<aside class="w-full lg:w-5/12 bg-[#0F3B3F] text-[#F2F7F7] flex flex-col justify-between p-4 md:p-6 lg:p-12 lg:min-h-screen">
+<!-- Top / Wordmark Area -->
+<div class="flex flex-col gap-4 lg:gap-8">
+<header class="flex items-center justify-between">
+<!-- Inline SVG Wordmark -->
+<div class="flex items-center gap-3">
+<svg aria-label="CitaClara Logo" class="w-8 h-8 flex-shrink-0" fill="none" viewbox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#0F6E6E" height="32" rx="8" width="32"></rect>
+<path d="M16 8V24M8 16H24" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+</svg>
+<div class="text-[22px] tracking-tight leading-none select-none">
+<span class="font-bold text-[#F2F7F7]">Cita</span><span class="font-normal text-[#A9C5C5]">Clara</span>
+</div>
+</div>
+<span class="hidden md:inline-flex lg:inline-flex text-xs uppercase tracking-wider text-[#A9C5C5] bg-[#005454]/60 px-2.5 py-1 rounded-full font-medium">
+            Sedes Clínicas
+          </span>
+</header>
+<!-- Tablet / Desktop Statement -->
+<div class="hidden md:block">
+<h1 class="text-xl lg:text-2xl font-bold text-[#F2F7F7] mb-1 leading-snug">Atención Médica Digital</h1>
+<p class="text-sm lg:text-base text-[#A9C5C5] leading-relaxed max-w-md">
+            Agenda tus citas médicas en dos sedes, sin filas ni llamadas.
+          </p>
+</div>
+<!-- Mobile only brief tag next to brand -->
+<div class="block md:hidden">
+<p class="text-xs text-[#A9C5C5] truncate">
+            Agenda tus citas médicas en dos sedes, sin filas ni llamadas.
+          </p>
+</div>
+<!-- Tablet Compact Chips (768px - 1023px) -->
+<div class="hidden md:flex lg:hidden flex-row gap-2.5 pt-1">
+<div class="bg-[#002020]/50 border border-[#0F6E6E]/40 rounded-lg px-3 py-1.5 flex items-center gap-2 text-xs text-[#F2F7F7]">
+<span class="material-symbols-outlined text-[#A1F0EF] text-[18px]">location_on</span>
+<span class="font-medium">HIC · Hospital Internacional de Colombia</span>
+</div>
+<div class="bg-[#002020]/50 border border-[#0F6E6E]/40 rounded-lg px-3 py-1.5 flex items-center gap-2 text-xs text-[#F2F7F7]">
+<span class="material-symbols-outlined text-[#A1F0EF] text-[18px]">location_on</span>
+<span class="font-medium">ICV · Instituto Cardiovascular</span>
+</div>
+</div>
+<!-- Desktop Cards (>=1024px) -->
+<div class="hidden lg:grid grid-cols-1 gap-4 pt-2">
+<div class="bg-[#002020]/40 border border-[#0F6E6E]/30 rounded-lg p-4 flex items-start gap-3 transition-colors">
+<span class="material-symbols-outlined text-[#A1F0EF] text-[20px] mt-0.5 flex-shrink-0">location_on</span>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#F2F7F7]">HIC — Hospital Internacional de Colombia</span>
+<span class="text-xs text-[#A9C5C5] mt-1 leading-normal">Km 7 Autopista Bucaramanga–Piedecuesta, Valle de Menzulí, Santander</span>
+</div>
+</div>
+<div class="bg-[#002020]/40 border border-[#0F6E6E]/30 rounded-lg p-4 flex items-start gap-3 transition-colors">
+<span class="material-symbols-outlined text-[#A1F0EF] text-[20px] mt-0.5 flex-shrink-0">location_on</span>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#F2F7F7]">ICV — Instituto Cardiovascular</span>
+<span class="text-xs text-[#A9C5C5] mt-1 leading-normal">Calle 155A No. 23-58, Urbanización El Bosque, Floridablanca, Santander</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Left Panel Footer: Desktop & Tablet only (Academic Note) -->
+<footer class="hidden md:block pt-4 mt-6 border-t border-[#0F6E6E]/30 text-[13px] text-[#A9C5C5]">
+        Proyecto académico · Datos ficticios
+      </footer>
+</aside>
+<!-- Right Panel (Main Content & Login Form) -->
+<main class="w-full lg:w-7/12 bg-[#F7F6F2] flex items-center justify-center p-4 sm:p-8 lg:p-12">
+<div class="w-full max-w-[480px] mx-auto py-2 sm:py-6">
+<!-- State Switcher Toolbar (Interactive Preview) -->
+<div class="mb-5 bg-[#E6F2F1] p-1 rounded-full flex items-center justify-between gap-1 shadow-sm">
+<button class="flex-1 py-1.5 px-3 rounded-full text-xs text-[#0F6E6E] hover:text-[#084747] transition-all duration-150 text-center font-medium truncate" id="btn-state-initial" onclick="setDemoState('initial')" type="button">
+            Inicial
+          </button>
+<button class="flex-1 py-1.5 px-3 rounded-full text-xs bg-white text-[#0F6E6E] shadow-sm transition-all duration-150 text-center font-semibold truncate" id="btn-state-error" onclick="setDemoState('error')" type="button">
+            Error credenciales
+          </button>
+<button class="flex-1 py-1.5 px-3 rounded-full text-xs text-[#0F6E6E] hover:text-[#084747] transition-all duration-150 text-center font-medium truncate" id="btn-state-loading" onclick="setDemoState('loading')" type="button">
+            Ingresando...
+          </button>
+</div>
+<!-- Main Authentication Card -->
+<section class="bg-white rounded-xl shadow-md p-6 sm:p-10 border border-[#D9DDE3]/60 transition-all duration-200">
+<!-- Header Typography -->
+<h2 class="text-2xl sm:text-3xl text-app-text font-semibold tracking-tight">
+            Inicia sesión
+          </h2>
+<p class="text-sm sm:text-base text-on-surface-variant mt-1 mb-6">
+            Accede para gestionar tus citas.
+          </p>
+<!-- Error Feedback Banner -->
+<div aria-live="polite" class="bg-error-container text-on-error-container rounded-lg p-3.5 flex items-start gap-3 mb-6 shadow-sm" id="auth-error-banner" role="alert">
+<svg class="w-5 h-5 flex-shrink-0 text-error mt-0.5" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"></circle>
+<line stroke="currentColor" stroke-linecap="round" stroke-width="1.5" x1="12" x2="12" y1="8" y2="12"></line>
+<circle cx="12" cy="16" fill="currentColor" r="1"></circle>
+</svg>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-error">Acceso no autorizado</span>
+<p class="text-xs sm:text-sm text-on-error-container mt-0.5 leading-snug">
+                Correo o contraseña incorrectos. Verifica tus datos e inténtalo de nuevo.
+              </p>
+</div>
+</div>
+<!-- Form Container -->
+<form class="flex flex-col gap-5" id="login-form" novalidate="" onsubmit="handleFormSubmit(event)">
+<!-- Field 1: Correo Electrónico -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-app-text flex items-center justify-between" for="email-input">
+<span>Correo electrónico</span>
+<span class="text-xs font-normal text-on-surface-variant">Requerido</span>
+</label>
+<div class="relative">
+<input autocomplete="email" class="w-full h-12 px-4 rounded-lg bg-white border border-[#D9DDE3] text-app-text placeholder:text-[#8E9A9D] text-sm sm:text-base focus-ring-custom transition-all" id="email-input" name="email" placeholder="ejemplo@correo.com" required="" type="email" value="m.rodriguez@hospitalario.co"/>
+<div class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-error pointer-events-none" id="email-error-indicator">
+<span class="material-symbols-outlined text-[20px]">error</span>
+</div>
+</div>
+<span class="hidden text-xs text-error" id="email-field-helper">Ingresa un correo electrónico institucional o personal válido.</span>
+</div>
+<!-- Field 2: Contraseña (Hint "Mínimo 8 caracteres" removed as requested) -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-app-text" for="password-input">
+                Contraseña
+              </label>
+<div class="relative flex items-center">
+<input autocomplete="current-password" class="w-full h-12 pl-4 pr-12 rounded-lg bg-white border border-[#D9DDE3] text-app-text placeholder:text-[#8E9A9D] text-sm sm:text-base focus-ring-custom transition-all" id="password-input" name="password" placeholder="••••••••••••" required="" type="password" value="Santander2024*"/>
+<button aria-label="Mostrar contraseña" class="absolute right-3 p-1.5 rounded-lg text-[#5A6772] hover:text-app-text focus:outline-none focus:text-[#0F6E6E] transition-colors" id="pwd-toggle-btn" onclick="togglePasswordVisibility()" title="Mostrar contraseña" type="button">
+<span class="material-symbols-outlined text-[20px] block" id="pwd-icon">visibility</span>
+</button>
+</div>
+<div class="flex justify-end pt-0.5">
+<a class="text-xs text-[#0F6E6E] hover:text-[#084747] font-medium hover:underline transition-colors focus:outline-none focus:underline" href="#recuperar-clave">
+                  ¿Olvidaste tu contraseña?
+                </a>
+</div>
+</div>
+<!-- Primary Action Button: Strict #0F6E6E, hover #0B5858, active #084747, text white, 48px, rounded 8px -->
+<div class="pt-2">
+<button class="w-full h-12 rounded-lg bg-[#0F6E6E] hover:bg-[#0B5858] active:bg-[#084747] text-white font-semibold text-sm shadow-sm transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed" id="submit-button" type="submit">
+<svg class="hidden animate-spin h-5 w-5 text-white" fill="none" id="button-spinner" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<span id="button-label">Iniciar sesión</span>
+<span class="material-symbols-outlined text-[18px]" id="button-arrow">arrow_forward</span>
+</button>
+</div>
+</form>
+<!-- Footer Sign-up Link (Support box & patient badge removed) -->
+<div class="mt-8 pt-6 border-t border-[#D9DDE3]/50 flex flex-col items-center justify-center text-center">
+<p class="text-sm text-on-surface-variant">
+              ¿No tienes cuenta? 
+              <a class="text-[#0F6E6E] hover:text-[#084747] font-semibold hover:underline ml-1" href="#crear-cuenta">
+                Crea tu cuenta
+              </a>
+</p>
+</div>
+</section>
+<!-- Visual Reference Specifications Tray (Component States Guide) -->
+<section class="mt-6 bg-[#E6F2F1]/50 border border-[#D9DDE3]/70 rounded-xl p-4 sm:p-6 shadow-sm">
+<details class="group">
+<summary class="flex items-center justify-between cursor-pointer list-none text-sm font-semibold text-app-text select-none">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#0F6E6E] text-[18px]">tune</span>
+                Guía de Estados de Componentes (Design Tokens)
+              </span>
+<span class="material-symbols-outlined text-[18px] text-[#5A6772] group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</summary>
+<div class="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+<!-- State 1: Default -->
+<div class="bg-white p-3 rounded-lg border border-[#D9DDE3] shadow-sm flex flex-col gap-1.5">
+<span class="text-xs text-[#5A6772] font-medium">Predeterminado</span>
+<div class="h-10 px-3 rounded-lg bg-white border border-[#D9DDE3] flex items-center text-on-surface-variant text-sm shadow-sm">
+                  ejemplo@correo.com
+                </div>
+<span class="text-[11px] text-[#5A6772]">Fondo #FFFFFF, borde #D9DDE3</span>
+</div>
+<!-- State 2: Focus / Activo -->
+<div class="bg-white p-3 rounded-lg border border-[#D9DDE3] shadow-sm flex flex-col gap-1.5">
+<span class="text-xs text-[#0F6E6E] font-medium">Foco Accesible (Focus)</span>
+<div class="h-10 px-3 rounded-lg bg-white border border-[#2B8C8C] ring-2 ring-[#2B8C8C] ring-offset-1 flex items-center text-app-text text-sm">
+                  m.rodriguez@hospitalario.co
+                </div>
+<span class="text-[11px] text-[#0F6E6E]">Anillo teal #2B8C8C offset 2px</span>
+</div>
+<!-- State 3: Error -->
+<div class="bg-white p-3 rounded-lg border border-[#D9DDE3] shadow-sm flex flex-col gap-1.5">
+<span class="text-xs text-error font-medium">Error de validación</span>
+<div class="h-10 px-3 rounded-lg bg-error-container border border-error/30 text-on-error-container flex items-center justify-between text-sm">
+<span>correo_invalido</span>
+<span class="material-symbols-outlined text-error text-[18px]">error</span>
+</div>
+<span class="text-[11px] text-error">Texto explicativo con contraste AA</span>
+</div>
+<!-- State 4: Disabled -->
+<div class="bg-white p-3 rounded-lg border border-[#D9DDE3] shadow-sm flex flex-col gap-1.5">
+<span class="text-xs text-[#5A6772] font-medium">Deshabilitado (Disabled)</span>
+<div class="h-10 px-3 rounded-lg bg-[#F7F6F2] border border-[#D9DDE3]/80 text-[#8E9A9D] flex items-center justify-between text-sm select-none">
+<span>Acción bloqueada</span>
+<span class="material-symbols-outlined text-[18px]">block</span>
+</div>
+<span class="text-[11px] text-[#5A6772]">Interacción no permitida</span>
+</div>
+</div>
+</details>
+</section>
+</div>
+</main>
+</div>
+<!-- State Switching and Interaction Logic -->
+<script>
+    function togglePasswordVisibility() {
+      const pwdInput = document.getElementById('password-input');
+      const pwdIcon = document.getElementById('pwd-icon');
+      const toggleBtn = document.getElementById('pwd-toggle-btn');
+      
+      if (!pwdInput || !pwdIcon || !toggleBtn) return;
+      
+      const isPassword = pwdInput.type === 'password';
+      pwdInput.type = isPassword ? 'text' : 'password';
+      pwdIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+      const label = isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña';
+      toggleBtn.setAttribute('aria-label', label);
+      toggleBtn.setAttribute('title', label);
+    }
+
+    function setDemoState(state) {
+      const banner = document.getElementById('auth-error-banner');
+      const emailInput = document.getElementById('email-input');
+      const passwordInput = document.getElementById('password-input');
+      const submitBtn = document.getElementById('submit-button');
+      const btnLabel = document.getElementById('button-label');
+      const btnSpinner = document.getElementById('button-spinner');
+      const btnArrow = document.getElementById('button-arrow');
+      const emailHelper = document.getElementById('email-field-helper');
+      const emailErrorIcon = document.getElementById('email-error-indicator');
+
+      const tabInitial = document.getElementById('btn-state-initial');
+      const tabError = document.getElementById('btn-state-error');
+      const tabLoading = document.getElementById('btn-state-loading');
+
+      const resetTabs = () => {
+        [tabInitial, tabError, tabLoading].forEach(tab => {
+          tab.className = "flex-1 py-1.5 px-3 rounded-full text-xs text-[#0F6E6E] hover:text-[#084747] transition-all duration-150 text-center font-medium truncate";
+        });
+      };
+
+      resetTabs();
+
+      if (state === 'initial') {
+        tabInitial.className = "flex-1 py-1.5 px-3 rounded-full text-xs bg-white text-[#0F6E6E] shadow-sm transition-all duration-150 text-center font-semibold truncate";
+        
+        banner.classList.add('hidden');
+        emailInput.value = '';
+        passwordInput.value = '';
+        emailInput.classList.remove('bg-error-container', 'text-on-error-container', 'border-error');
+        emailInput.classList.add('bg-white', 'text-app-text', 'border-[#D9DDE3]');
+        emailHelper.classList.add('hidden');
+        emailErrorIcon.classList.add('hidden');
+
+        submitBtn.disabled = false;
+        btnSpinner.classList.add('hidden');
+        btnArrow.classList.remove('hidden');
+        btnLabel.textContent = 'Iniciar sesión';
+        
+      } else if (state === 'error') {
+        tabError.className = "flex-1 py-1.5 px-3 rounded-full text-xs bg-white text-[#0F6E6E] shadow-sm transition-all duration-150 text-center font-semibold truncate";
+
+        banner.classList.remove('hidden');
+        emailInput.value = 'm.rodriguez@hospitalario.co';
+        passwordInput.value = 'Santander2024*';
+        emailInput.classList.remove('bg-white', 'text-app-text', 'border-[#D9DDE3]');
+        emailInput.classList.add('bg-error-container', 'text-on-error-container', 'border-error');
+        emailHelper.classList.remove('hidden');
+        emailErrorIcon.classList.remove('hidden');
+
+        submitBtn.disabled = false;
+        btnSpinner.classList.add('hidden');
+        btnArrow.classList.remove('hidden');
+        btnLabel.textContent = 'Iniciar sesión';
+
+      } else if (state === 'loading') {
+        tabLoading.className = "flex-1 py-1.5 px-3 rounded-full text-xs bg-white text-[#0F6E6E] shadow-sm transition-all duration-150 text-center font-semibold truncate";
+
+        banner.classList.add('hidden');
+        emailInput.value = 'm.rodriguez@hospitalario.co';
+        passwordInput.value = 'Santander2024*';
+        emailInput.classList.remove('bg-error-container', 'text-on-error-container', 'border-error');
+        emailInput.classList.add('bg-white', 'text-app-text', 'border-[#D9DDE3]');
+        emailHelper.classList.add('hidden');
+        emailErrorIcon.classList.add('hidden');
+
+        submitBtn.disabled = true;
+        btnSpinner.classList.remove('hidden');
+        btnArrow.classList.add('hidden');
+        btnLabel.textContent = 'Ingresando…';
+      }
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      setDemoState('loading');
+      setTimeout(() => {
+        setDemoState('error');
+      }, 1800);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setDemoState('error');
+    });
+  </script>
+</body></html>

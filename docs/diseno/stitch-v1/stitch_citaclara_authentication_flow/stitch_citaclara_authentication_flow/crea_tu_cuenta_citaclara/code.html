@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_blank" name="shell-type"/><title>CitaClara — Portal de Citas Médicas</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed-dim": "#ffb692", "surface-bright": "#f8f9ff", "on-tertiary-fixed": "#341100", "on-secondary-fixed-variant": "#244d51", "surface-container-highest": "#dbe3f3", "on-error": "#ffffff", "on-primary-fixed": "#002020", "secondary-fixed": "#c0eaef", "on-tertiary-container": "#ffd8c6", "primary": "#005454", "surface-container-lowest": "#ffffff", "on-background": "#141c28", "inverse-primary": "#85d4d3", "on-primary": "#ffffff", "tertiary-fixed": "#ffdbcb", "error": "#ba1a1a", "error-container": "#ffdad6", "outline-variant": "#bec9c8", "surface-dim": "#d2daeb", "secondary-container": "#bde7ec", "on-error-container": "#93000a", "outline": "#6e7979", "on-primary-container": "#9eedec", "background": "#f8f9ff", "tertiary": "#743c1d", "primary-fixed": "#a1f0ef", "primary-fixed-dim": "#85d4d3", "surface-tint": "#03696a", "surface-container-high": "#e1e8f9", "surface": "#f8f9ff", "inverse-on-surface": "#ebf1ff", "on-secondary": "#ffffff", "secondary": "#3d6569", "on-secondary-fixed": "#002022", "on-tertiary-fixed-variant": "#6f3819", "surface-container": "#e6eeff", "on-surface": "#141c28", "on-tertiary": "#ffffff", "secondary-fixed-dim": "#a4ced2", "primary-container": "#0f6e6e", "on-secondary-container": "#41696d", "tertiary-container": "#915332", "inverse-surface": "#29313d", "on-surface-variant": "#3e4948", "on-primary-fixed-variant": "#004f50", "surface-container-low": "#eff3ff", "surface-variant": "#dbe3f3" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "margin": "2rem", "space-2xl": "3rem", "gutter": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter-mobile": "1rem", "margin-mobile": "1rem" }, "fontFamily": { "title-lg": ["Public Sans"], "body-lg": ["Public Sans"], "caption": ["Public Sans"], "body-md": ["Public Sans"], "headline-md": ["Public Sans"], "display-lg": ["Public Sans"], "display-lg-mobile": ["Public Sans"], "headline-lg": ["Public Sans"], "label-md": ["Public Sans"], "label-lg": ["Public Sans"] }, "fontSize": { "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "500" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "display-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen"><div class="min-h-screen w-full flex flex-col lg:flex-row"><aside class="w-full lg:w-5/12 bg-[#0F3B3F] text-[#F2F7F7] flex flex-col justify-between p-margin-mobile md:p-space-lg lg:p-space-xl"><div class="flex flex-col gap-space-lg"><header class="flex items-center justify-between pb-space-sm"><div class="flex items-center gap-space-sm"><img alt="CitaClara Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xu301FP_ykBNjWDeKwbu1JLFjQ_yNuLfi_6arrry8-bDsWNJYv4q9o-ok_v0oD4PU17P6RFkEpsTKPV4fot2E5O-o3jTQwLzLNEKz62dPWePylsYVcJc8iXXCTo5ILaIP3MMU1QbpjyxMD6--z42Mro_SY-U4SqY6CHMFZ3J-gT3lgmAnctdqeDjq4vxe0VQaZzRQfeKZzVMlVa1Sek3M0UjUk4kqyis-uuAunPNpTaA"/><span class="font-headline-md text-headline-md text-[#F2F7F7] tracking-tight">CitaClara</span></div><span class="font-label-md text-label-md uppercase tracking-wider text-[#A9C5C5] bg-[#005454]/50 px-2.5 py-1 rounded-full">Sedes Clínicas</span></header><div class="hidden md:block"><h1 class="font-headline-lg text-headline-lg text-[#F2F7F7] mb-space-xs">Atención Médica Digital</h1><p class="font-body-md text-body-md text-[#A9C5C5] leading-relaxed max-w-md">Agenda tus citas médicas en dos sedes, sin filas ni llamadas.</p></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-space-md pt-space-xs"><div class="bg-[#002020]/40 rounded-lg p-space-md flex items-start gap-space-sm transition-colors"><span class="material-symbols-outlined text-[#A1F0EF] text-[20px] mt-0.5 flex-shrink-0">location_on</span><div class="flex flex-col"><span class="font-label-lg text-label-lg text-[#F2F7F7]">HIC — Hospital Internacional de Colombia</span><span class="font-caption text-caption text-[#A9C5C5] mt-1">Km 7 Autopista Bucaramanga–Piedecuesta, Valle de Menzulí, Santander</span></div></div><div class="bg-[#002020]/40 rounded-lg p-space-md flex items-start gap-space-sm transition-colors"><span class="material-symbols-outlined text-[#A1F0EF] text-[20px] mt-0.5 flex-shrink-0">location_on</span><div class="flex flex-col"><span class="font-label-lg text-label-lg text-[#F2F7F7]">ICV — Instituto Cardiovascular</span><span class="font-caption text-caption text-[#A9C5C5] mt-1">Calle 155A No. 23-58, Urbanización El Bosque, Floridablanca, Santander</span></div></div></div></div><footer class="pt-space-md mt-space-md flex flex-wrap items-center justify-between gap-space-sm font-caption text-caption text-[#A9C5C5]"><span>© 2024 CitaClara Salud Digital</span><div class="flex items-center gap-space-md"><a class="text-[#A9C5C5] hover:text-[#F2F7F7] transition-colors" href="#">Privacidad</a><span class="text-[#005454]">•</span><a class="text-[#A9C5C5] hover:text-[#F2F7F7] transition-colors" href="#">Términos</a></div></footer></aside><main class="w-full lg:w-7/12 bg-[#F7F6F2] flex items-center justify-center p-margin-mobile md:p-space-lg lg:p-space-2xl min-h-[60vh] lg:min-h-screen"><div class="w-full max-w-md mx-auto"><div class="flex flex-col w-full max-w-2xl mx-auto py-space-sm sm:py-space-md">
+<!-- Interactive State Controller (Prototyping & Inspection Bar) -->
+<div class="w-full mb-space-md bg-surface-container-low p-space-xs rounded-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-xs shadow-sm">
+<div class="flex items-center gap-space-xs px-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span class="font-label-md text-label-md tracking-wider uppercase text-on-surface-variant">Modo de simulación</span>
+</div>
+<div aria-label="Cambio de estado de vista" class="inline-flex rounded-lg bg-surface-container p-1 gap-1" role="tablist">
+<button aria-selected="true" class="px-3 py-1.5 rounded-md font-label-md text-label-md transition-all font-medium bg-surface-container-lowest text-on-surface shadow-sm" id="btn-state-active" onclick="switchState('active')" role="tab">
+        Formulario activo
+      </button>
+<button aria-selected="false" class="px-3 py-1.5 rounded-md font-label-md text-label-md transition-all text-on-surface-variant hover:text-on-surface" id="btn-state-conflict" onclick="switchState('conflict')" role="tab">
+        Conflicto API (409)
+      </button>
+<button aria-selected="false" class="px-3 py-1.5 rounded-md font-label-md text-label-md transition-all text-on-surface-variant hover:text-on-surface" id="btn-state-success" onclick="switchState('success')" role="tab">
+        Estado exitoso
+      </button>
+</div>
+</div>
+<!-- Main Patient Sign-Up Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-md p-space-md sm:p-space-xl transition-all duration-200" id="signup-card">
+<!-- Header Section -->
+<header class="mb-space-lg">
+<div class="flex items-center gap-space-xs mb-space-xs">
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary font-semibold bg-secondary-container/40 px-2 py-0.5 rounded">Paso 1 de 1</span>
+<span class="font-caption text-caption text-outline">Registro único de paciente</span>
+</div>
+<h2 class="font-display-lg-mobile sm:font-display-lg text-display-lg-mobile sm:text-display-lg text-on-surface tracking-tight font-bold">
+        Crea tu cuenta
+      </h2>
+<p class="font-title-lg text-title-lg text-on-surface-variant font-normal mt-space-xs">
+        Tus datos se usan solo para agendar tus citas.
+      </p>
+</header>
+<!-- Interactive Registration Form -->
+<form class="flex flex-col gap-space-lg" id="signup-form" novalidate="" onsubmit="handleFormSubmit(event)">
+<!-- Fieldset 1: DATOS PERSONALES -->
+<fieldset class="p-0 m-0 border-0">
+<legend class="font-label-md text-label-md tracking-wider uppercase text-outline font-bold mb-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">person</span>
+<span>Datos personales</span>
+</legend>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center justify-between" for="input-nombres">
+<span>Nombres <span aria-hidden="true" class="text-error">*</span></span>
+</label>
+<input autocomplete="given-name" class="h-12 w-full px-4 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline-variant font-body-md text-body-md outline-none transition-all shadow-sm focus:bg-surface-container-low" id="input-nombres" name="nombres" placeholder="Ej. María Fernanda" required="" type="text" value="María Fernanda"/>
+<span class="font-caption text-caption text-outline">Tal como figura en tu identificación</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="input-apellidos">
+              Apellidos <span aria-hidden="true" class="text-error">*</span>
+</label>
+<input autocomplete="family-name" class="h-12 w-full px-4 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline-variant font-body-md text-body-md outline-none transition-all shadow-sm focus:bg-surface-container-low" id="input-apellidos" name="apellidos" placeholder="Ej. Rodríguez Gómez" required="" type="text" value="Rodríguez Gómez"/>
+<span class="font-caption text-caption text-outline">Primer y segundo apellido</span>
+</div>
+</div>
+</fieldset>
+<!-- Fieldset 2: DOCUMENTO -->
+<fieldset class="p-0 m-0 border-0">
+<legend class="font-label-md text-label-md tracking-wider uppercase text-outline font-bold mb-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">badge</span>
+<span>Documento de identidad</span>
+</legend>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="select-tipo-doc">
+              Tipo de documento <span aria-hidden="true" class="text-error">*</span>
+</label>
+<div class="relative w-full">
+<select class="h-12 w-full appearance-none px-4 pr-10 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md outline-none transition-all shadow-sm focus:bg-surface-container-low cursor-pointer" id="select-tipo-doc" name="tipo_documento">
+<option selected="" value="CC">Cédula de ciudadanía (CC)</option>
+<option value="CE">Cédula de extranjería (CE)</option>
+<option value="TI">Tarjeta de identidad (TI)</option>
+<option value="RC">Registro civil (RC)</option>
+<option value="PA">Pasaporte (PA)</option>
+<option value="PPT">Permiso por protección temporal (PPT)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[20px]">
+                arrow_drop_down
+              </span>
+</div>
+<span class="font-caption text-caption text-outline">Válido ante el sistema de salud en Colombia</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="input-num-doc">
+              Número de documento <span aria-hidden="true" class="text-error">*</span>
+</label>
+<input class="h-12 w-full px-4 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline-variant font-mono tabular-nums font-body-md text-body-md outline-none transition-all shadow-sm focus:bg-surface-container-low" id="input-num-doc" inputmode="numeric" name="numero_documento" placeholder="Ej. 1098765432" required="" type="text" value="1.098.765.432"/>
+<!-- Dynamic Error Feedback: Doc Already Registered -->
+<div class="hidden flex items-center gap-1.5 text-error mt-0.5" id="error-doc" role="alert">
+<span class="material-symbols-outlined text-[18px]">error</span>
+<span class="font-caption text-caption font-semibold">Este documento ya está registrado.</span>
+</div>
+<span class="font-caption text-caption text-outline" id="hint-doc">Sin puntos ni espacios</span>
+</div>
+</div>
+</fieldset>
+<!-- Fieldset 3: CONTACTO -->
+<fieldset class="p-0 m-0 border-0">
+<legend class="font-label-md text-label-md tracking-wider uppercase text-outline font-bold mb-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">contacts</span>
+<span>Datos de contacto</span>
+</legend>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="input-correo">
+              Correo electrónico <span aria-hidden="true" class="text-error">*</span>
+</label>
+<input autocomplete="email" class="h-12 w-full px-4 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline-variant font-body-md text-body-md outline-none transition-all shadow-sm focus:bg-surface-container-low" id="input-correo" name="email" placeholder="nombre@ejemplo.com" required="" type="email" value="m.rodriguez@hospitalario.co"/>
+<!-- Dynamic Error Feedback: Email Already Registered -->
+<div class="hidden flex items-center gap-1.5 text-error mt-0.5" id="error-correo" role="alert">
+<span class="material-symbols-outlined text-[18px]">error</span>
+<span class="font-caption text-caption font-semibold">Este correo ya está registrado.</span>
+</div>
+<span class="font-caption text-caption text-outline" id="hint-correo">Recibirás confirmaciones y recordatorios</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="input-telefono">
+              Teléfono celular <span aria-hidden="true" class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="absolute left-4 font-body-md text-body-md text-outline font-mono select-none">+57</span>
+<input class="h-12 w-full pl-14 pr-4 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline-variant font-mono tabular-nums font-body-md text-body-md outline-none transition-all shadow-sm focus:bg-surface-container-low" id="input-telefono" name="telefono" placeholder="300 123 4567" required="" type="tel" value="312 458 9021"/>
+</div>
+<span class="font-caption text-caption text-outline">Para notificaciones SMS de citas</span>
+</div>
+</div>
+</fieldset>
+<!-- Fieldset 4: SEGURIDAD -->
+<fieldset class="p-0 m-0 border-0">
+<legend class="font-label-md text-label-md tracking-wider uppercase text-outline font-bold mb-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">lock</span>
+<span>Seguridad de la cuenta</span>
+</legend>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md mb-2">
+<!-- Password Field -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="input-password">
+              Contraseña <span aria-hidden="true" class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<input class="h-12 w-full px-4 pr-12 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline-variant font-body-md text-body-md outline-none transition-all shadow-sm focus:bg-surface-container-low" id="input-password" name="password" oninput="evaluatePasswordCriteria(this.value)" required="" type="password" value="ClaveSegura2024"/>
+<button aria-label="Mostrar contraseña" class="absolute right-2.5 p-1.5 text-outline hover:text-on-surface rounded-md focus:outline-none focus:bg-surface-container-high transition-colors" onclick="togglePasswordVisibility('input-password', 'icon-pass-1')" title="Mostrar contraseña" type="button">
+<span class="material-symbols-outlined text-[20px]" id="icon-pass-1">visibility</span>
+</button>
+</div>
+</div>
+<!-- Confirm Password Field -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="input-confirm-password">
+              Confirmar contraseña <span aria-hidden="true" class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<input class="h-12 w-full px-4 pr-12 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline-variant font-body-md text-body-md outline-none transition-all shadow-sm focus:bg-surface-container-low" id="input-confirm-password" name="confirm_password" required="" type="password" value="ClaveSegura2024"/>
+<button aria-label="Mostrar contraseña" class="absolute right-2.5 p-1.5 text-outline hover:text-on-surface rounded-md focus:outline-none focus:bg-surface-container-high transition-colors" onclick="togglePasswordVisibility('input-confirm-password', 'icon-pass-2')" title="Mostrar contraseña" type="button">
+<span class="material-symbols-outlined text-[20px]" id="icon-pass-2">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Live Password Criteria Checklist Box -->
+<div class="bg-surface-container-low p-3.5 rounded-lg mt-1 mb-2">
+<div class="font-label-md text-label-md font-semibold text-on-surface-variant mb-2 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+<span>Requisitos de contraseña:</span>
+</div>
+<ul class="flex flex-col gap-2 m-0 p-0 list-none">
+<!-- Criterion 1: Min 8 chars -->
+<li class="flex items-center gap-2 font-caption text-caption text-on-surface-variant transition-colors" id="req-length">
+<span class="material-symbols-outlined text-[18px] text-secondary" id="req-icon-length">
+                check_circle
+              </span>
+<span id="req-text-length">Al menos 8 caracteres</span>
+</li>
+<!-- Criterion 2: Min 1 letter -->
+<li class="flex items-center gap-2 font-caption text-caption text-on-surface-variant transition-colors" id="req-letter">
+<span class="material-symbols-outlined text-[18px] text-secondary" id="req-icon-letter">
+                check_circle
+              </span>
+<span id="req-text-letter">Al menos una letra</span>
+</li>
+<!-- Criterion 3: Min 1 number -->
+<li class="flex items-center gap-2 font-caption text-caption text-on-surface-variant transition-colors" id="req-number">
+<span class="material-symbols-outlined text-[18px] text-secondary" id="req-icon-number">
+                check_circle
+              </span>
+<span id="req-text-number">Al menos un número</span>
+</li>
+</ul>
+</div>
+</fieldset>
+<!-- Terms & Policy Checkbox -->
+<div class="flex items-start gap-space-sm bg-surface-container-lowest p-1">
+<div class="flex items-center h-5 mt-0.5">
+<input checked="" class="w-5 h-5 rounded cursor-pointer accent-primary" id="terms-check" required="" type="checkbox"/>
+</div>
+<label class="font-caption text-caption text-on-surface-variant leading-relaxed select-none" for="terms-check">
+          Acepto el tratamiento de mis datos personales de acuerdo con la <a class="text-primary font-semibold hover:underline" href="#">Ley Estatutaria 1581 de 2012</a> y la política de privacidad de CitaClara.
+        </label>
+</div>
+<!-- Submit Primary Action Button -->
+<div class="pt-space-xs">
+<button class="w-full h-12 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-title-lg text-title-lg font-semibold shadow-sm transition-all duration-150 flex items-center justify-center gap-2 active:scale-[0.99] focus:outline-none" id="btn-submit" type="submit">
+<span id="btn-submit-text">Crear cuenta</span>
+<span class="hidden animate-spin material-symbols-outlined text-[20px]" id="btn-submit-spinner">
+            progress_activity
+          </span>
+</button>
+</div>
+</form>
+<!-- Success State View (Revealed when submitted or selected via switcher) -->
+<div class="hidden flex-col items-center text-center py-space-md animate-fade-in" id="success-view">
+<div class="w-16 h-16 rounded-full bg-secondary-container/60 text-primary flex items-center justify-center mb-space-md">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">
+          check_circle
+        </span>
+</div>
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface mb-space-xs tracking-tight">
+        ¡Tu cuenta fue creada!
+      </h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-sm mb-space-xl">
+        Ya puedes iniciar sesión con tu correo electrónico y contraseña para acceder a la agenda médica.
+      </p>
+<!-- Account Summary Chip -->
+<div class="w-full bg-surface-container-low rounded-lg p-space-md mb-space-lg text-left flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">account_circle</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold truncate">María Fernanda Rodríguez Gómez</span>
+<span class="font-caption text-caption text-on-surface-variant truncate font-mono">CC 1.098.765.432 • m.rodriguez@hospitalario.co</span>
+</div>
+</div>
+<button class="w-full h-12 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-title-lg text-title-lg font-semibold shadow-sm transition-all duration-150 flex items-center justify-center gap-2" onclick="switchState('active')" type="button">
+<span>Ir a iniciar sesión</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<!-- Card Footer / Login Reference -->
+<footer class="mt-space-lg pt-space-md bg-surface-container-lowest text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+        ¿Ya tienes cuenta? 
+        <a class="font-label-lg text-label-lg font-semibold text-primary hover:text-primary-container transition-colors ml-1 inline-flex items-center gap-0.5" href="#">
+<span>Inicia sesión</span>
+<span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+</a>
+</p>
+</footer>
+</section>
+<!-- Accordion: Component States Guide for Reviewers -->
+<aside class="mt-space-lg w-full bg-surface-container-low rounded-xl p-space-md shadow-sm">
+<button class="w-full flex items-center justify-between text-left focus:outline-none group" onclick="toggleStateGuide()" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">developer_guide</span>
+<div>
+<h4 class="font-label-lg text-label-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+            Guía de especificaciones y estados de campo
+          </h4>
+<p class="font-caption text-caption text-on-surface-variant">
+            Inspecciona cómo se comportan los estados Focus, Error, Hover y Disabled
+          </p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform duration-200" id="guide-arrow">
+        expand_more
+      </span>
+</button>
+<div class="hidden mt-space-md pt-space-md flex flex-col gap-space-md" id="guide-content">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- State: Hover & Focus Indicator -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-primary">Foco / Edición activa</span>
+<span class="font-caption text-caption bg-secondary-container/40 text-on-secondary-container px-2 py-0.5 rounded font-mono">focus:ring</span>
+</div>
+<input class="h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md outline-none" readonly="" type="text" value="m.rodriguez@hospitalario.co"/>
+<span class="font-caption text-caption text-on-surface-variant">Superficie elevada con cambio de tinte para baja fatiga visual</span>
+</div>
+<!-- State: Error with Icon & Message -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-error">Validación con error</span>
+<span class="font-caption text-caption bg-error-container text-on-error-container px-2 py-0.5 rounded font-mono">409 Conflict</span>
+</div>
+<input class="h-10 px-3 rounded-lg bg-error-container/30 text-error font-body-md text-body-md outline-none" readonly="" type="text" value="1.098.765.432"/>
+<div class="flex items-center gap-1 text-error">
+<span class="material-symbols-outlined text-[16px]">error</span>
+<span class="font-caption text-caption font-semibold">Este documento ya está registrado.</span>
+</div>
+</div>
+<!-- State: Disabled -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-outline">Deshabilitado (Disabled)</span>
+<span class="font-caption text-caption bg-surface-container text-outline px-2 py-0.5 rounded font-mono">disabled</span>
+</div>
+<input class="h-10 px-3 rounded-lg bg-surface-container text-outline font-body-md text-body-md cursor-not-allowed opacity-75" disabled="" type="text" value="No modificable por el paciente"/>
+<span class="font-caption text-caption text-outline">Bloqueado según perfil de seguridad hospitalaria</span>
+</div>
+<!-- State: Password Checklist (Complete) -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-primary">Criterio cumplido</span>
+<span class="font-caption text-caption bg-secondary-container/40 text-on-secondary-container px-2 py-0.5 rounded font-mono">Live eval</span>
+</div>
+<div class="flex items-center gap-2 text-primary font-caption text-caption py-1">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="font-semibold text-on-surface">Al menos un número detectado</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Iconografía y texto explícito sin depender únicamente del color</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<script>
+  // Live Password Criteria Checker
+  function evaluatePasswordCriteria(val) {
+    const hasLength = val.length >= 8;
+    const hasLetter = /[a-zA-ZáéíóúÁÉÍÓÚñÑ]/.test(val);
+    const hasNumber = /[0-9]/.test(val);
+
+    updateCriterionItem('req-length', 'req-icon-length', 'req-text-length', hasLength);
+    updateCriterionItem('req-letter', 'req-icon-letter', 'req-text-letter', hasLetter);
+    updateCriterionItem('req-number', 'req-icon-number', 'req-text-number', hasNumber);
+  }
+
+  function updateCriterionItem(rowId, iconId, textId, isValid) {
+    const iconEl = document.getElementById(iconId);
+    const textEl = document.getElementById(textId);
+
+    if (isValid) {
+      iconEl.textContent = 'check_circle';
+      iconEl.className = 'material-symbols-outlined text-[18px] text-primary';
+      textEl.className = 'text-on-surface font-medium';
+    } else {
+      iconEl.textContent = 'radio_button_unchecked';
+      iconEl.className = 'material-symbols-outlined text-[18px] text-outline';
+      textEl.className = 'text-outline font-normal';
+    }
+  }
+
+  // Toggle Password Masking
+  function togglePasswordVisibility(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    if (!input || !icon) return;
+
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = 'visibility_off';
+      icon.parentElement.setAttribute('aria-label', 'Ocultar contraseña');
+      icon.parentElement.setAttribute('title', 'Ocultar contraseña');
+    } else {
+      input.type = 'password';
+      icon.textContent = 'visibility';
+      icon.parentElement.setAttribute('aria-label', 'Mostrar contraseña');
+      icon.parentElement.setAttribute('title', 'Mostrar contraseña');
+    }
+  }
+
+  // State Switcher (Active, Conflict 409, Success)
+  function switchState(stateName) {
+    const btnActive = document.getElementById('btn-state-active');
+    const btnConflict = document.getElementById('btn-state-conflict');
+    const btnSuccess = document.getElementById('btn-state-success');
+    
+    const form = document.getElementById('signup-form');
+    const successView = document.getElementById('success-view');
+    const docInput = document.getElementById('input-num-doc');
+    const emailInput = document.getElementById('input-correo');
+    const docError = document.getElementById('error-doc');
+    const emailError = document.getElementById('error-correo');
+    const docHint = document.getElementById('hint-doc');
+    const emailHint = document.getElementById('hint-correo');
+
+    // Reset button pills
+    [btnActive, btnConflict, btnSuccess].forEach(btn => {
+      btn.className = 'px-3 py-1.5 rounded-md font-label-md text-label-md transition-all text-on-surface-variant hover:text-on-surface';
+      btn.setAttribute('aria-selected', 'false');
+    });
+
+    const activePillClass = 'px-3 py-1.5 rounded-md font-label-md text-label-md transition-all font-medium bg-surface-container-lowest text-on-surface shadow-sm';
+
+    if (stateName === 'active') {
+      btnActive.className = activePillClass;
+      btnActive.setAttribute('aria-selected', 'true');
+      
+      form.classList.remove('hidden');
+      successView.classList.add('hidden');
+      
+      // Clean conflicts
+      docInput.classList.remove('bg-error-container/30', 'text-error');
+      emailInput.classList.remove('bg-error-container/30', 'text-error');
+      docError.classList.add('hidden');
+      emailError.classList.add('hidden');
+      docHint.classList.remove('hidden');
+      emailHint.classList.remove('hidden');
+
+    } else if (stateName === 'conflict') {
+      btnConflict.className = activePillClass;
+      btnConflict.setAttribute('aria-selected', 'true');
+
+      form.classList.remove('hidden');
+      successView.classList.add('hidden');
+
+      // Trigger conflict UI
+      docInput.classList.add('bg-error-container/30', 'text-error');
+      emailInput.classList.add('bg-error-container/30', 'text-error');
+      docError.classList.remove('hidden');
+      emailError.classList.remove('hidden');
+      docHint.classList.add('hidden');
+      emailHint.classList.add('hidden');
+
+    } else if (stateName === 'success') {
+      btnSuccess.className = activePillClass;
+      btnSuccess.setAttribute('aria-selected', 'true');
+
+      form.classList.add('hidden');
+      successView.classList.remove('hidden');
+      successView.classList.add('flex');
+    }
+  }
+
+  // Handle Form Submission with Simulated Network Latency
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btn-submit');
+    const text = document.getElementById('btn-submit-text');
+    const spinner = document.getElementById('btn-submit-spinner');
+
+    btn.disabled = true;
+    text.textContent = 'Creando cuenta…';
+    spinner.classList.remove('hidden');
+
+    setTimeout(() => {
+      btn.disabled = false;
+      text.textContent = 'Crear cuenta';
+      spinner.classList.add('hidden');
+      switchState('success');
+    }, 850);
+  }
+
+  // Toggle Component State Guide Accordion
+  function toggleStateGuide() {
+    const content = document.getElementById('guide-content');
+    const arrow = document.getElementById('guide-arrow');
+    const isHidden = content.classList.contains('hidden');
+
+    if (isHidden) {
+      content.classList.remove('hidden');
+      arrow.style.transform = 'rotate(180deg)';
+    } else {
+      content.classList.add('hidden');
+      arrow.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  // Initial evaluation on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const passInput = document.getElementById('input-password');
+    if (passInput) {
+      evaluatePasswordCriteria(passInput.value);
+    }
+  });
+</script></div></main></div></body></html>
