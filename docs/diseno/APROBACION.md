@@ -5,6 +5,12 @@
 | `stitch-v1/` | 2026-09-18 | Prompt inicial (skill `stitch-design-to-frontend`, modo Equilibrado / Gemini 3.8, ejecución manual) | Revisada: 7 problemas (logo roto, contenido inventado incl. un teléfono, consentimiento fuera de alcance, textos contradictorios con la API, responsive móvil, colores inconsistentes, sin resumen de errores) |
 | `stitch-v2/` | 2026-09-18 | Prompt correctivo sobre v1 | 7/7 corregidos. **Aprobada** por Juan Muñoz ("apruebo la v2") |
 
+## Cambios posteriores a la aprobación
+
+| Fecha | Cambio | Aprobación | Proceso |
+|---|---|---|---|
+| 2026-09-18 | Panel de sedes plegable en escritorio (riel de 72px con isotipo y botón) | Solicitado y aprobado por Juan Muñoz (opción "riel delgado") | Implementado directamente en código por decisión del usuario, sin iteración en Stitch; verificado con capturas desplegado/plegado; especificación en `DESIGN.md` |
+
 ## Decisiones de diseño
 
 - Estilo "señalética hospitalaria serena" propuesto por el agente y aceptado por el usuario.

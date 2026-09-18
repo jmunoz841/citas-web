@@ -2,9 +2,11 @@ import React from 'react';
 
 interface BrandMarkProps {
   className?: string;
+  /** Oculta el texto "CitaClara" en escritorio (panel plegado); el nombre queda para lectores de pantalla. */
+  compactOnDesktop?: boolean;
 }
 
-export const BrandMark: React.FC<BrandMarkProps> = ({ className = '' }) => {
+export const BrandMark: React.FC<BrandMarkProps> = ({ className = '', compactOnDesktop = false }) => {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       {/* 32px rounded-square #0F6E6E mark with white cross */}
@@ -24,7 +26,11 @@ export const BrandMark: React.FC<BrandMarkProps> = ({ className = '' }) => {
           strokeWidth="3"
         />
       </svg>
-      <div className="text-[22px] tracking-tight leading-none select-none flex items-center">
+      <div
+        className={`text-[22px] tracking-tight leading-none select-none items-center ${
+          compactOnDesktop ? 'flex lg:sr-only' : 'flex'
+        }`}
+      >
         <span className="font-bold text-[#F2F7F7]">Cita</span>
         <span className="font-normal text-[#A9C5C5]">Clara</span>
       </div>
