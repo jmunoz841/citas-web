@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Public Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-page-bg: #F7F6F2;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #1C2430;
+  --color-text-secondary: #5B6573;
+  --color-border-custom: #D9DDE3;
+  --color-action: #0F6E6E;
+  --color-action-hover: #0B5858;
+  --color-action-pressed: #084747;
+  --color-action-tint: #E6F2F1;
+  --color-brand-teal: #2B8C8C;
+  --color-wayfinding: #0F3B3F;
+  --color-panel-text: #F2F7F7;
+  --color-panel-muted: #A9C5C5;
+  --color-danger: #B42318;
+  --color-danger-bg: #FEF3F2;
+  --color-success: #1E7B4F;
+  --color-success-bg: #ECF7F1;
+  --color-warning: #A15C00;
+  --color-warning-bg: #FFF8ED;
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #F7F6F2;
+    color: #1C2430;
+    font-family: 'Public Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+.focus-ring-custom:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 5px #2B8C8C;
+  border-color: #2B8C8C;
+}
+
+.focus-ring-custom:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 5px #2B8C8C;
+  border-color: #2B8C8C;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
