@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Verificaciones antes de cada commit en citas-web.
+#   1. Detector de secretos sobre los archivos en staging (siempre).
+#   2. lint, pruebas y build, solo si el commit toca codigo o configuracion.
+#
+# Activar una vez por clon:  git config core.hooksPath .githooks
+# Omitir en una emergencia:  git commit --no-verify   (dejalo justificado)
+
+set -uo pipefail
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root" || exit 1
+
+echo "[pre-commit] Buscando secretos en los archivos preparados..."
+if ! bash .githooks/detect-secrets.sh; then
+  exit 1
+fi
+echo "[pre-commit] Sin secretos."
+
+if ! git diff --cached --name-only --diff-filter=ACMR \
+    | grep -qE '^(src/|index\.html$|package(-lock)?\.json$|tsconfig.*\.json$|vite\.config\.ts$|eslint\.config\.js$)'; then
+  echo "[pre-commit] Sin cambios en codigo ni configuracion: se omiten lint, pruebas y build."
+  exit 0
+fi
+
+if [ ! -d node_modules ]; then
+  echo "[pre-commit] Falta node_modules. Ejecuta npm install y reintenta." >&2
+  exit 1
+fi
+
+echo "[pre-commit] npm run lint..."
+if ! npm run --silent lint; then
+  echo "[pre-commit] Lint en rojo: commit bloqueado." >&2
+  exit 1
+fi
+
+echo "[pre-commit] npm test..."
+if ! npm run --silent test; then
+  echo "[pre-commit] Pruebas en rojo: commit bloqueado." >&2
+  exit 1
+fi
+
+echo "[pre-commit] npm run build..."
+if ! npm run --silent build; then
+  echo "[pre-commit] Build en rojo: commit bloqueado." >&2
+  exit 1
+fi
+
+echo "[pre-commit] Lint, pruebas y build en verde."
+exit 0
