@@ -45,7 +45,6 @@ npm run build       # tsc -b && vite build
 | Variable | Uso |
 |---|---|
 | `VITE_API_URL` | URL base de `citas-api` (`http://localhost:8081`) |
-| `VITE_AUTH_MODE` | `api` (cliente HTTP real) o `mock` (cliente en memoria; cuenta `demo@citaclara.test` / `Demo1234`). Si falta, `mock` cuando no hay `VITE_API_URL` |
 
 Solo `import.meta.env`; nunca URLs ni credenciales escritas en el código.
 
@@ -58,8 +57,7 @@ src/
   features/auth/
     api/types.ts                  DTOs del contrato, AuthError (code, status, fieldErrors), interfaz AuthApi
     api/httpAuthApi.ts            cliente fetch contra VITE_API_URL; traduce problem+json a AuthError
-    api/mockAuthApi.ts            cliente simulado con el mismo contrato y códigos de error
-    api/authApi.ts                selector por VITE_AUTH_MODE (singleton)
+    api/authApi.ts                singleton del cliente HTTP (sin modo simulado desde S3)
     session/sessionManager.ts     access token en memoria, refresh token en sessionStorage; refresh con rotación y deduplicado
     validation/validation.ts      reglas espejo del backend (política de contraseña, email, documento, teléfono)
     components/                   AuthLayout, BrandMark, SiteCard, SiteChip, Card, FormGroup, TextField, PasswordField,
@@ -81,7 +79,7 @@ Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{
   - `INVALID_REFRESH_TOKEN` / `UNAUTHORIZED` → limpiar sesión y volver a `/login`.
   - Red o 5xx → banner "No pudimos conectar con el servidor. Inténtalo de nuevo." **No** cierra la sesión.
 - **Tokens:** nunca en `localStorage`, logs, URLs ni mensajes. Reemplaza siempre el refresh token tras un refresh (rotación). Tras logout se descarta el access token en memoria.
-- **Tipos del contrato:** si la API cambia un DTO, actualiza `api/types.ts` y ambos clientes (`http` y `mock`) en el mismo cambio.
+- **Tipos del contrato:** si la API cambia un DTO, actualiza `api/types.ts` y el cliente HTTP en el mismo cambio.
 - **Rutas protegidas:** usan `getCurrentSession()`; sin sesión válida redirigen a `/login`.
 
 ## Fidelidad visual
@@ -102,7 +100,7 @@ Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{
 2. **Pruebas:** Vitest + jsdom + Testing Library; oxlint como linter, porque `typescript-eslint` aún no admite TypeScript 7 (D-023). Las pruebas viven junto al código como `*.test.ts(x)`; `src/test/setup.ts` carga los matchers y limpia el DOM. Cada CA de una HU que toque el frontend necesita al menos una prueba que lo demuestre.
 3. **Hooks:** `.githooks/pre-commit` (actívalo con `git config core.hooksPath .githooks`) corre el detector de secretos siempre, y lint, pruebas y build cuando el commit toca código o configuración.
 4. Verificación manual/visual:
-   - Contra la API real con `VITE_AUTH_MODE=api` y `citas-api` corriendo, o con `mock` si la API no está disponible.
+   - Siempre contra la API real: `citas-api` debe estar corriendo. Desde S3 no hay cliente simulado.
    - Capturas con Edge headless: `msedge --headless=new --window-size=1440,1000 --screenshot=<png> <url>`. Edge tiene un ancho mínimo de ~500px: para móvil (390px) carga la página dentro de un `<iframe width="390">` y captura ese HTML.
    - Compara contra `docs/diseno/stitch-v2/*/screen.png` y `DESIGN.md`.
 5. Resume la evidencia y deja explícito lo no verificado (p. ej. lectores de pantalla reales).

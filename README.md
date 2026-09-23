@@ -54,13 +54,11 @@ Para saltarlo en una emergencia, `git commit --no-verify`, dejando constancia de
 
 ```dotenv
 VITE_API_URL=http://localhost:8081
-VITE_AUTH_MODE=api
 ```
 
 | Variable | Valores | Uso |
 |---|---|---|
-| `VITE_API_URL` | `http://localhost:8081` | URL base de `citas-api` |
-| `VITE_AUTH_MODE` | `api` \| `mock` | `api` llama a la API real; `mock` simula las respuestas en memoria (cuenta de prueba `demo@citaclara.test` / `Demo1234`) |
+| `VITE_API_URL` | `http://localhost:8081` | URL base de `citas-api`. **Obligatoria**: sin ella la aplicación falla de forma visible en vez de simular datos |
 
 El origen del frontend debe coincidir con `FRONTEND_ORIGIN` de `citas-api` (por defecto `http://localhost:5174`) para que CORS lo acepte.
 
@@ -77,12 +75,17 @@ El origen del frontend debe coincidir con `FRONTEND_ORIGIN` de `citas-api` (por 
 ```text
 src/
   features/auth/
-    api/          contrato (types), cliente HTTP, cliente simulado y selector por VITE_AUTH_MODE
+    api/          contrato (types) y cliente HTTP contra citas-api
     components/   AuthLayout, BrandMark, campos, botones, banners, resumen de errores, estado de éxito
     pages/        LoginPage, RegisterPage
     session/      tokens: access en memoria, refresh en sessionStorage; refresh con rotación
     validation/   reglas espejo del backend (el backend es la autoridad)
+  features/catalogs/
+    api/          cliente de los catálogos fijos (públicos, sin token)
+    hooks/        useDocumentTypes y demás lecturas de catálogo para formularios
+  shared/api/     configuración común: URL base obligatoria de la API
+  test/setup.ts   arranque de Vitest (matchers y limpieza del DOM)
   pages/InicioPage.tsx   página temporal
 ```
 
-Contrato REST: `citas-api/docs/contratos/autenticacion.md`.
+Contratos REST: `citas-api/docs/contratos/autenticacion.md` y `citas-api/docs/contratos/catalogos.md`.

@@ -19,5 +19,7 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     css: false,
+    // Las pruebas no deben depender del .env local: la URL nunca se llama de verdad.
+    env: { VITE_API_URL: 'http://localhost:8081' },
   },
 });

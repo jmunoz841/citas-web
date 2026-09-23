@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuthApi } from '../api/authApi';
+import { useDocumentTypes } from '../../catalogs/hooks/useDocumentTypes';
 import { AuthError } from '../api/types';
 import {
   evaluatePasswordCriteria,
@@ -21,14 +22,8 @@ import { ErrorSummary, ErrorSummaryItem } from '../components/ErrorSummary';
 import { SuccessState } from '../components/SuccessState';
 import { AlertBanner } from '../components/AlertBanner';
 
-const DOCUMENT_TYPE_OPTIONS: SelectOption[] = [
-  { value: 'CC', label: 'Cédula de ciudadanía (CC)' },
-  { value: 'CE', label: 'Cédula de extranjería (CE)' },
-  { value: 'TI', label: 'Tarjeta de identidad (TI)' },
-  { value: 'RC', label: 'Registro civil (RC)' },
-  { value: 'PA', label: 'Pasaporte (PA)' },
-  { value: 'PPT', label: 'Permiso por protección temporal (PPT)' },
-];
+// Opción visible mientras el catálogo viaja por la red, para que el select nunca quede vacío.
+const LOADING_DOCUMENT_TYPE: SelectOption[] = [{ value: '', label: 'Cargando…' }];
 
 // Orden de los campos en el formulario, id del control y etiqueta para el resumen de errores.
 const FIELD_ORDER: (keyof RegisterFormValues)[] = [
@@ -66,6 +61,7 @@ const FIELD_LABELS: Record<keyof RegisterFormValues, string> = {
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
+  const documentTypes = useDocumentTypes();
 
   const [values, setValues] = useState<RegisterFormValues>({
     firstNames: '',
@@ -275,7 +271,11 @@ export const RegisterPage: React.FC = () => {
               <FormGroup icon="badge" legend="Documento de identidad">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <SelectField
-                    errorText={errors.documentType}
+                    disabled={documentTypes.loading || documentTypes.failed}
+                    errorText={
+                      errors.documentType ||
+                      (documentTypes.failed ? 'No pudimos cargar los tipos de documento.' : undefined)
+                    }
                     helperText="Válido ante el sistema de salud en Colombia"
                     id="select-tipo-doc"
                     isRequired
@@ -283,7 +283,7 @@ export const RegisterPage: React.FC = () => {
                     name="documentType"
                     onBlur={() => handleFieldBlur('documentType')}
                     onChange={(e) => handleFieldChange('documentType', e.target.value)}
-                    options={DOCUMENT_TYPE_OPTIONS}
+                    options={documentTypes.loading ? LOADING_DOCUMENT_TYPE : documentTypes.options}
                     value={values.documentType}
                   />
 

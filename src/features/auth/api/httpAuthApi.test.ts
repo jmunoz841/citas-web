@@ -49,7 +49,7 @@ describe('HttpAuthApi', () => {
 
     expect(result).toEqual(created);
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe(`${BASE_URL}/api/auth/register`);
+    expect(url).toBe(`${BASE_URL}/api/v1/auth/register`);
     expect(init.method).toBe('POST');
   });
 
@@ -143,6 +143,6 @@ describe('HttpAuthApi', () => {
     await new HttpAuthApi(`${BASE_URL}///`).logout('un-refresh-token');
 
     const [url] = fetchMock.mock.calls[0] as [string];
-    expect(url).toBe(`${BASE_URL}/api/auth/logout`);
+    expect(url).toBe(`${BASE_URL}/api/v1/auth/logout`);
   });
 });
