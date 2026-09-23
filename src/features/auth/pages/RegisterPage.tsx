@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuthApi } from '../api/authApi';
 import { useDocumentTypes } from '../../catalogs/hooks/useDocumentTypes';
+import { useAffiliationCatalogs } from '../../catalogs/hooks/useAffiliationCatalogs';
 import { AuthError } from '../api/types';
 import {
   evaluatePasswordCriteria,
@@ -62,6 +63,11 @@ const FIELD_LABELS: Record<keyof RegisterFormValues, string> = {
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const documentTypes = useDocumentTypes();
+  const affiliationCatalogs = useAffiliationCatalogs();
+
+  // La afiliación es opcional y vive fuera de `values`: no la valida el validador del formulario.
+  const [affiliation, setAffiliation] = useState({ insurancePlanId: '', regimeCode: '' });
+  const [affiliationError, setAffiliationError] = useState<string | null>(null);
 
   const [values, setValues] = useState<RegisterFormValues>({
     firstNames: '',
@@ -123,6 +129,14 @@ export const RegisterPage: React.FC = () => {
     const formErrors = validateRegisterForm(values);
     setErrors(formErrors);
 
+    // Espejo de la regla del servidor: plan y régimen van en pareja (HU-004, CA-06).
+    const faltaRegimen = affiliation.insurancePlanId !== '' && affiliation.regimeCode === '';
+    setAffiliationError(faltaRegimen ? 'Selecciona el régimen de tu afiliación.' : null);
+    if (faltaRegimen) {
+      document.getElementById('select-regimen')?.focus();
+      return;
+    }
+
     if (Object.keys(formErrors).length > 0) {
       // Lleva el foco al primer campo con error.
       const firstErrorField = FIELD_ORDER.find((f) => formErrors[f]);
@@ -144,6 +158,13 @@ export const RegisterPage: React.FC = () => {
         email: values.email,
         phone: values.phone,
         password: values.password,
+        // Solo viajan si el usuario eligió afiliación; si no, el registro va sin ella.
+        ...(affiliation.insurancePlanId !== ''
+          ? {
+              insurancePlanId: Number(affiliation.insurancePlanId),
+              regimeCode: affiliation.regimeCode,
+            }
+          : {}),
       });
 
       setIsSuccess(true);
@@ -157,6 +178,12 @@ export const RegisterPage: React.FC = () => {
           err.code === 'EMAIL_ALREADY_REGISTERED' || err.code === 'DOCUMENT_ALREADY_REGISTERED';
         const newErrors: RegisterFormErrors = { ...errors };
         const summaryItems: ErrorSummaryItem[] = [];
+
+        // Los campos de afiliación no están en el formulario principal: se muestran en su select.
+        const affiliationMessage = err.fieldErrors.insurancePlanId ?? err.fieldErrors.regimeCode;
+        if (affiliationMessage) {
+          setAffiliationError(affiliationMessage);
+        }
 
         for (const [key, msg] of Object.entries(err.fieldErrors)) {
           if (!(key in FIELD_IDS)) continue;
@@ -303,6 +330,61 @@ export const RegisterPage: React.FC = () => {
                   />
                 </div>
               </FormGroup>
+
+              {/* Fieldset opcional: AFILIACIÓN (HU-004). Si el catálogo no carga, no se ofrece. */}
+              {!affiliationCatalogs.loading && !affiliationCatalogs.failed
+                && affiliationCatalogs.plans.length > 0 && (
+                <FormGroup icon="health_and_safety" legend="Afiliación (opcional)">
+                  <p className="text-sm text-[#5B6573] -mt-1 mb-1">
+                    Si conoces tu EPS puedes registrarla ahora. También puedes dejarlo en blanco y
+                    seguir con tu registro.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <SelectField
+                      helperText="Déjalo sin seleccionar si prefieres no registrarla"
+                      id="select-plan"
+                      label="Plan de EPS"
+                      name="insurancePlanId"
+                      onChange={(e) =>
+                        setAffiliation((prev) => ({
+                          insurancePlanId: e.target.value,
+                          // Al quitar el plan también se limpia el régimen: van en pareja.
+                          regimeCode: e.target.value === '' ? '' : prev.regimeCode,
+                        }))
+                      }
+                      options={[
+                        { value: '', label: 'Sin afiliación' },
+                        ...affiliationCatalogs.plans.map((plan) => ({
+                          value: String(plan.id),
+                          label: `${plan.epsName} — ${plan.name}`,
+                        })),
+                      ]}
+                      value={affiliation.insurancePlanId}
+                    />
+
+                    <SelectField
+                      disabled={affiliation.insurancePlanId === ''}
+                      errorText={affiliationError ?? undefined}
+                      helperText="Contributivo si cotizas; subsidiado si perteneces al SISBÉN"
+                      id="select-regimen"
+                      label="Régimen"
+                      name="regimeCode"
+                      onChange={(e) => {
+                        setAffiliation((prev) => ({ ...prev, regimeCode: e.target.value }));
+                        setAffiliationError(null);
+                      }}
+                      options={[
+                        { value: '', label: 'Selecciona tu régimen' },
+                        ...affiliationCatalogs.regimes.map((regime) => ({
+                          value: regime.code,
+                          label: regime.name,
+                        })),
+                      ]}
+                      value={affiliation.regimeCode}
+                    />
+                  </div>
+                </FormGroup>
+              )}
 
               {/* Fieldset 3: DATOS DE CONTACTO */}
               <FormGroup icon="contacts" legend="Datos de contacto">

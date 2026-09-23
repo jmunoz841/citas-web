@@ -18,6 +18,14 @@ export interface StatusEntry {
   terminal: boolean;
 }
 
+/** Plan de EPS seleccionable. Se identifica por número, no por código. */
+export interface InsurancePlan {
+  id: number;
+  name: string;
+  epsId: number;
+  epsName: string;
+}
+
 interface ItemsResponse<T> {
   items: T[];
 }
@@ -69,6 +77,11 @@ export class CatalogsApi {
 
   regimes(): Promise<CatalogEntry[]> {
     return this.fetchItems<CatalogEntry>('regimes');
+  }
+
+  /** Solo planes activos de EPS activas: la API ya aplica ese filtro. */
+  insurancePlans(): Promise<InsurancePlan[]> {
+    return this.fetchItems<InsurancePlan>('insurance-plans');
   }
 
   appointmentStatuses(): Promise<StatusEntry[]> {

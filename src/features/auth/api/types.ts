@@ -6,6 +6,9 @@ export interface RegisterRequest {
   email: string;
   phone: string;
   password: string;
+  /** Afiliación opcional (HU-004): ambos campos o ninguno. */
+  insurancePlanId?: number;
+  regimeCode?: string;
 }
 
 export interface RegisterResponse {
