@@ -98,13 +98,14 @@ Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{
 
 ## Verificación
 
-1. `npm run typecheck` y `npm run build` en verde. No declares una tarea terminada si fallan o no se ejecutaron.
-2. **Todavía no hay pruebas automatizadas de frontend** (sin Vitest ni Testing Library). Si una HU exige pruebas, propón primero la herramienta al usuario y regístralo como decisión.
-3. Verificación manual/visual:
+1. `npm run lint`, `npm test`, `npm run typecheck` y `npm run build` en verde. No declares una tarea terminada si fallan o no se ejecutaron.
+2. **Pruebas:** Vitest + jsdom + Testing Library; oxlint como linter, porque `typescript-eslint` aún no admite TypeScript 7 (D-023). Las pruebas viven junto al código como `*.test.ts(x)`; `src/test/setup.ts` carga los matchers y limpia el DOM. Cada CA de una HU que toque el frontend necesita al menos una prueba que lo demuestre.
+3. **Hooks:** `.githooks/pre-commit` (actívalo con `git config core.hooksPath .githooks`) corre el detector de secretos siempre, y lint, pruebas y build cuando el commit toca código o configuración.
+4. Verificación manual/visual:
    - Contra la API real con `VITE_AUTH_MODE=api` y `citas-api` corriendo, o con `mock` si la API no está disponible.
    - Capturas con Edge headless: `msedge --headless=new --window-size=1440,1000 --screenshot=<png> <url>`. Edge tiene un ancho mínimo de ~500px: para móvil (390px) carga la página dentro de un `<iframe width="390">` y captura ese HTML.
    - Compara contra `docs/diseno/stitch-v2/*/screen.png` y `DESIGN.md`.
-4. Resume la evidencia y deja explícito lo no verificado (p. ej. lectores de pantalla reales).
+5. Resume la evidencia y deja explícito lo no verificado (p. ej. lectores de pantalla reales).
 
 ## Modo de trabajo
 

@@ -27,8 +27,26 @@ npm run dev                   # http://localhost:5174
 |---|---|
 | `npm run dev` | Servidor de desarrollo en el puerto **5174** (fijo: el 5173 lo usa otro grupo en el equipo del laboratorio) |
 | `npm run typecheck` | Verificación de tipos (`tsc -b`) |
+| `npm run lint` | Análisis estático con oxlint |
+| `npm test` | Pruebas con Vitest (jsdom + Testing Library) |
+| `npm run test:watch` | Pruebas en modo vigilancia |
+| `npm run test:coverage` | Pruebas con informe de cobertura |
 | `npm run build` | Verificación de tipos + build de producción en `dist/` |
 | `npm run preview` | Sirve el build en el puerto 5174 |
+
+Se usa **oxlint** en lugar de ESLint con `typescript-eslint`, porque este último todavía no admite TypeScript 7.
+
+## Hooks de calidad
+
+Los hooks viven en `.githooks/` y están versionados, pero Git no los activa solo. Una vez por clon:
+
+```powershell
+git config core.hooksPath .githooks
+```
+
+`pre-commit` ejecuta el **detector de secretos** sobre los archivos preparados en cada commit y, cuando el commit toca código o configuración, además `lint`, `test` y `build`. El detector bloquea siempre los archivos `.env`, las claves privadas y las credenciales de nube o de conexión; los patrones genéricos admiten exenciones justificadas por ruta en `.githooks/secrets-allowlist.txt`.
+
+Para saltarlo en una emergencia, `git commit --no-verify`, dejando constancia del motivo.
 
 ## Configuración (`.env`)
 
