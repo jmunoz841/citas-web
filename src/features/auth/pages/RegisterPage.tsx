@@ -14,14 +14,14 @@ import {
 import { AuthLayout } from '../components/AuthLayout';
 import { Card } from '../components/Card';
 import { FormGroup } from '../components/FormGroup';
-import { TextField } from '../components/TextField';
+import { TextField } from '../../../shared/components/TextField';
 import { PasswordField } from '../components/PasswordField';
-import { SelectField, SelectOption } from '../components/SelectField';
+import { SelectField, SelectOption } from '../../../shared/components/SelectField';
 import { PasswordChecklist } from '../components/PasswordChecklist';
-import { Button } from '../components/Button';
+import { Button } from '../../../shared/components/Button';
 import { ErrorSummary, ErrorSummaryItem } from '../components/ErrorSummary';
 import { SuccessState } from '../components/SuccessState';
-import { AlertBanner } from '../components/AlertBanner';
+import { AlertBanner } from '../../../shared/components/AlertBanner';
 
 // Opción visible mientras el catálogo viaja por la red, para que el select nunca quede vacío.
 const LOADING_DOCUMENT_TYPE: SelectOption[] = [{ value: '', label: 'Cargando…' }];

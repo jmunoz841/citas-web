@@ -1,7 +1,12 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary';
+  /** `danger` solo para acciones destructivas confirmadas (p. ej. "Rechazar solicitud"). */
+  variant?: 'primary' | 'secondary' | 'danger';
+  /** `sm` para acciones dentro de filas de tabla en escritorio; en móvil se usa `md` (48px). */
+  size?: 'md' | 'sm';
+  /** Ícono a la izquierda del texto (el `icon` normal va a la derecha). */
+  leadingIcon?: string;
   isLoading?: boolean;
   loadingText?: string;
   icon?: string;
@@ -13,9 +18,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       children,
       variant = 'primary',
+      size = 'md',
       isLoading = false,
       loadingText,
       icon,
+      leadingIcon,
       fullWidth = true,
       className = '',
       disabled,
@@ -23,13 +30,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const baseStyles =
-      'min-h-[48px] h-12 rounded-lg font-semibold text-sm sm:text-base px-4 transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed select-none focus-ring-custom';
+    const sizeStyles =
+      size === 'md'
+        ? 'min-h-[48px] h-12 text-sm sm:text-base px-4'
+        : 'min-h-[40px] h-10 text-sm px-3';
+    const baseStyles = `${sizeStyles} rounded-lg font-semibold whitespace-nowrap transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed select-none focus-ring-custom`;
 
-    const variantStyles =
-      variant === 'primary'
-        ? 'bg-[#0F6E6E] hover:bg-[#0B5858] active:bg-[#084747] text-white shadow-sm disabled:opacity-75'
-        : 'bg-white hover:bg-[#E6F2F1] text-[#0F6E6E] border border-[#0F6E6E] active:bg-[#E6F2F1]/80 disabled:opacity-50';
+    const variantStyles = {
+      primary:
+        'bg-[#0F6E6E] hover:bg-[#0B5858] active:bg-[#084747] text-white shadow-sm disabled:opacity-75',
+      secondary:
+        'bg-white hover:bg-[#E6F2F1] text-[#0F6E6E] border border-[#0F6E6E] active:bg-[#E6F2F1]/80 disabled:opacity-50',
+      danger: 'bg-[#B42318] hover:bg-[#912018] active:bg-[#7A1A14] text-white shadow-sm disabled:opacity-75',
+    }[variant];
 
     const widthStyle = fullWidth ? 'w-full' : '';
 
@@ -66,6 +79,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </>
         ) : (
           <>
+            {leadingIcon && (
+              <span
+                aria-hidden="true"
+                className="material-symbols-outlined text-[18px] shrink-0"
+              >
+                {leadingIcon}
+              </span>
+            )}
             <span>{children}</span>
             {icon && (
               <span
