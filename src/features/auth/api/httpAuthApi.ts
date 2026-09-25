@@ -80,7 +80,7 @@ export class HttpAuthApi implements AuthApi {
   }
 
   async register(data: RegisterRequest): Promise<RegisterResponse> {
-    return this.executeFetch<RegisterResponse>(`${this.baseUrl}/api/auth/register`, {
+    return this.executeFetch<RegisterResponse>(`${this.baseUrl}/api/v1/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export class HttpAuthApi implements AuthApi {
   }
 
   async login(data: LoginRequest): Promise<AuthTokens> {
-    return this.executeFetch<AuthTokens>(`${this.baseUrl}/api/auth/login`, {
+    return this.executeFetch<AuthTokens>(`${this.baseUrl}/api/v1/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export class HttpAuthApi implements AuthApi {
 
   async refresh(refreshToken: string): Promise<AuthTokens> {
     const payload: RefreshRequest = { refreshToken };
-    return this.executeFetch<AuthTokens>(`${this.baseUrl}/api/auth/refresh`, {
+    return this.executeFetch<AuthTokens>(`${this.baseUrl}/api/v1/auth/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export class HttpAuthApi implements AuthApi {
 
   async logout(refreshToken: string): Promise<void> {
     const payload: RefreshRequest = { refreshToken };
-    return this.executeFetch<void>(`${this.baseUrl}/api/auth/logout`, {
+    return this.executeFetch<void>(`${this.baseUrl}/api/v1/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export class HttpAuthApi implements AuthApi {
   }
 
   async getSession(accessToken: string): Promise<SessionResponse> {
-    return this.executeFetch<SessionResponse>(`${this.baseUrl}/api/auth/session`, {
+    return this.executeFetch<SessionResponse>(`${this.baseUrl}/api/v1/auth/session`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,

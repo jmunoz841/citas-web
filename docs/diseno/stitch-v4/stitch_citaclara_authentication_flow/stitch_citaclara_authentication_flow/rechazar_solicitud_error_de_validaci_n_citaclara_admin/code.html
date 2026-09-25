@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;background-color:#F7F6F2;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        page: "#F7F6F2",
+        surface: "#FFFFFF",
+        border: "#D9DDE3",
+        "muted-text": "#5B6573",
+        "dark-text": "#1C2430",
+        accent: "#E6F2F1",
+        "primary-btn": "#0F6E6E",
+        "primary-btn-hover": "#0B5858",
+        "primary-btn-active": "#084747",
+        error: "#B42318",
+        "error-bg": "#FEF3F2"
+      },
+      fontFamily: {
+        sans: ["Public Sans", "sans-serif"]
+      }
+    }
+  }
+};</script></head><body class="bg-page font-sans text-dark-text antialiased"><header class="fixed top-0 left-0 right-0 h-16 bg-surface border-b border-border z-50"><div class="h-16 w-full px-6 flex items-center justify-between"><div class="flex items-center gap-4"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-primary-btn flex items-center justify-center"><span class="material-symbols-outlined text-white text-[20px]">add</span></div><div class="flex items-baseline"><span class="text-[18px] font-bold text-dark-text tracking-tight">Cita</span><span class="text-[18px] font-normal text-muted-text tracking-tight">Clara</span></div></div><div class="h-4 w-px bg-border mx-1"></div><span class="bg-accent text-primary-btn text-[12px] px-2 py-0.5 rounded font-semibold tracking-wider uppercase">ADMINISTRADOR</span></div><div class="flex items-center gap-6"><div class="flex items-center gap-2"><span class="text-[14px] font-medium text-dark-text">Admin Laboratorio</span><div class="w-8 h-8 rounded-full bg-primary-btn flex items-center justify-center"><span class="material-symbols-outlined text-white text-[18px]">person</span></div></div><a class="text-[14px] text-muted-text hover:text-dark-text transition-colors" href="#">Cerrar sesión</a></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-60 bg-surface border-r border-border z-40 flex flex-col py-4"><nav class="flex-1 flex flex-col gap-1"><a aria-current="page" class="flex items-center justify-between py-2 px-4 transition-colors bg-accent text-primary-btn font-semibold border-l-[3px] border-primary-btn pl-[13px]" data-path="solicitudes-pendientes" href="#"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="text-[14px]">Solicitudes pendientes</span></div><span class="bg-white/80 text-primary-btn text-[12px] px-2 py-0.5 rounded font-semibold shadow-xs">3</span></a><a class="flex items-center gap-2.5 py-2 px-4 pl-4 text-muted-text hover:bg-page hover:text-dark-text transition-colors border-l-[3px] border-transparent" data-path="especialidades" href="#"><span class="material-symbols-outlined text-[20px]">clinical_notes</span><span class="text-[14px]">Especialidades</span></a><a class="flex items-center gap-2.5 py-2 px-4 pl-4 text-muted-text hover:bg-page hover:text-dark-text transition-colors border-l-[3px] border-transparent" data-path="profesionales" href="#"><span class="material-symbols-outlined text-[20px]">stethoscope</span><span class="text-[14px]">Profesionales</span></a></nav></aside><div class="pl-60"><main class="w-full pt-16 bg-page min-h-screen"><div class="max-w-[1360px] mx-auto p-8"><div class="flex flex-col w-full text-dark-text">
+<!-- Interactive State Toolbar -->
+<!-- Header Region -->
+<div class="mb-6">
+<h1 class="text-[32px] leading-[40px] text-dark-text tracking-tight font-semibold">Solicitudes pendientes</h1>
+<p class="text-[16px] text-muted-text mt-1">Citas especializadas que esperan tu decisión.</p>
+</div>
+<!-- API Conflict Alert Banner -->
+<div class="hidden mb-6 bg-[#FFF4ED] text-[#7A2E0E] p-4 rounded-lg border border-[#FECDCA] shadow-sm" id="alert-conflict">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-[#B54708] text-[22px] mt-0.5">warning</span>
+<div class="flex-1">
+<h2 class="text-[14px] font-semibold text-[#B54708]">Esta solicitud ya fue resuelta</h2>
+<p class="text-[14px] text-[#7A2E0E] mt-0.5">La cita ya no está pendiente de aprobación. Actualiza la lista para refrescar los cupos disponibles en el servidor.</p>
+</div>
+<button aria-label="Cerrar advertencia" class="text-[#B54708] hover:opacity-80 p-1" onclick="toggleConflictAlert()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Main Card Container -->
+<div class="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+<!-- Active Table View -->
+<div class="overflow-x-auto" id="view-table">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface border-b border-border text-muted-text text-[14px] leading-[20px] font-semibold">
+<th class="py-3.5 px-6 font-semibold w-[22%]">Paciente</th>
+<th class="py-3.5 px-4 font-semibold w-[13%]">Especialidad</th>
+<th class="py-3.5 px-4 font-semibold w-[14%]">Profesional</th>
+<th class="py-3.5 px-4 font-semibold w-[9%]">Sede</th>
+<th class="py-3.5 px-4 font-semibold w-[11%]">Fecha</th>
+<th class="py-3.5 px-4 font-semibold w-[12%]">Hora</th>
+<th class="py-3.5 px-4 font-semibold w-[8%]">Duración</th>
+<th class="py-3.5 px-6 font-semibold text-right w-[11%] min-w-[210px]">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border bg-surface">
+<!-- Row 1: Ana Pérez -->
+<tr class="h-16 hover:bg-page/70 transition-colors group">
+<td class="py-3 px-6 text-[14px] font-semibold text-dark-text whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-accent text-primary-btn text-[11px] flex items-center justify-center font-bold flex-shrink-0">AP</span>
+<span>Ana Pérez</span>
+</div>
+</td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap">
+              Cardiología
+            </td>
+<td class="py-3 px-4 text-[14px] text-muted-text whitespace-nowrap">
+              Laura Gómez
+            </td>
+<td class="py-3 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[12px] font-semibold bg-accent text-primary-btn">
+                HIC
+              </span>
+</td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap [font-feature-settings:'tnum']">
+              26/09/2026
+            </td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap [font-feature-settings:'tnum']">
+              09:00 – 10:00
+            </td>
+<td class="py-3 px-4 text-[13px] text-muted-text whitespace-nowrap">
+              60 min
+            </td>
+<td class="py-3 px-6 text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-2 justify-end">
+<button class="h-9 px-3 py-1.5 rounded-lg text-[13px] bg-primary-btn hover:bg-primary-btn-hover active:bg-primary-btn-active text-white font-medium transition-colors flex items-center gap-1 shadow-xs" onclick="openApproveModal('Ana Pérez', 'Cardiología', 'Laura Gómez', 'HIC', '26/09/2026 09:00 – 10:00')" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+                  Aprobar
+                </button>
+<button class="h-9 px-3 py-1.5 rounded-lg text-[13px] bg-transparent border border-border text-muted-text hover:border-error hover:text-error font-medium transition-colors" onclick="openRejectModal('Ana Pérez', 'Cardiología', 'Laura Gómez', 'HIC', '26/09/2026 09:00 – 10:00')" type="button">
+                  Rechazar
+                </button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Carlos Rojas -->
+<tr class="h-16 hover:bg-page/70 transition-colors group">
+<td class="py-3 px-6 text-[14px] font-semibold text-dark-text whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-accent text-primary-btn text-[11px] flex items-center justify-center font-bold flex-shrink-0">CR</span>
+<span>Carlos Rojas</span>
+</div>
+</td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap">
+              Dermatología
+            </td>
+<td class="py-3 px-4 text-[14px] text-muted-text whitespace-nowrap">
+              Andrés Vargas
+            </td>
+<td class="py-3 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[12px] font-semibold bg-accent text-primary-btn">
+                ICV
+              </span>
+</td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap [font-feature-settings:'tnum']">
+              26/09/2026
+            </td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap [font-feature-settings:'tnum']">
+              14:30 – 15:00
+            </td>
+<td class="py-3 px-4 text-[13px] text-muted-text whitespace-nowrap">
+              30 min
+            </td>
+<td class="py-3 px-6 text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-2 justify-end">
+<button class="h-9 px-3 py-1.5 rounded-lg text-[13px] bg-primary-btn hover:bg-primary-btn-hover active:bg-primary-btn-active text-white font-medium transition-colors flex items-center gap-1 shadow-xs" onclick="openApproveModal('Carlos Rojas', 'Dermatología', 'Andrés Vargas', 'ICV', '26/09/2026 14:30 – 15:00')" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+                  Aprobar
+                </button>
+<button class="h-9 px-3 py-1.5 rounded-lg text-[13px] bg-transparent border border-border text-muted-text hover:border-error hover:text-error font-medium transition-colors" onclick="openRejectModal('Carlos Rojas', 'Dermatología', 'Andrés Vargas', 'ICV', '26/09/2026 14:30 – 15:00')" type="button">
+                  Rechazar
+                </button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Marta Díaz -->
+<tr class="h-16 hover:bg-page/70 transition-colors group">
+<td class="py-3 px-6 text-[14px] font-semibold text-dark-text whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-accent text-primary-btn text-[11px] flex items-center justify-center font-bold flex-shrink-0">MD</span>
+<span>Marta Díaz</span>
+</div>
+</td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap">
+              Cardiología
+            </td>
+<td class="py-3 px-4 text-[14px] text-muted-text whitespace-nowrap">
+              Laura Gómez
+            </td>
+<td class="py-3 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[12px] font-semibold bg-accent text-primary-btn">
+                HIC
+              </span>
+</td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap [font-feature-settings:'tnum']">
+              27/09/2026
+            </td>
+<td class="py-3 px-4 text-[14px] text-dark-text whitespace-nowrap [font-feature-settings:'tnum']">
+              08:00 – 09:00
+            </td>
+<td class="py-3 px-4 text-[13px] text-muted-text whitespace-nowrap">
+              60 min
+            </td>
+<td class="py-3 px-6 text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-2 justify-end">
+<button class="h-9 px-3 py-1.5 rounded-lg text-[13px] bg-primary-btn hover:bg-primary-btn-hover active:bg-primary-btn-active text-white font-medium transition-colors flex items-center gap-1 shadow-xs" onclick="openApproveModal('Marta Díaz', 'Cardiología', 'Laura Gómez', 'HIC', '27/09/2026 08:00 – 09:00')" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+                  Aprobar
+                </button>
+<button class="h-9 px-3 py-1.5 rounded-lg text-[13px] bg-transparent border border-border text-muted-text hover:border-error hover:text-error font-medium transition-colors" onclick="openRejectModal('Marta Díaz', 'Cardiología', 'Laura Gómez', 'HIC', '27/09/2026 08:00 – 09:00')" type="button">
+                  Rechazar
+                </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Loading Skeleton View (Initially hidden) -->
+<div class="hidden p-6 space-y-4" id="view-loading">
+<div class="flex items-center justify-between pb-2 border-b border-border">
+<div class="h-4 bg-border/60 rounded w-48 animate-pulse"></div>
+<div class="h-4 bg-border/60 rounded w-24 animate-pulse"></div>
+</div>
+<div class="space-y-3">
+<div class="h-14 bg-page rounded-lg p-4 flex items-center justify-between animate-pulse">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-border"></div>
+<div class="space-y-1.5">
+<div class="h-3.5 bg-border rounded w-28"></div>
+<div class="h-2.5 bg-border/60 rounded w-16"></div>
+</div>
+</div>
+<div class="h-4 bg-border rounded w-24"></div>
+<div class="h-4 bg-border rounded w-28"></div>
+<div class="flex gap-2">
+<div class="h-9 bg-border rounded-lg w-20"></div>
+<div class="h-9 bg-border/60 rounded-lg w-20"></div>
+</div>
+</div>
+<div class="h-14 bg-page rounded-lg p-4 flex items-center justify-between animate-pulse">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-border"></div>
+<div class="space-y-1.5">
+<div class="h-3.5 bg-border rounded w-28"></div>
+<div class="h-2.5 bg-border/60 rounded w-16"></div>
+</div>
+</div>
+<div class="h-4 bg-border rounded w-24"></div>
+<div class="h-4 bg-border rounded w-28"></div>
+<div class="flex gap-2">
+<div class="h-9 bg-border rounded-lg w-20"></div>
+<div class="h-9 bg-border/60 rounded-lg w-20"></div>
+</div>
+</div>
+<div class="h-14 bg-page rounded-lg p-4 flex items-center justify-between animate-pulse">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-border"></div>
+<div class="space-y-1.5">
+<div class="h-3.5 bg-border rounded w-28"></div>
+<div class="h-2.5 bg-border/60 rounded w-16"></div>
+</div>
+</div>
+<div class="h-4 bg-border rounded w-24"></div>
+<div class="h-4 bg-border rounded w-28"></div>
+<div class="flex gap-2">
+<div class="h-9 bg-border rounded-lg w-20"></div>
+<div class="h-9 bg-border/60 rounded-lg w-20"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State View (Initially hidden) -->
+<div class="hidden py-16 px-6 text-center" id="view-empty">
+<div class="max-w-md mx-auto flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-primary-btn mb-4">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="text-[20px] font-semibold text-dark-text">No hay solicitudes pendientes</h2>
+<p class="text-[14px] text-muted-text mt-1 max-w-sm">
+          Cuando un paciente solicite una cita especializada aparecerá aquí para su respectiva aprobación médica.
+        </p>
+<button class="mt-6 px-4 py-2 bg-accent text-primary-btn font-semibold text-[14px] rounded-lg hover:bg-accent/80 transition-colors" onclick="setViewMode('table')" type="button">
+          Restablecer lista
+        </button>
+</div>
+</div>
+</div>
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toast-success">
+<div class="bg-surface border border-[#A6F4C5] text-[#05603A] px-5 py-4 rounded-xl shadow-lg flex items-center gap-3 max-w-md pointer-events-auto">
+<div class="w-8 h-8 rounded-full bg-[#D1FADF] flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px] text-[#05603A]">check</span>
+</div>
+<div class="flex-1">
+<p class="text-[14px] font-bold text-[#05603A]">Cita aprobada</p>
+<p class="text-[12px] text-[#05603A] mt-0.5">El horario queda confirmado para el paciente.</p>
+</div>
+<button aria-label="Cerrar notificación" class="text-[#05603A] hover:opacity-75 p-1" onclick="hideToastNotification()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- MODAL: APROBAR CITA -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center bg-dark-text/40 backdrop-blur-[1px] p-4" id="modal-approve">
+<div class="bg-surface rounded-xl shadow-xl max-w-lg w-full overflow-hidden border border-border">
+<!-- Modal Header -->
+<div class="px-6 pt-6 pb-4 flex items-start justify-between border-b border-border">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-primary-btn">
+<span class="material-symbols-outlined text-[22px]">event_available</span>
+</div>
+<div>
+<h2 class="text-[20px] font-semibold text-dark-text tracking-tight">¿Aprobar esta cita?</h2>
+<p class="text-[12px] text-muted-text">Confirma la asignación del profesional y consultorio.</p>
+</div>
+</div>
+<button aria-label="Cerrar ventana" class="text-muted-text hover:text-dark-text p-1 rounded-lg hover:bg-page transition-colors" onclick="closeModal('modal-approve')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body (Summary Card) -->
+<div class="px-6 py-5">
+<div class="bg-page rounded-lg p-4 space-y-2 border border-border">
+<div class="flex items-center justify-between py-1">
+<span class="text-[13px] text-muted-text">Paciente:</span>
+<span class="text-[14px] font-semibold text-dark-text" id="approve-patient">Ana Pérez</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="text-[13px] text-muted-text">Especialidad:</span>
+<span class="text-[14px] text-dark-text" id="approve-specialty">Cardiología</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="text-[13px] text-muted-text">Profesional:</span>
+<span class="text-[14px] text-dark-text" id="approve-doctor">Laura Gómez</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="text-[13px] text-muted-text">Sede:</span>
+<span class="text-[12px] font-semibold bg-accent text-primary-btn px-2 py-0.5 rounded" id="approve-branch">HIC</span>
+</div>
+<div class="flex items-center justify-between py-2 bg-surface px-3 rounded border border-border mt-1">
+<span class="text-[13px] text-muted-text">Horario asignado:</span>
+<span class="text-[14px] font-semibold text-primary-btn [font-feature-settings:'tnum']" id="approve-time">26/09/2026 09:00 – 10:00</span>
+</div>
+</div>
+</div>
+<!-- Modal Actions -->
+<div class="px-6 pb-6 pt-2 flex items-center justify-end gap-3">
+<button class="h-9 px-4 rounded-lg text-[14px] bg-transparent border border-border hover:bg-page text-muted-text font-medium transition-colors" onclick="closeModal('modal-approve')" type="button">
+          Cancelar
+        </button>
+<button class="h-9 px-4 rounded-lg text-[14px] bg-primary-btn hover:bg-primary-btn-hover text-white font-medium transition-colors flex items-center gap-1 shadow-xs" onclick="confirmApproval()" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+          Aprobar cita
+        </button>
+</div>
+</div>
+</div>
+<!-- MODAL: RECHAZAR SOLICITUD -->
+<div class="fixed inset-0 z-50 items-center justify-center bg-dark-text/40 backdrop-blur-[1px] p-4 flex" id="modal-reject">
+<div class="bg-surface rounded-xl shadow-xl max-w-lg w-full overflow-hidden border border-border">
+<!-- Modal Header -->
+<div class="px-6 pt-6 pb-4 flex items-start justify-between border-b border-border">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-error-bg flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[22px]">event_busy</span>
+</div>
+<div>
+<h2 class="text-[20px] font-semibold text-dark-text tracking-tight">Rechazar solicitud</h2>
+<p class="text-[12px] text-muted-text">Se informará al paciente con el motivo detallado.</p>
+</div>
+</div>
+<button aria-label="Cerrar ventana" class="text-muted-text hover:text-dark-text p-1 rounded-lg hover:bg-page transition-colors" onclick="closeModal('modal-reject')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="px-6 py-5 space-y-4">
+<!-- Compact Summary -->
+<div class="bg-page rounded-lg p-3 text-[12px] flex flex-wrap items-center justify-between gap-2 text-muted-text border border-border"><div class="flex items-center gap-2 text-[13px] text-dark-text font-medium"><span class="material-symbols-outlined text-[18px] text-muted-text">calendar_today</span><span><strong>Ana Pérez</strong> · Cardiología · Sede HIC · 26/09/2026, 09:00 – 10:00 (60 min)</span></div></div>
+<!-- Field with Validation Error State -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="text-[14px] font-semibold text-dark-text" for="reject-reason">
+              Motivo del rechazo <span class="text-error">*</span>
+</label>
+<span class="text-[12px] text-muted-text" id="char-counter">0/500</span>
+</div>
+<p class="text-[12px] text-muted-text">
+            El paciente verá este motivo. Máximo 500 caracteres.
+          </p>
+<div class="relative">
+<textarea class="w-full rounded-lg p-3 text-[14px] text-dark-text bg-error-bg border border-error focus:outline-none transition-all resize-none placeholder:text-muted-text/70" id="reject-reason" maxlength="500" oninput="handleReasonInput(this)" placeholder="Indica de forma clara y respetuosa por qué no se puede aceptar la cita..." rows="4"></textarea>
+</div>
+<!-- Exact Validation Error Message -->
+<div class="flex items-center gap-1.5 text-error text-[12px] font-medium" id="reject-error-msg">
+<span class="material-symbols-outlined text-[16px]">error</span>
+<span>El motivo del rechazo es obligatorio</span>
+</div>
+</div>
+</div>
+<!-- Modal Actions -->
+<div class="px-6 pb-6 pt-2 flex items-center justify-end gap-3">
+<button class="h-9 px-4 rounded-lg text-[14px] bg-transparent border border-border hover:bg-page text-muted-text font-medium transition-colors" onclick="closeModal('modal-reject')" type="button">
+          Cancelar
+        </button>
+<button class="h-9 px-4 rounded-lg text-[14px] bg-error hover:bg-error/90 text-white font-medium transition-colors flex items-center gap-1 shadow-xs" onclick="executeReject()" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+          Rechazar solicitud
+        </button>
+</div>
+</div>
+</div>
+<script>
+    // Tab / View Switcher Functionality
+    function setViewMode(mode) {
+      const tableEl = document.getElementById('view-table');
+      const loadingEl = document.getElementById('view-loading');
+      const emptyEl = document.getElementById('view-empty');
+
+      const btnTable = document.getElementById('btn-view-table');
+      const btnLoading = document.getElementById('btn-view-loading');
+      const btnEmpty = document.getElementById('btn-view-empty');
+
+      tableEl.classList.add('hidden');
+      loadingEl.classList.add('hidden');
+      emptyEl.classList.add('hidden');
+
+      [btnTable, btnLoading, btnEmpty].forEach(btn => {
+        btn.classList.remove('bg-primary-btn', 'text-white', 'font-medium');
+        btn.classList.add('bg-page', 'text-muted-text');
+      });
+
+      if (mode === 'table') {
+        tableEl.classList.remove('hidden');
+        btnTable.classList.add('bg-primary-btn', 'text-white', 'font-medium');
+        btnTable.classList.remove('bg-page', 'text-muted-text');
+      } else if (mode === 'loading') {
+        loadingEl.classList.remove('hidden');
+        btnLoading.classList.add('bg-primary-btn', 'text-white', 'font-medium');
+        btnLoading.classList.remove('bg-page', 'text-muted-text');
+      } else if (mode === 'empty') {
+        emptyEl.classList.remove('hidden');
+        btnEmpty.classList.add('bg-primary-btn', 'text-white', 'font-medium');
+        btnEmpty.classList.remove('bg-page', 'text-muted-text');
+      }
+    }
+
+    // Conflict Alert Toggle
+    function toggleConflictAlert() {
+      const alert = document.getElementById('alert-conflict');
+      if (alert.classList.contains('hidden')) {
+        alert.classList.remove('hidden');
+      } else {
+        alert.classList.add('hidden');
+      }
+    }
+
+    // Toast Notification Manager
+    let toastTimeout;
+    function showToastNotification() {
+      const toast = document.getElementById('toast-success');
+      clearTimeout(toastTimeout);
+      toast.classList.remove('opacity-0', 'translate-y-24', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      toastTimeout = setTimeout(() => {
+        hideToastNotification();
+      }, 4500);
+    }
+
+    function hideToastNotification() {
+      const toast = document.getElementById('toast-success');
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-24', 'pointer-events-none');
+    }
+
+    // Modals Management
+    function openApproveModal(patient, specialty, doctor, branch, time) {
+      document.getElementById('approve-patient').innerText = patient;
+      document.getElementById('approve-specialty').innerText = specialty;
+      document.getElementById('approve-doctor').innerText = doctor;
+      document.getElementById('approve-branch').innerText = branch;
+      document.getElementById('approve-time').innerText = time;
+
+      const modal = document.getElementById('modal-approve');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function openRejectModal(patient, specialty, doctor, branch, time) {
+      document.getElementById('reject-patient').innerText = patient;
+      document.getElementById('reject-specialty').innerText = specialty;
+      document.getElementById('reject-branch-badge').innerText = branch;
+
+      const textarea = document.getElementById('reject-reason');
+      textarea.value = '';
+      textarea.classList.add('bg-error-bg', 'border-error');
+      textarea.classList.remove('bg-surface', 'border-border');
+      document.getElementById('char-counter').innerText = '0/500';
+      document.getElementById('reject-error-msg').classList.remove('hidden');
+
+      const modal = document.getElementById('modal-reject');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function confirmApproval() {
+      closeModal('modal-approve');
+      showToastNotification();
+    }
+
+    function handleReasonInput(el) {
+      const len = el.value.trim().length;
+      document.getElementById('char-counter').innerText = `${el.value.length}/500`;
+      const errEl = document.getElementById('reject-error-msg');
+      if (len > 0) {
+        errEl.classList.add('hidden');
+        el.classList.remove('bg-error-bg', 'border-error');
+        el.classList.add('bg-surface', 'border-border');
+      } else {
+        errEl.classList.remove('hidden');
+        el.classList.add('bg-error-bg', 'border-error');
+        el.classList.remove('bg-surface', 'border-border');
+      }
+    }
+
+    function executeReject() {
+      const textarea = document.getElementById('reject-reason');
+      if (!textarea.value.trim()) {
+        document.getElementById('reject-error-msg').classList.remove('hidden');
+        textarea.focus();
+        return;
+      }
+      closeModal('modal-reject');
+    }
+
+    // Close modals when clicking backdrop
+    window.addEventListener('click', function(e) {
+      const approveModal = document.getElementById('modal-approve');
+      const rejectModal = document.getElementById('modal-reject');
+      if (e.target === approveModal) closeModal('modal-approve');
+      if (e.target === rejectModal) closeModal('modal-reject');
+    });
+  </script>
+</div></div></main></div></body></html>

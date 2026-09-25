@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"surface":"#f8f9ff","on-secondary-fixed-variant":"#244d51","secondary":"#3d6569","primary-container":"#0f6e6e","on-surface":"#141c28","secondary-fixed":"#c0eaef","tertiary-container":"#915332","on-surface-variant":"#3e4948","tertiary-fixed":"#ffdbcb","outline-variant":"#bec9c8","on-tertiary-fixed":"#341100","error-container":"#ffdad6","on-secondary-fixed":"#002022","on-secondary":"#ffffff","on-primary-fixed":"#002020","on-primary":"#ffffff","on-primary-fixed-variant":"#004f50","on-error":"#ffffff","on-error-container":"#93000a","on-secondary-container":"#41696d","surface-container-lowest":"#ffffff","surface-tint":"#03696a","error":"#ba1a1a","on-primary-container":"#9eedec","surface-container-highest":"#dbe3f3","background":"#f8f9ff","inverse-primary":"#85d4d3","on-tertiary-fixed-variant":"#6f3819","surface-variant":"#dbe3f3","on-background":"#141c28","secondary-container":"#bde7ec","on-tertiary-container":"#ffd8c6","surface-bright":"#f8f9ff","outline":"#6e7979","primary-fixed-dim":"#85d4d3","surface-dim":"#d2daeb","inverse-surface":"#29313d","primary":"#005454","secondary-fixed-dim":"#a4ced2","tertiary-fixed-dim":"#ffb692","tertiary":"#743c1d","on-tertiary":"#ffffff","surface-container-low":"#eff3ff","primary-fixed":"#a1f0ef","surface-container-high":"#e1e8f9","surface-container":"#e6eeff","inverse-on-surface":"#ebf1ff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter-mobile":"1rem","space-md":"1rem","margin":"2rem","gutter":"1.5rem","space-xs":"0.25rem","space-xl":"2rem","margin-mobile":"1rem","space-lg":"1.5rem","space-sm":"0.5rem","space-2xl":"3rem"},"fontFamily":{"label-lg":["Public Sans"],"headline-md":["Public Sans"],"body-lg":["Public Sans"],"headline-lg":["Public Sans"],"display-lg":["Public Sans"],"caption":["Public Sans"],"title-lg":["Public Sans"],"display-lg-mobile":["Public Sans"],"body-md":["Public Sans"],"label-md":["Public Sans"]},"fontSize":{"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"headline-md":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"600"}],"caption":["12px",{"lineHeight":"16px","fontWeight":"400"}],"title-lg":["18px",{"lineHeight":"26px","fontWeight":"500"}],"display-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen"><header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest border-b border-outline-variant z-50"><div class="h-16 w-full px-gutter-mobile md:px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm md:gap-space-md"><button aria-label="Abrir menú" class="md:hidden flex items-center justify-center w-10 h-10 rounded text-on-surface hover:bg-surface-container hover:text-on-surface focus:outline-none" type="button"><span class="material-symbols-outlined">menu</span></button><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[20px]">local_hospital</span></div><div class="flex items-baseline tracking-tight"><span class="font-headline-md text-headline-md text-on-surface">Cita</span><span class="font-title-lg text-title-lg text-outline">Clara</span></div></div><span class="hidden sm:inline-flex items-center px-space-sm py-0.5 rounded bg-secondary-container text-primary font-label-md text-label-md uppercase tracking-wider">Profesional</span></div><div class="flex items-center gap-space-sm md:gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden sm:flex flex-col text-left"><span class="font-label-lg text-label-lg text-on-surface leading-none">Dra. Laura Gómez</span><span class="font-caption text-caption text-outline">Medicina General</span></div></div><div class="h-4 w-px bg-outline-variant hidden sm:block"></div><a class="font-label-lg text-label-lg text-outline hover:text-on-surface transition-colors py-space-xs px-space-sm rounded hover:bg-surface-container" data-path="login" href="#">Cerrar sesión</a></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-16 md:w-60 bg-surface-container-lowest border-r border-outline-variant z-40 hidden sm:flex flex-col py-space-md"><nav class="flex-1 space-y-1" data-active-classes="bg-secondary-container text-primary font-label-lg border-l-4 border-primary-container"><a aria-current="page" class="flex items-center h-12 px-space-md transition-colors bg-secondary-container text-primary font-label-lg border-l-4 border-primary-container" data-path="mi-agenda" href="#"><span class="material-symbols-outlined text-[20px] shrink-0">calendar_today</span><span class="hidden md:inline font-label-lg text-label-lg ml-space-sm truncate">Mi agenda</span></a><a class="flex items-center h-12 px-space-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="pacientes" href="#"><span class="material-symbols-outlined text-[20px] shrink-0">group</span><span class="hidden md:inline font-label-lg text-label-lg ml-space-sm truncate">Pacientes</span></a><a class="flex items-center h-12 px-space-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="configuracion-consulta" href="#"><span class="material-symbols-outlined text-[20px] shrink-0">settings</span><span class="hidden md:inline font-label-lg text-label-lg ml-space-sm truncate">Configuración</span></a></nav><div class="px-space-md pt-space-sm border-t border-outline-variant hidden md:block"><span class="font-caption text-caption text-outline">CitaClara v2.4</span></div></aside><div class="pt-16 sm:pl-16 md:pl-60 min-h-screen bg-surface"><main class="w-full max-w-[1200px] mx-auto p-gutter-mobile md:p-space-xl bg-surface"><div class="flex flex-col w-full">
+<!-- Interactive State Drawer / Controller Toolbar -->
+<aside aria-label="Simulador de estados de prueba" class="mb-space-lg p-space-sm bg-surface-container-low rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px] text-primary">tune</span>
+<span class="font-headline-md text-[13px] uppercase tracking-wider text-on-surface">Simulador de Estados Clínicos:</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container transition-colors" id="btn-toggle-empty" onclick="toggleState('empty')" type="button">
+        Semana Vacía
+      </button>
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container transition-colors" id="btn-toggle-inactive" onclick="toggleState('inactive')" type="button">
+        Cuenta Inactiva
+      </button>
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container transition-colors" id="btn-toggle-conflict" onclick="toggleState('conflict')" type="button">
+        Alerta Conflicto
+      </button>
+<button class="px-space-sm py-1 rounded bg-secondary-container text-primary font-label-md text-label-md hover:bg-secondary-fixed transition-colors" onclick="openPublishModal()" type="button">
+        Probar Modal Publicar
+      </button>
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container transition-colors" id="btn-toggle-mobile" onclick="toggleMobileCardView()" type="button">
+        Vista Lista / Móvil
+      </button>
+</div>
+</aside>
+<!-- Banner de Cuenta Inactiva (Conditional state) -->
+<div class="hidden mb-space-lg p-space-md bg-error-container text-on-error-container rounded-lg shadow-sm flex items-center justify-between gap-space-md" id="banner-inactive-account" role="alert">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-[24px]">lock_clock</span>
+<div>
+<p class="font-label-lg text-label-lg font-bold">Tu cuenta profesional está inactiva</p>
+<p class="font-caption text-caption text-on-error-container">No puedes publicar nuevos horarios ni modificar bloques hasta validar credenciales con el comité de acreditación médica.</p>
+</div>
+</div>
+<span class="px-space-sm py-1 bg-surface-container-lowest text-error font-label-md text-label-md rounded shadow-sm">Bloqueado</span>
+</div>
+<!-- Banner de Advertencia de Conflicto (Conditional state) -->
+<div class="hidden mb-space-lg p-space-md bg-tertiary-fixed text-on-tertiary-fixed rounded-lg shadow-sm flex items-center justify-between gap-space-md" id="banner-conflict-notice" role="alert">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[24px]">warning</span>
+<div>
+<p class="font-label-lg text-label-lg">Este bloque tiene citas reservadas o solicitadas y no se puede modificar.</p>
+<p class="font-caption text-caption text-on-tertiary-fixed-variant">Para cancelaciones por causa mayor, comuníquese directamente con la administración de sede.</p>
+</div>
+</div>
+<button aria-label="Cerrar advertencia" class="p-1 hover:bg-tertiary-container hover:text-on-tertiary rounded" onclick="document.getElementById('banner-conflict-notice').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">Mi agenda</h1>
+<p class="font-body-lg text-body-lg text-outline mt-1">Publica los horarios en que atiendes. Cada bloque se divide en espacios de 30 minutos.</p>
+</div>
+<div class="flex items-center gap-space-sm text-caption font-caption text-on-surface-variant bg-surface-container-low px-space-md py-space-xs rounded-lg self-start md:self-auto">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container inline-block"></span>
+<span>Dra. Laura Gómez • Medicina General</span>
+</div>
+</div>
+<!-- Toolbar: Week Navigation, Clinic Filter & Actions -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-lg">
+<!-- Navegador de semana -->
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center bg-surface-container-low rounded-lg p-1">
+<button aria-label="Semana anterior" class="w-9 h-9 flex items-center justify-center rounded text-on-surface hover:bg-surface-container-lowest hover:shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary-container" type="button">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<span class="font-label-lg text-label-lg text-on-surface px-space-md select-none tabular-nums">22 – 28 sep 2026</span>
+<button aria-label="Semana siguiente" class="w-9 h-9 flex items-center justify-center rounded text-on-surface hover:bg-surface-container-lowest hover:shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary-container" type="button">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+<button class="px-space-md h-9 bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-label-lg text-label-lg rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container" type="button">
+        Hoy
+      </button>
+</div>
+<!-- Filtro segmentado de sede -->
+<div aria-label="Filtro de sede" class="flex items-center bg-surface-container-low p-1 rounded-lg self-start sm:self-center" role="radiogroup">
+<button class="px-space-md py-1.5 rounded-md font-label-lg text-label-lg bg-surface-container-lowest text-primary shadow-sm transition-all" id="filter-all" onclick="filterClinic('all')" type="button">
+        Todas
+      </button>
+<button class="px-space-md py-1.5 rounded-md font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all" id="filter-HIC" onclick="filterClinic('HIC')" type="button">
+        HIC
+      </button>
+<button class="px-space-md py-1.5 rounded-md font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all" id="filter-ICV" onclick="filterClinic('ICV')" type="button">
+        ICV
+      </button>
+</div>
+<!-- Botón Primario Publicar Bloque -->
+<button class="h-12 px-space-lg bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg rounded-lg shadow-sm flex items-center justify-center gap-space-xs transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2" id="btn-main-publish" onclick="openPublishModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Publicar bloque</span>
+</button>
+</div>
+<!-- ESTADO VACÍO (Conditional) -->
+<div class="hidden flex-col items-center justify-center text-center p-space-2xl bg-surface-container-lowest rounded-xl shadow-sm my-space-lg" id="empty-state-view">
+<div class="w-16 h-16 rounded-full bg-secondary-container text-primary flex items-center justify-center mb-space-md">
+<span class="material-symbols-outlined text-[32px]">calendar_month</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Aún no publicas horarios esta semana</h2>
+<p class="font-body-md text-body-md text-outline max-w-md mb-space-lg">Establece tus bloques de atención médica para que los pacientes puedan solicitar citas en consultorios HIC o ICV.</p>
+<button class="h-12 px-space-lg bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg rounded-lg shadow-sm flex items-center gap-space-xs" onclick="openPublishModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Publicar bloque</span>
+</button>
+</div>
+<!-- CALENDARIO SEMANAL PRINCIPAL (Vista Regular Grid) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col" id="weekly-calendar-card">
+<!-- Header de días (Columnas de Lunes a Sábado, sin Domingo) -->
+<div class="grid grid-cols-[72px_repeat(6,minmax(140px,1fr))] bg-surface-container-low text-center select-none overflow-x-auto">
+<div class="p-space-sm font-caption text-caption text-outline flex items-center justify-center">
+        Hora
+      </div>
+<!-- Lunes 22 sep (Día pasado/hoy) -->
+<div class="p-space-sm flex flex-col items-center justify-center bg-surface-container-low">
+<span class="font-label-md text-label-md uppercase tracking-wider text-outline">Lunes</span>
+<span class="font-headline-md text-headline-md text-on-surface">22 sep</span>
+</div>
+<!-- Martes 23 sep -->
+<div class="p-space-sm flex flex-col items-center justify-center">
+<span class="font-label-md text-label-md uppercase tracking-wider text-outline">Martes</span>
+<span class="font-headline-md text-headline-md text-on-surface">23 sep</span>
+</div>
+<!-- Miércoles 24 sep -->
+<div class="p-space-sm flex flex-col items-center justify-center">
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary font-bold">Miércoles</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">24 sep</span>
+</div>
+<!-- Jueves 25 sep -->
+<div class="p-space-sm flex flex-col items-center justify-center">
+<span class="font-label-md text-label-md uppercase tracking-wider text-outline">Jueves</span>
+<span class="font-headline-md text-headline-md text-on-surface">25 sep</span>
+</div>
+<!-- Viernes 26 sep -->
+<div class="p-space-sm flex flex-col items-center justify-center">
+<span class="font-label-md text-label-md uppercase tracking-wider text-outline">Viernes</span>
+<span class="font-headline-md text-headline-md text-on-surface">26 sep</span>
+</div>
+<!-- Sábado 27 sep -->
+<div class="p-space-sm flex flex-col items-center justify-center">
+<span class="font-label-md text-label-md uppercase tracking-wider text-outline">Sábado</span>
+<span class="font-headline-md text-headline-md text-on-surface">27 sep</span>
+</div>
+</div>
+<!-- Rejilla y Contenedor de Horarios con Scroll horizontal en móviles/tablets -->
+<div class="relative overflow-x-auto">
+<div class="grid grid-cols-[72px_repeat(6,minmax(140px,1fr))] min-w-[912px] relative bg-surface-container-lowest" style="height: 720px;">
+<!-- Columna Eje Temporal Izquierdo (07:00 a 19:00 cada 60px = 1 hora, cada 30px = 30min) -->
+<div class="relative select-none bg-surface-container-low text-right pr-space-sm font-caption text-caption text-outline tabular-nums">
+<div class="absolute -top-2 right-2">07:00</div>
+<div class="absolute top-[60px] -mt-2 right-2">08:00</div>
+<div class="absolute top-[120px] -mt-2 right-2">09:00</div>
+<div class="absolute top-[180px] -mt-2 right-2">10:00</div>
+<div class="absolute top-[240px] -mt-2 right-2">11:00</div>
+<div class="absolute top-[300px] -mt-2 right-2">12:00</div>
+<div class="absolute top-[360px] -mt-2 right-2">13:00</div>
+<div class="absolute top-[420px] -mt-2 right-2">14:00</div>
+<div class="absolute top-[480px] -mt-2 right-2">15:00</div>
+<div class="absolute top-[540px] -mt-2 right-2">16:00</div>
+<div class="absolute top-[600px] -mt-2 right-2">17:00</div>
+<div class="absolute top-[660px] -mt-2 right-2">18:00</div>
+<div class="absolute top-[715px] right-2">19:00</div>
+</div>
+<!-- Guías Horizontales de Fondo (Líneas sutiles de fondo cada 30 min y 1 hora) -->
+<div class="absolute inset-0 pointer-events-none left-[72px]">
+<!-- 12 horas x 2 = 24 líneas -->
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+<div class="h-[30px] bg-transparent"></div>
+<div class="h-[30px] bg-surface-container-low/40"></div>
+</div>
+<!-- Columnas de Días -->
+<!-- 1. LUNES 22 SEP -->
+<div class="relative bg-surface-container-low/20 p-1" data-day="lunes">
+<!-- Bloque 1: 08:00 – 12:00 (HIC) -> top: 60px, height: 240px -->
+<div aria-label="Lunes 22 de septiembre, 08:00 a 12:00, sede HIC, 8 espacios" class="clinic-block hic-block absolute top-[60px] left-1.5 right-1.5 h-[240px] bg-secondary-container/50 rounded-lg p-space-sm flex flex-col justify-between cursor-pointer hover:bg-secondary-container transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container" onclick="togglePopover(event, 'popover-lunes-1')" role="button" tabindex="0">
+<div class="flex items-start justify-between gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold tabular-nums">08:00 – 12:00</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest font-label-md text-label-md text-primary font-semibold tracking-wider">HIC</span>
+</div>
+<div class="flex items-center gap-1 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-primary">event_available</span>
+<span>8 espacios (30m)</span>
+</div>
+</div>
+<!-- Bloque 2: 14:00 – 17:00 (HIC) -> top: 420px, height: 180px -->
+<div aria-label="Lunes 22 de septiembre, 14:00 a 17:00, sede HIC, 6 espacios" class="clinic-block hic-block absolute top-[420px] left-1.5 right-1.5 h-[180px] bg-secondary-container/50 rounded-lg p-space-sm flex flex-col justify-between cursor-pointer hover:bg-secondary-container transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container" onclick="togglePopover(event, 'popover-lunes-2')" role="button" tabindex="0">
+<div class="flex items-start justify-between gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold tabular-nums">14:00 – 17:00</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest font-label-md text-label-md text-primary font-semibold tracking-wider">HIC</span>
+</div>
+<div class="flex items-center gap-1 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-primary">event_available</span>
+<span>6 espacios (30m)</span>
+</div>
+</div>
+</div>
+<!-- 2. MARTES 23 SEP (Sin bloques) -->
+<div class="relative bg-transparent p-1" data-day="martes">
+<div class="h-full flex items-center justify-center pointer-events-none">
+<span class="font-caption text-caption text-outline opacity-40 select-none">Sin horarios</span>
+</div>
+</div>
+<!-- 3. MIÉRCOLES 24 SEP -->
+<div class="relative bg-transparent p-1" data-day="miercoles">
+<!-- Bloque: 07:30 – 10:30 (ICV) -> top: 30px, height: 180px -->
+<div aria-label="Miércoles 24 de septiembre, 07:30 a 10:30, sede ICV, 6 espacios" class="clinic-block icv-block absolute top-[30px] left-1.5 right-1.5 h-[180px] bg-secondary-container/50 rounded-lg p-space-sm flex flex-col justify-between cursor-pointer hover:bg-secondary-container transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container" onclick="togglePopover(event, 'popover-miercoles')" role="button" tabindex="0">
+<div class="flex items-start justify-between gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold tabular-nums">07:30 – 10:30</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest font-label-md text-label-md text-primary font-semibold tracking-wider">ICV</span>
+</div>
+<div class="flex items-center gap-1 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-primary">event_available</span>
+<span>6 espacios (30m)</span>
+</div>
+</div>
+</div>
+<!-- 4. JUEVES 25 SEP (Sin bloques) -->
+<div class="relative bg-transparent p-1" data-day="jueves">
+<div class="h-full flex items-center justify-center pointer-events-none">
+<span class="font-caption text-caption text-outline opacity-40 select-none">Sin horarios</span>
+</div>
+</div>
+<!-- 5. VIERNES 26 SEP -->
+<div class="relative bg-transparent p-1" data-day="viernes">
+<!-- Bloque: 08:00 – 10:00 (HIC) -> top: 60px, height: 120px -->
+<div aria-label="Viernes 26 de septiembre, 08:00 a 10:00, sede HIC, 4 espacios" class="clinic-block hic-block absolute top-[60px] left-1.5 right-1.5 h-[120px] bg-secondary-container/50 rounded-lg p-space-sm flex flex-col justify-between cursor-pointer hover:bg-secondary-container transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container" onclick="togglePopover(event, 'popover-viernes')" role="button" tabindex="0">
+<div class="flex items-start justify-between gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold tabular-nums">08:00 – 10:00</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest font-label-md text-label-md text-primary font-semibold tracking-wider">HIC</span>
+</div>
+<div class="flex items-center gap-1 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-primary">event_available</span>
+<span>4 espacios (30m)</span>
+</div>
+</div>
+</div>
+<!-- 6. SÁBADO 27 SEP (Sin bloques) -->
+<div class="relative bg-transparent p-1" data-day="sabado">
+<div class="h-full flex items-center justify-center pointer-events-none">
+<span class="font-caption text-caption text-outline opacity-40 select-none">Sin horarios</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- VISTA LISTA / MÓVIL ALTERNATIVA (Oculta por defecto en desktop) -->
+<div class="hidden flex-col gap-space-md" id="mobile-card-view">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low px-space-sm py-1 rounded">
+<span class="font-label-lg text-label-lg text-on-surface">Lunes 22 sep</span>
+<span class="font-caption text-caption text-outline">2 bloques</span>
+</div>
+<div class="space-y-space-sm">
+<div class="p-space-sm bg-secondary-container/40 rounded-lg flex items-center justify-between">
+<div>
+<p class="font-label-lg text-label-lg text-primary font-bold">08:00 – 12:00 • HIC</p>
+<p class="font-caption text-caption text-on-surface-variant">8 espacios de 30 min</p>
+</div>
+<button class="px-space-sm py-1 bg-surface-container-lowest text-primary rounded font-label-md text-label-md shadow-sm" onclick="openEditModal('08:00', '12:00', 'HIC')" type="button">Gestionar</button>
+</div>
+<div class="p-space-sm bg-secondary-container/40 rounded-lg flex items-center justify-between">
+<div>
+<p class="font-label-lg text-label-lg text-primary font-bold">14:00 – 17:00 • HIC</p>
+<p class="font-caption text-caption text-on-surface-variant">6 espacios de 30 min</p>
+</div>
+<button class="px-space-sm py-1 bg-surface-container-lowest text-primary rounded font-label-md text-label-md shadow-sm" onclick="openEditModal('14:00', '17:00', 'HIC')" type="button">Gestionar</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low px-space-sm py-1 rounded">
+<span class="font-label-lg text-label-lg text-on-surface font-bold text-primary">Miércoles 24 sep</span>
+<span class="font-caption text-caption text-outline">1 bloque</span>
+</div>
+<div class="p-space-sm bg-secondary-container/40 rounded-lg flex items-center justify-between">
+<div>
+<p class="font-label-lg text-label-lg text-primary font-bold">07:30 – 10:30 • ICV</p>
+<p class="font-caption text-caption text-on-surface-variant">6 espacios de 30 min</p>
+</div>
+<button class="px-space-sm py-1 bg-surface-container-lowest text-primary rounded font-label-md text-label-md shadow-sm" onclick="openEditModal('07:30', '10:30', 'ICV')" type="button">Gestionar</button>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low px-space-sm py-1 rounded">
+<span class="font-label-lg text-label-lg text-on-surface">Viernes 26 sep</span>
+<span class="font-caption text-caption text-outline">1 bloque</span>
+</div>
+<div class="p-space-sm bg-secondary-container/40 rounded-lg flex items-center justify-between">
+<div>
+<p class="font-label-lg text-label-lg text-primary font-bold">08:00 – 10:00 • HIC</p>
+<p class="font-caption text-caption text-on-surface-variant">4 espacios de 30 min</p>
+</div>
+<button class="px-space-sm py-1 bg-surface-container-lowest text-primary rounded font-label-md text-label-md shadow-sm" onclick="openEditModal('08:00', '10:00', 'HIC')" type="button">Gestionar</button>
+</div>
+</div>
+</div>
+<!-- POPOVER INTERACTIVO FLOTANTE DE DETALLE DE BLOQUE -->
+<div aria-labelledby="popover-title" class="hidden fixed z-50 w-80 bg-surface-container-lowest rounded-xl shadow-xl p-space-md animate-fade-in" id="block-popover" role="dialog">
+<div class="flex items-start justify-between mb-space-xs">
+<div>
+<span class="font-caption text-caption text-outline uppercase tracking-wider font-semibold">Detalle de Disponibilidad</span>
+<h3 class="font-headline-md text-headline-md text-on-surface tabular-nums" id="popover-title">08:00 – 12:00</h3>
+</div>
+<button aria-label="Cerrar popover" class="p-1 text-outline hover:text-on-surface rounded hover:bg-surface-container" onclick="closePopover()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="my-space-sm space-y-space-xs">
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded bg-secondary-container text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">apartment</span>
+<span id="popover-clinic">HIC — Hospital Internacional de Colombia</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1.5 mt-2" id="popover-slots">
+<span class="material-symbols-outlined text-[18px] text-primary">schedule</span>
+<span>8 espacios disponibles de 30 min</span>
+</p>
+</div>
+<div class="flex items-center justify-between gap-space-sm pt-space-sm mt-space-sm bg-surface-container-low -mx-space-md -mb-space-md p-space-md rounded-b-xl">
+<button class="font-label-lg text-label-lg text-error hover:text-on-error-container hover:underline py-1" onclick="triggerDeleteFromPopover()" type="button">
+        Eliminar
+      </button>
+<button class="px-space-md py-1.5 bg-surface-container-lowest hover:bg-surface-container text-primary font-label-lg text-label-lg rounded-lg shadow-sm" onclick="triggerEditFromPopover()" type="button">
+        Editar
+      </button>
+</div>
+</div>
+<!-- MODAL: PUBLICAR / EDITAR BLOQUE -->
+<div aria-labelledby="modal-publish-title" aria-modal="true" class="hidden fixed inset-0 z-50 flex items-center justify-center p-space-md bg-on-surface/40 backdrop-blur-sm" id="modal-publish" role="dialog">
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-xl shadow-xl overflow-hidden animate-scale-up">
+<!-- Modal Header -->
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface" id="modal-publish-title">Publicar bloque</h2>
+<p class="font-caption text-caption text-outline">Configura la franja horaria para recibir pacientes en consulta externa.</p>
+</div>
+<button aria-label="Cerrar modal" class="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container-highest" onclick="closePublishModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body Form -->
+<form class="p-space-lg space-y-space-lg" id="form-publish-slot" onsubmit="event.preventDefault(); validateAndSubmitForm();">
+<!-- Campo Fecha -->
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-1" for="input-date">Fecha *</label>
+<input class="w-full h-12 px-space-md bg-surface-container-lowest text-on-surface rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container" id="input-date" min="2026-09-22" type="date" value="2026-09-24"/>
+<p class="font-caption text-caption text-outline mt-1">Fechas pasadas están deshabilitadas por normativa.</p>
+</div>
+<!-- Fila Horarios Inicio y Fin -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- Hora Inicio -->
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-1" for="select-start-time">Hora de inicio *</label>
+<select class="w-full h-12 px-space-md bg-surface-container-lowest text-on-surface rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container" id="select-start-time" onchange="updateCalculatedSlots()">
+<option value="07:00">07:00</option>
+<option value="07:30">07:30</option>
+<option selected="" value="08:00">08:00</option>
+<option value="08:30">08:30</option>
+<option value="09:00">09:00</option>
+<option value="09:30">09:30</option>
+<option value="10:00">10:00</option>
+<option value="10:30">10:30</option>
+<option value="11:00">11:00</option>
+<option value="11:30">11:30</option>
+<option value="12:00">12:00</option>
+<option value="13:00">13:00</option>
+<option value="14:00">14:00</option>
+<option value="14:30">14:30</option>
+<option value="15:00">15:00</option>
+<option value="15:30">15:30</option>
+<option value="16:00">16:00</option>
+<option value="17:00">17:00</option>
+</select>
+<!-- Mensaje de error condicional hora inicio -->
+<p class="hidden font-caption text-caption text-error mt-1 flex items-center gap-1" id="error-start-past">
+<span class="material-symbols-outlined text-[14px]">error</span>
+              No se puede publicar disponibilidad en el pasado.
+            </p>
+<p class="hidden font-caption text-caption text-error mt-1 flex items-center gap-1" id="error-start-overlap">
+<span class="material-symbols-outlined text-[14px]">error</span>
+              El bloque se cruza con otro que ya publicaste.
+            </p>
+</div>
+<!-- Hora Fin -->
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-1" for="select-end-time">Hora de fin *</label>
+<select class="w-full h-12 px-space-md bg-surface-container-lowest text-on-surface rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container" id="select-end-time" onchange="updateCalculatedSlots()">
+<option value="08:00">08:00</option>
+<option value="09:00">09:00</option>
+<option value="10:00">10:00</option>
+<option value="11:00">11:00</option>
+<option selected="" value="12:00">12:00</option>
+<option value="13:00">13:00</option>
+<option value="14:00">14:00</option>
+<option value="15:00">15:00</option>
+<option value="16:00">16:00</option>
+<option value="17:00">17:00</option>
+<option value="18:00">18:00</option>
+<option value="19:00">19:00</option>
+</select>
+<!-- Mensaje de error condicional hora fin -->
+<p class="hidden font-caption text-caption text-error mt-1 flex items-center gap-1" id="error-end-prior">
+<span class="material-symbols-outlined text-[14px]">error</span>
+              La hora de fin debe ser posterior a la de inicio.
+            </p>
+</div>
+</div>
+<!-- Selección de Sede (Radio Cards) -->
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-space-sm">Sede *</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm" role="radiogroup">
+<!-- Radio HIC -->
+<label class="cursor-pointer p-space-md rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/50 has-[:checked]:text-primary flex items-start gap-space-sm transition-all shadow-sm">
+<input checked="" class="mt-0.5 w-4 h-4 text-primary-container accent-primary-container" name="modal-clinic" type="radio" value="HIC"/>
+<div>
+<span class="font-label-lg text-label-lg block text-on-surface">HIC</span>
+<span class="font-caption text-caption text-on-surface-variant">Hospital Internacional de Colombia (Piedecuesta)</span>
+</div>
+</label>
+<!-- Radio ICV -->
+<label class="cursor-pointer p-space-md rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/50 has-[:checked]:text-primary flex items-start gap-space-sm transition-all shadow-sm">
+<input class="mt-0.5 w-4 h-4 text-primary-container accent-primary-container" name="modal-clinic" type="radio" value="ICV"/>
+<div>
+<span class="font-label-lg text-label-lg block text-on-surface">ICV</span>
+<span class="font-caption text-caption text-on-surface-variant">Instituto del Corazón (Bucaramanga)</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Helper en vivo de espacios generados -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex items-center gap-space-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+<span class="font-label-lg text-label-lg text-on-surface" id="calculated-slots-text">Se crearán 8 espacios de 30 minutos</span>
+</div>
+<!-- Modal Footer Actions -->
+<div class="flex items-center justify-end gap-space-sm pt-space-sm">
+<button class="h-12 px-space-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg rounded-lg transition-colors" onclick="closePublishModal()" type="button">
+            Cancelar
+          </button>
+<button class="h-12 px-space-xl bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg rounded-lg shadow-sm transition-colors" id="btn-submit-block" type="submit">
+            Publicar bloque
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- MODAL: CONFIRMACIÓN DE ELIMINACIÓN -->
+<div aria-labelledby="modal-delete-title" aria-modal="true" class="hidden fixed inset-0 z-50 flex items-center justify-center p-space-md bg-on-surface/40 backdrop-blur-sm" id="modal-delete" role="dialog">
+<div class="bg-surface-container-lowest w-full max-w-md rounded-xl shadow-xl overflow-hidden p-space-lg animate-scale-up">
+<div class="w-12 h-12 rounded-full bg-error-container text-error flex items-center justify-center mb-space-md">
+<span class="material-symbols-outlined text-[26px]">delete_forever</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs" id="modal-delete-title">¿Eliminar este bloque?</h3>
+<p class="font-body-md text-body-md text-outline mb-space-lg" id="delete-confirmation-text">
+        Se eliminarán sus 8 espacios. Esta acción no se puede deshacer y los pacientes no podrán reservar citas en este intervalo.
+      </p>
+<div class="flex items-center justify-end gap-space-sm">
+<button class="h-12 px-space-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg rounded-lg transition-colors" onclick="closeDeleteModal()" type="button">
+          Cancelar
+        </button>
+<button class="h-12 px-space-lg bg-error hover:bg-on-error-container text-on-error font-label-lg text-label-lg rounded-lg shadow-sm transition-colors" onclick="executeDeleteBlock()" type="button">
+          Eliminar bloque
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Global View Model State
+  let currentClinicFilter = 'all';
+  let activePopoverId = null;
+  let simulatedState = {
+    empty: false,
+    inactive: false,
+    conflict: false
+  };
+
+  function filterClinic(clinic) {
+    currentClinicFilter = clinic;
+    const filterAll = document.getElementById('filter-all');
+    const filterHic = document.getElementById('filter-HIC');
+    const filterIcv = document.getElementById('filter-ICV');
+
+    [filterAll, filterHic, filterIcv].forEach(btn => {
+      btn.className = 'px-space-md py-1.5 rounded-md font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all';
+    });
+
+    const activeBtn = document.getElementById('filter-' + clinic);
+    if (activeBtn) {
+      activeBtn.className = 'px-space-md py-1.5 rounded-md font-label-lg text-label-lg bg-surface-container-lowest text-primary shadow-sm transition-all';
+    }
+
+    const blocks = document.querySelectorAll('.clinic-block');
+    blocks.forEach(block => {
+      if (clinic === 'all') {
+        block.style.display = 'flex';
+      } else if (clinic === 'HIC') {
+        block.style.display = block.classList.contains('hic-block') ? 'flex' : 'none';
+      } else if (clinic === 'ICV') {
+        block.style.display = block.classList.contains('icv-block') ? 'flex' : 'none';
+      }
+    });
+  }
+
+  function togglePopover(event, id) {
+    event.stopPropagation();
+    const popover = document.getElementById('block-popover');
+    const target = event.currentTarget;
+    const rect = target.getBoundingClientRect();
+
+    if (activePopoverId === id && !popover.classList.contains('hidden')) {
+      closePopover();
+      return;
+    }
+
+    activePopoverId = id;
+
+    // Popover content contextualization
+    const popoverTitle = document.getElementById('popover-title');
+    const popoverClinic = document.getElementById('popover-clinic');
+    const popoverSlots = document.getElementById('popover-slots');
+
+    if (id.includes('lunes-1')) {
+      popoverTitle.innerText = '08:00 – 12:00';
+      popoverClinic.innerText = 'HIC — Hospital Internacional de Colombia';
+      popoverSlots.innerHTML = '<span class="material-symbols-outlined text-[18px] text-primary">schedule</span><span>8 espacios disponibles de 30 min</span>';
+    } else if (id.includes('lunes-2')) {
+      popoverTitle.innerText = '14:00 – 17:00';
+      popoverClinic.innerText = 'HIC — Hospital Internacional de Colombia';
+      popoverSlots.innerHTML = '<span class="material-symbols-outlined text-[18px] text-primary">schedule</span><span>6 espacios disponibles de 30 min</span>';
+    } else if (id.includes('miercoles')) {
+      popoverTitle.innerText = '07:30 – 10:30';
+      popoverClinic.innerText = 'ICV — Instituto del Corazón';
+      popoverSlots.innerHTML = '<span class="material-symbols-outlined text-[18px] text-primary">schedule</span><span>6 espacios disponibles de 30 min</span>';
+    } else {
+      popoverTitle.innerText = '08:00 – 10:00';
+      popoverClinic.innerText = 'HIC — Hospital Internacional de Colombia';
+      popoverSlots.innerHTML = '<span class="material-symbols-outlined text-[18px] text-primary">schedule</span><span>4 espacios disponibles de 30 min</span>';
+    }
+
+    // Position popover relative to clicked block
+    popover.classList.remove('hidden');
+    let top = rect.top + window.scrollY;
+    let left = rect.right + 12;
+
+    if (left + 320 > window.innerWidth) {
+      left = rect.left - 330;
+    }
+    if (left < 10) {
+      left = Math.max(10, (window.innerWidth - 320) / 2);
+    }
+
+    popover.style.top = `${top}px`;
+    popover.style.left = `${left}px`;
+  }
+
+  function closePopover() {
+    const popover = document.getElementById('block-popover');
+    if (popover) {
+      popover.classList.add('hidden');
+      activePopoverId = null;
+    }
+  }
+
+  // Dismiss popover on outside click
+  document.addEventListener('click', function(e) {
+    const popover = document.getElementById('block-popover');
+    if (popover && !popover.classList.contains('hidden') && !popover.contains(e.target) && !e.target.closest('.clinic-block')) {
+      closePopover();
+    }
+  });
+
+  function triggerEditFromPopover() {
+    closePopover();
+    openPublishModal(true);
+  }
+
+  function triggerDeleteFromPopover() {
+    closePopover();
+    openDeleteModal();
+  }
+
+  function openPublishModal(isEdit = false) {
+    if (simulatedState.inactive) {
+      alert('Tu cuenta está inactiva. No puedes realizar esta acción.');
+      return;
+    }
+    const modal = document.getElementById('modal-publish');
+    const title = document.getElementById('modal-publish-title');
+    const submitBtn = document.getElementById('btn-submit-block');
+
+    if (isEdit) {
+      title.innerText = 'Editar bloque';
+      submitBtn.innerText = 'Guardar cambios';
+    } else {
+      title.innerText = 'Publicar bloque';
+      submitBtn.innerText = 'Publicar bloque';
+    }
+
+    // Reset error banners in modal
+    hideValidationErrors();
+    modal.classList.remove('hidden');
+  }
+
+  function openEditModal(start, end, clinic) {
+    document.getElementById('select-start-time').value = start;
+    document.getElementById('select-end-time').value = end;
+    const radios = document.getElementsByName('modal-clinic');
+    for (let r of radios) {
+      if (r.value === clinic) r.checked = true;
+    }
+    updateCalculatedSlots();
+    openPublishModal(true);
+  }
+
+  function closePublishModal() {
+    document.getElementById('modal-publish').classList.add('hidden');
+    hideValidationErrors();
+  }
+
+  function openDeleteModal() {
+    document.getElementById('modal-delete').classList.remove('hidden');
+  }
+
+  function closeDeleteModal() {
+    document.getElementById('modal-delete').classList.add('hidden');
+  }
+
+  function executeDeleteBlock() {
+    closeDeleteModal();
+    // Feedback notification or toast simulation
+    const alertBanner = document.createElement('div');
+    alertBanner.className = 'fixed bottom-6 right-6 bg-surface-container-highest text-on-surface p-space-md rounded-lg shadow-xl z-50 flex items-center gap-space-sm';
+    alertBanner.innerHTML = '<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span><span class="font-label-lg text-label-lg">Bloque eliminado exitosamente</span>';
+    document.body.appendChild(alertBanner);
+    setTimeout(() => alertBanner.remove(), 3500);
+  }
+
+  function updateCalculatedSlots() {
+    const start = document.getElementById('select-start-time').value;
+    const end = document.getElementById('select-end-time').value;
+    const helper = document.getElementById('calculated-slots-text');
+
+    const [sh, sm] = start.split(':').map(Number);
+    const [eh, em] = end.split(':').map(Number);
+    const totalMinutes = (eh * 60 + em) - (sh * 60 + sm);
+
+    if (totalMinutes <= 0) {
+      helper.innerText = 'El rango de horas no es válido.';
+    } else {
+      const slots = Math.floor(totalMinutes / 30);
+      helper.innerText = `Se crearán ${slots} espacios de 30 minutos`;
+    }
+  }
+
+  function hideValidationErrors() {
+    document.getElementById('error-start-past').classList.add('hidden');
+    document.getElementById('error-start-overlap').classList.add('hidden');
+    document.getElementById('error-end-prior').classList.add('hidden');
+  }
+
+  function validateAndSubmitForm() {
+    hideValidationErrors();
+    const start = document.getElementById('select-start-time').value;
+    const end = document.getElementById('select-end-time').value;
+
+    const [sh, sm] = start.split(':').map(Number);
+    const [eh, em] = end.split(':').map(Number);
+
+    if (eh * 60 + em <= sh * 60 + sm) {
+      document.getElementById('error-end-prior').classList.remove('hidden');
+      return;
+    }
+
+    // Demo overlap check
+    if (start === '08:00' && end === '12:00') {
+      document.getElementById('error-start-overlap').classList.remove('hidden');
+      return;
+    }
+
+    closePublishModal();
+  }
+
+  function toggleState(type) {
+    if (type === 'empty') {
+      simulatedState.empty = !simulatedState.empty;
+      const calendar = document.getElementById('weekly-calendar-card');
+      const emptyView = document.getElementById('empty-state-view');
+      const btn = document.getElementById('btn-toggle-empty');
+
+      if (simulatedState.empty) {
+        calendar.classList.add('hidden');
+        emptyView.classList.remove('hidden');
+        emptyView.classList.add('flex');
+        btn.classList.add('bg-secondary-container', 'text-primary');
+      } else {
+        calendar.classList.remove('hidden');
+        emptyView.classList.add('hidden');
+        emptyView.classList.remove('flex');
+        btn.classList.remove('bg-secondary-container', 'text-primary');
+      }
+    } else if (type === 'inactive') {
+      simulatedState.inactive = !simulatedState.inactive;
+      const banner = document.getElementById('banner-inactive-account');
+      const publishBtn = document.getElementById('btn-main-publish');
+      const btn = document.getElementById('btn-toggle-inactive');
+
+      if (simulatedState.inactive) {
+        banner.classList.remove('hidden');
+        publishBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        publishBtn.setAttribute('disabled', 'true');
+        btn.classList.add('bg-secondary-container', 'text-primary');
+      } else {
+        banner.classList.add('hidden');
+        publishBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        publishBtn.removeAttribute('disabled');
+        btn.classList.remove('bg-secondary-container', 'text-primary');
+      }
+    } else if (type === 'conflict') {
+      simulatedState.conflict = !simulatedState.conflict;
+      const banner = document.getElementById('banner-conflict-notice');
+      const btn = document.getElementById('btn-toggle-conflict');
+
+      if (simulatedState.conflict) {
+        banner.classList.remove('hidden');
+        btn.classList.add('bg-secondary-container', 'text-primary');
+      } else {
+        banner.classList.add('hidden');
+        btn.classList.remove('bg-secondary-container', 'text-primary');
+      }
+    }
+  }
+
+  function toggleMobileCardView() {
+    const calendar = document.getElementById('weekly-calendar-card');
+    const mobileView = document.getElementById('mobile-card-view');
+    const btn = document.getElementById('btn-toggle-mobile');
+
+    if (mobileView.classList.contains('hidden')) {
+      mobileView.classList.remove('hidden');
+      mobileView.classList.add('flex');
+      calendar.classList.add('hidden');
+      btn.classList.add('bg-secondary-container', 'text-primary');
+    } else {
+      mobileView.classList.add('hidden');
+      mobileView.classList.remove('flex');
+      if (!simulatedState.empty) {
+        calendar.classList.remove('hidden');
+      }
+      btn.classList.remove('bg-secondary-container', 'text-primary');
+    }
+  }
+</script></main></div></body></html>

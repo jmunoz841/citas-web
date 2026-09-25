@@ -27,8 +27,26 @@ npm run dev                   # http://localhost:5174
 |---|---|
 | `npm run dev` | Servidor de desarrollo en el puerto **5174** (fijo: el 5173 lo usa otro grupo en el equipo del laboratorio) |
 | `npm run typecheck` | Verificación de tipos (`tsc -b`) |
+| `npm run lint` | Análisis estático con oxlint |
+| `npm test` | Pruebas con Vitest (jsdom + Testing Library) |
+| `npm run test:watch` | Pruebas en modo vigilancia |
+| `npm run test:coverage` | Pruebas con informe de cobertura |
 | `npm run build` | Verificación de tipos + build de producción en `dist/` |
 | `npm run preview` | Sirve el build en el puerto 5174 |
+
+Se usa **oxlint** en lugar de ESLint con `typescript-eslint`, porque este último todavía no admite TypeScript 7.
+
+## Hooks de calidad
+
+Los hooks viven en `.githooks/` y están versionados, pero Git no los activa solo. Una vez por clon:
+
+```powershell
+git config core.hooksPath .githooks
+```
+
+`pre-commit` ejecuta el **detector de secretos** sobre los archivos preparados en cada commit y, cuando el commit toca código o configuración, además `lint`, `test` y `build`. El detector bloquea siempre los archivos `.env`, las claves privadas y las credenciales de nube o de conexión; los patrones genéricos admiten exenciones justificadas por ruta en `.githooks/secrets-allowlist.txt`.
+
+Para saltarlo en una emergencia, `git commit --no-verify`, dejando constancia del motivo.
 
 ## Configuración (`.env`)
 
@@ -36,13 +54,11 @@ npm run dev                   # http://localhost:5174
 
 ```dotenv
 VITE_API_URL=http://localhost:8081
-VITE_AUTH_MODE=api
 ```
 
 | Variable | Valores | Uso |
 |---|---|---|
-| `VITE_API_URL` | `http://localhost:8081` | URL base de `citas-api` |
-| `VITE_AUTH_MODE` | `api` \| `mock` | `api` llama a la API real; `mock` simula las respuestas en memoria (cuenta de prueba `demo@citaclara.test` / `Demo1234`) |
+| `VITE_API_URL` | `http://localhost:8081` | URL base de `citas-api`. **Obligatoria**: sin ella la aplicación falla de forma visible en vez de simular datos |
 
 El origen del frontend debe coincidir con `FRONTEND_ORIGIN` de `citas-api` (por defecto `http://localhost:5174`) para que CORS lo acepte.
 
@@ -59,12 +75,17 @@ El origen del frontend debe coincidir con `FRONTEND_ORIGIN` de `citas-api` (por 
 ```text
 src/
   features/auth/
-    api/          contrato (types), cliente HTTP, cliente simulado y selector por VITE_AUTH_MODE
+    api/          contrato (types) y cliente HTTP contra citas-api
     components/   AuthLayout, BrandMark, campos, botones, banners, resumen de errores, estado de éxito
     pages/        LoginPage, RegisterPage
     session/      tokens: access en memoria, refresh en sessionStorage; refresh con rotación
     validation/   reglas espejo del backend (el backend es la autoridad)
+  features/catalogs/
+    api/          cliente de los catálogos fijos (públicos, sin token)
+    hooks/        useDocumentTypes y demás lecturas de catálogo para formularios
+  shared/api/     configuración común: URL base obligatoria de la API
+  test/setup.ts   arranque de Vitest (matchers y limpieza del DOM)
   pages/InicioPage.tsx   página temporal
 ```
 
-Contrato REST: `citas-api/docs/contratos/autenticacion.md`.
+Contratos REST: `citas-api/docs/contratos/autenticacion.md` y `citas-api/docs/contratos/catalogos.md`.

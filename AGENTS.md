@@ -6,8 +6,8 @@ Instrucciones para el agente principal del frontend. Generado con `../prompts/ag
 
 - Solo este repositorio. **No edites `citas-api`**; si el contrato REST no alcanza, reporta el cambio al orquestador.
 - Fuente funcional: `../PRD.md` y las HU **Aprobadas** o **En desarrollo** de `../citas-api/docs/wiki/scrum/`. No implementes pantallas ni flujos fuera de una HU.
-- Fuente visual: `docs/diseno/DESIGN.md` (prevalece) + capturas y HTML de `docs/diseno/stitch-v2/`. `stitch-v1/`, `resumen.md` y los `DESIGN.md` generados por Stitch son solo historial.
-- Contrato REST: `../citas-api/docs/contratos/` (hoy: `autenticacion.md`).
+- Fuente visual: `docs/diseno/DESIGN.md` (prevalece) + capturas y HTML de `docs/diseno/stitch-v2/` (login y registro) y `docs/diseno/stitch-v4/` (áreas autenticadas de S3, con las correcciones obligatorias de `APROBACION.md`). `stitch-v1/`, `stitch-v3/`, `resumen.md` y los `DESIGN.md` generados por Stitch son solo historial.
+- Contrato REST: `../citas-api/docs/contratos/` (`autenticacion.md`, `catalogos.md`, `administracion.md`, `disponibilidad.md`, `citas.md`).
 
 ## Stack real (no cambiar de framework)
 
@@ -45,7 +45,6 @@ npm run build       # tsc -b && vite build
 | Variable | Uso |
 |---|---|
 | `VITE_API_URL` | URL base de `citas-api` (`http://localhost:8081`) |
-| `VITE_AUTH_MODE` | `api` (cliente HTTP real) o `mock` (cliente en memoria; cuenta `demo@citaclara.test` / `Demo1234`). Si falta, `mock` cuando no hay `VITE_API_URL` |
 
 Solo `import.meta.env`; nunca URLs ni credenciales escritas en el código.
 
@@ -53,22 +52,32 @@ Solo `import.meta.env`; nunca URLs ni credenciales escritas en el código.
 
 ```text
 src/
-  App.tsx                         rutas: / → /inicio o /login, /login, /registro, /inicio, * → /
+  App.tsx                         proveedores (sesión, toasts) y rutas por rol: / → inicio del rol o /login;
+                                  /admin/{solicitudes,especialidades,profesionales} (ADMIN), /agenda (PROFESSIONAL),
+                                  /inicio (USER), /login, /registro
   index.css                       tokens de DESIGN.md (@theme) + foco + reduced motion
+  shared/
+    api/apiClient.ts              apiRequest: token Bearer, un refresh ante 401, ProblemDetail → ApiError; red/5xx no cierran sesión
+    api/errors.ts                 ApiError (code, status, fieldErrors, isConnectionProblem); AuthError es su alias
+    api/config.ts                 apiBaseUrl() desde VITE_API_URL (obligatoria)
+    layout/AppShell.tsx           barra superior, riel por rol (240px / íconos en tablet / cajón en móvil), badge de solicitudes
+    components/                   Button, TextField, SelectField, AlertBanner, BrandMark, Modal, Toast, Feedback (PageHeader,
+                                  StatusLabel, SiteBadge, Chip, EmptyState, SkeletonRows), FormGroup, PasswordField,
+                                  PasswordChecklist, ErrorSummary
   features/auth/
-    api/types.ts                  DTOs del contrato, AuthError (code, status, fieldErrors), interfaz AuthApi
-    api/httpAuthApi.ts            cliente fetch contra VITE_API_URL; traduce problem+json a AuthError
-    api/mockAuthApi.ts            cliente simulado con el mismo contrato y códigos de error
-    api/authApi.ts                selector por VITE_AUTH_MODE (singleton)
+    api/                          DTOs y cliente de autenticación
     session/sessionManager.ts     access token en memoria, refresh token en sessionStorage; refresh con rotación y deduplicado
+    session/SessionContext.tsx    SessionProvider, useSession, RequireRole, RootRedirect, homePathFor
     validation/validation.ts      reglas espejo del backend (política de contraseña, email, documento, teléfono)
-    components/                   AuthLayout, BrandMark, SiteCard, SiteChip, Card, FormGroup, TextField, PasswordField,
-                                  SelectField, PasswordChecklist, Button, AlertBanner, ErrorSummary, SuccessState
-    pages/                        LoginPage, RegisterPage
-  pages/InicioPage.tsx            TEMPORAL: sesión + cerrar sesión (se reemplaza por el panel del paciente)
+    components/, pages/           AuthLayout, SiteCard, SiteChip, Card, SuccessState; LoginPage, RegisterPage
+  features/catalogs/              catálogos públicos (tipos de documento, sedes, regímenes, planes)
+  features/admin/                 HU-015 Solicitudes pendientes, HU-006 Especialidades, HU-008/009 Profesionales
+  features/agenda/                HU-010 Mi agenda (calendario semanal de bloques)
+  features/booking/               HU-012/013/014 Inicio del paciente y modal de reserva en 4 pasos
+  test/apiTestUtils.tsx           mockApi, problem, signIn, renderWithProviders para las pruebas
 ```
 
-Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{api,components,pages,...}`. Los componentes genéricos que empiecen a usarse fuera de `auth` se mueven a una carpeta compartida en ese momento, no antes.
+Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{api,components,pages,...}`. Los componentes genéricos se mueven a `src/shared/` cuando otra feature los necesita, no antes.
 
 ## Reglas
 
@@ -81,7 +90,7 @@ Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{
   - `INVALID_REFRESH_TOKEN` / `UNAUTHORIZED` → limpiar sesión y volver a `/login`.
   - Red o 5xx → banner "No pudimos conectar con el servidor. Inténtalo de nuevo." **No** cierra la sesión.
 - **Tokens:** nunca en `localStorage`, logs, URLs ni mensajes. Reemplaza siempre el refresh token tras un refresh (rotación). Tras logout se descarta el access token en memoria.
-- **Tipos del contrato:** si la API cambia un DTO, actualiza `api/types.ts` y ambos clientes (`http` y `mock`) en el mismo cambio.
+- **Tipos del contrato:** si la API cambia un DTO, actualiza `api/types.ts` y el cliente HTTP en el mismo cambio.
 - **Rutas protegidas:** usan `getCurrentSession()`; sin sesión válida redirigen a `/login`.
 
 ## Fidelidad visual
@@ -98,13 +107,14 @@ Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{
 
 ## Verificación
 
-1. `npm run typecheck` y `npm run build` en verde. No declares una tarea terminada si fallan o no se ejecutaron.
-2. **Todavía no hay pruebas automatizadas de frontend** (sin Vitest ni Testing Library). Si una HU exige pruebas, propón primero la herramienta al usuario y regístralo como decisión.
-3. Verificación manual/visual:
-   - Contra la API real con `VITE_AUTH_MODE=api` y `citas-api` corriendo, o con `mock` si la API no está disponible.
+1. `npm run lint`, `npm test`, `npm run typecheck` y `npm run build` en verde. No declares una tarea terminada si fallan o no se ejecutaron.
+2. **Pruebas:** Vitest + jsdom + Testing Library; oxlint como linter, porque `typescript-eslint` aún no admite TypeScript 7 (D-023). Las pruebas viven junto al código como `*.test.ts(x)`; `src/test/setup.ts` carga los matchers y limpia el DOM. Cada CA de una HU que toque el frontend necesita al menos una prueba que lo demuestre.
+3. **Hooks:** `.githooks/pre-commit` (actívalo con `git config core.hooksPath .githooks`) corre el detector de secretos siempre, y lint, pruebas y build cuando el commit toca código o configuración.
+4. Verificación manual/visual:
+   - Siempre contra la API real: `citas-api` debe estar corriendo. Desde S3 no hay cliente simulado.
    - Capturas con Edge headless: `msedge --headless=new --window-size=1440,1000 --screenshot=<png> <url>`. Edge tiene un ancho mínimo de ~500px: para móvil (390px) carga la página dentro de un `<iframe width="390">` y captura ese HTML.
    - Compara contra `docs/diseno/stitch-v2/*/screen.png` y `DESIGN.md`.
-4. Resume la evidencia y deja explícito lo no verificado (p. ej. lectores de pantalla reales).
+5. Resume la evidencia y deja explícito lo no verificado (p. ej. lectores de pantalla reales).
 
 ## Modo de trabajo
 

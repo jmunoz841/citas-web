@@ -6,6 +6,9 @@ export interface RegisterRequest {
   email: string;
   phone: string;
   password: string;
+  /** Afiliación opcional (HU-004): ambos campos o ninguno. */
+  insurancePlanId?: number;
+  regimeCode?: string;
 }
 
 export interface RegisterResponse {
@@ -39,51 +42,14 @@ export interface RefreshRequest {
 export interface SessionResponse {
   userId: number;
   email: string;
+  firstNames: string;
+  lastNames: string;
   roles: string[];
 }
 
-export interface FieldError {
-  field: string;
-  message: string;
-}
-
-export interface ProblemDetails {
-  status: number;
-  detail: string;
-  code: string;
-  errors?: FieldError[];
-}
-
-export class AuthError extends Error {
-  readonly status: number;
-  readonly code: string;
-  readonly detail: string;
-  readonly fieldErrors: Record<string, string>;
-
-  constructor(problem: ProblemDetails) {
-    super(problem.detail || 'Ocurrió un error en la autenticación.');
-    this.name = 'AuthError';
-    this.status = problem.status;
-    this.code = problem.code;
-    this.detail = problem.detail;
-    this.fieldErrors = {};
-
-    if (problem.errors && Array.isArray(problem.errors)) {
-      for (const err of problem.errors) {
-        if (err.field && err.message) {
-          this.fieldErrors[err.field] = err.message;
-        }
-      }
-    }
-
-    if (problem.code === 'EMAIL_ALREADY_REGISTERED') {
-      this.fieldErrors.email = 'Este correo ya está registrado.';
-    }
-    if (problem.code === 'DOCUMENT_ALREADY_REGISTERED') {
-      this.fieldErrors.documentNumber = 'Este documento ya está registrado.';
-    }
-  }
-}
+// El error de la API es común a todas las features; se conserva el nombre AuthError por compatibilidad.
+export { ApiError as AuthError } from '../../../shared/api/errors';
+export type { FieldError, ProblemDetails } from '../../../shared/api/errors';
 
 export interface AuthApi {
   register(data: RegisterRequest): Promise<RegisterResponse>;

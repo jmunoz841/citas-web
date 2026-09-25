@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container": "#e6eeff", "on-error-container": "#93000a", "on-primary-fixed-variant": "#004f50", "outline": "#6e7979", "tertiary-fixed-dim": "#ffb692", "surface": "#f8f9ff", "inverse-on-surface": "#ebf1ff", "on-tertiary": "#ffffff", "on-error": "#ffffff", "surface-container-highest": "#dbe3f3", "inverse-primary": "#85d4d3", "error-container": "#ffdad6", "on-secondary-container": "#41696d", "on-tertiary-container": "#ffd8c6", "secondary": "#3d6569", "surface-container-low": "#eff3ff", "on-secondary": "#ffffff", "surface-container-high": "#e1e8f9", "tertiary": "#743c1d", "tertiary-container": "#915332", "secondary-container": "#bde7ec", "primary": "#005454", "outline-variant": "#bec9c8", "on-secondary-fixed-variant": "#244d51", "primary-fixed": "#a1f0ef", "inverse-surface": "#29313d", "tertiary-fixed": "#ffdbcb", "on-primary-container": "#9eedec", "background": "#f8f9ff", "on-background": "#141c28", "on-primary-fixed": "#002020", "primary-container": "#0f6e6e", "surface-tint": "#03696a", "error": "#ba1a1a", "secondary-fixed": "#c0eaef", "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "surface-variant": "#dbe3f3", "surface-dim": "#d2daeb", "on-tertiary-fixed": "#341100", "on-surface-variant": "#3e4948", "surface-bright": "#f8f9ff", "primary-fixed-dim": "#85d4d3", "secondary-fixed-dim": "#a4ced2", "on-surface": "#141c28", "on-tertiary-fixed-variant": "#6f3819", "on-secondary-fixed": "#002022" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-2xl": "3rem", "gutter": "1.5rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-xl": "2rem", "margin-mobile": "1rem", "space-md": "1rem", "margin": "2rem", "gutter-mobile": "1rem" }, "fontFamily": { "caption": [ "Public Sans" ], "display-lg": [ "Public Sans" ], "label-md": [ "Public Sans" ], "display-lg-mobile": [ "Public Sans" ], "label-lg": [ "Public Sans" ], "body-md": [ "Public Sans" ], "title-lg": [ "Public Sans" ], "headline-lg": [ "Public Sans" ], "headline-md": [ "Public Sans" ], "body-lg": [ "Public Sans" ] }, "fontSize": { "caption": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "display-lg": [ "36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "display-lg-mobile": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "title-lg": [ "18px", { "lineHeight": "26px", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-md": [ "20px", { "lineHeight": "28px", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ] } } } }</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest border-b border-outline-variant z-50"><div class="h-16 w-full px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">add</span></div><div class="flex items-baseline"><span class="font-title-lg text-title-lg font-bold text-on-surface tracking-tight">Cita</span><span class="font-title-lg text-title-lg font-normal text-on-surface-variant tracking-tight">Clara</span></div></div><div class="h-4 w-px bg-outline-variant mx-space-xs"></div><span class="bg-secondary-container text-primary-container font-label-md text-label-md px-space-sm py-space-xs rounded font-semibold tracking-wider uppercase">ADMINISTRADOR</span></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><span class="font-label-lg text-label-lg text-on-surface">Admin Laboratorio</span><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Cerrar sesión</a></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-60 bg-surface-container-lowest border-r border-outline-variant z-40 flex flex-col py-space-md"><nav class="flex-1 flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-primary-container font-semibold border-l-[3px] border-primary-container pl-[13px]"><a class="flex items-center justify-between py-space-sm px-space-md pl-4 text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors border-l-[3px] border-transparent" data-path="solicitudes-pendientes" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Solicitudes pendientes</span></div><span class="bg-secondary-container text-primary-container font-label-md text-label-md px-space-xs py-0.5 rounded font-semibold">12</span></a><a class="flex items-center gap-space-sm py-space-sm px-space-md pl-4 text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors border-l-[3px] border-transparent" data-path="especialidades" href="#"><span class="material-symbols-outlined text-[20px]">clinical_notes</span><span class="font-body-md text-body-md">Especialidades</span></a><a aria-current="page" class="flex items-center gap-space-sm py-space-sm px-space-md transition-colors bg-secondary-container text-primary-container font-semibold border-l-[3px] border-primary-container pl-[13px]" data-path="profesionales" href="#"><span class="material-symbols-outlined text-[20px]">stethoscope</span><span class="font-body-md text-body-md">Profesionales</span></a></nav></aside><div class="pl-60"><main class="w-full pt-16 bg-surface min-h-screen"><div class="max-w-[1200px] mx-auto p-margin"><div class="flex flex-col w-full">
+<!-- Top View Heading & Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-xl">
+<div>
+<div class="flex items-center gap-space-sm mb-space-xs">
+<span class="font-caption text-caption text-secondary uppercase tracking-wider font-semibold">Directorio Médico Central</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-caption text-caption text-outline">Gestión Institucional</span>
+</div>
+<h1 class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">Profesionales</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+        Administración de credenciales, matrículas, sedes y especialidades vinculadas en CitaClara.
+      </p>
+</div>
+<!-- Actions & Filter Quick Switch -->
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<button aria-haspopup="dialog" class="h-12 px-space-lg bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg rounded-lg flex items-center gap-space-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-container active:scale-[0.98]" id="btn-open-create-modal" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Nuevo profesional</span>
+</button>
+</div>
+</div>
+<!-- Key Metrics Row / Subtle Contextual Data Display -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="font-caption text-caption text-outline uppercase font-semibold tracking-wider">Total Registrados</p>
+<p class="font-headline-lg text-headline-lg font-bold text-on-surface mt-0.5">34</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">badge</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="font-caption text-caption text-outline uppercase font-semibold tracking-wider">Activos en Agenda</p>
+<p class="font-headline-lg text-headline-lg font-bold text-primary mt-0.5">31</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[22px]">check_circle</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="font-caption text-caption text-outline uppercase font-semibold tracking-wider">Inactivos / Receso</p>
+<p class="font-headline-lg text-headline-lg font-bold text-outline mt-0.5">3</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">pause_circle</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="font-caption text-caption text-outline uppercase font-semibold tracking-wider">Cobertura de Sedes</p>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="font-label-md text-label-md bg-surface-container-high px-2 py-0.5 rounded text-on-surface font-medium">HIC: 28</span>
+<span class="font-label-md text-label-md bg-surface-container-high px-2 py-0.5 rounded text-on-surface font-medium">ICV: 19</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">domain</span>
+</div>
+</div>
+</div>
+<!-- Main Table Section Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col mb-space-xl">
+<!-- Table Toolbar: Filters & Quick Search -->
+<div class="p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container-lowest">
+<div class="relative w-full sm:w-80">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Buscar por nombre, código o matrícula..." type="text"/>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<div class="flex items-center bg-surface rounded-lg p-1">
+<button class="px-3 py-1 text-label-md font-label-md rounded font-semibold bg-surface-container-lowest shadow-sm text-primary">Todos (34)</button>
+<button class="px-3 py-1 text-label-md font-label-md rounded text-on-surface-variant hover:text-on-surface">Activos (31)</button>
+<button class="px-3 py-1 text-label-md font-label-md rounded text-on-surface-variant hover:text-on-surface">Inactivos (3)</button>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<th class="py-space-md px-space-lg font-semibold">Nombre</th>
+<th class="py-space-md px-space-md font-semibold">Código</th>
+<th class="py-space-md px-space-md font-semibold">Matrícula</th>
+<th class="py-space-md px-space-md font-semibold">Especialidades</th>
+<th class="py-space-md px-space-md font-semibold">Sedes</th>
+<th class="py-space-md px-space-md font-semibold">Estado</th>
+<th class="py-space-md px-space-lg text-right font-semibold">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface font-body-md text-body-md">
+<!-- Row 1: Laura Gómez -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-space-md px-space-lg font-semibold text-on-surface">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-primary-container font-label-lg font-bold">
+                  LG
+                </div>
+<div>
+<span class="block">Dra. Laura Gómez</span>
+<span class="font-caption text-caption text-outline">laura.gomez@citaclara.co</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md font-mono text-label-md text-on-surface-variant">
+              PRO-001
+            </td>
+<td class="py-space-md px-space-md font-mono text-label-md text-on-surface">
+              MP-45821
+            </td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-wrap gap-1.5 items-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-secondary-container text-primary-container font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  Cardiología (principal)
+                </span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5">
+<span class="inline-block px-2 py-0.5 rounded font-label-md text-label-md font-semibold bg-surface-container-high text-on-surface tracking-wide" title="Hospital Internacional de Colombia">
+                  HIC
+                </span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="inline-flex items-center gap-1.5 text-primary font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Activo</span>
+</div>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-space-md">
+<button class="font-label-lg text-label-lg font-semibold text-primary-container hover:text-primary transition-colors focus:outline-none focus:underline" onclick="openDrawer('Dra. Laura Gómez', 'PRO-001', 'Cardiología', ['HIC'])" type="button">
+                  Editar asignaciones
+                </button>
+<span class="text-outline-variant font-light">|</span>
+<button class="font-label-lg text-label-lg font-medium text-error hover:text-on-error-container transition-colors focus:outline-none focus:underline" onclick="openDeactivateModal('Dra. Laura Gómez', 'PRO-001')" type="button">
+                  Desactivar
+                </button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Andrés Vargas -->
+<tr class="hover:bg-surface-container-low/60 transition-colors bg-surface-container-lowest/50 group">
+<td class="py-space-md px-space-lg font-semibold text-on-surface">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary font-label-lg font-bold">
+                  AV
+                </div>
+<div>
+<span class="block">Dr. Andrés Vargas</span>
+<span class="font-caption text-caption text-outline">andres.vargas@citaclara.co</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md font-mono text-label-md text-on-surface-variant">
+              PRO-002
+            </td>
+<td class="py-space-md px-space-md font-mono text-label-md text-on-surface">
+              MP-39107
+            </td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-wrap gap-1.5 items-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-secondary-container text-primary-container font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  Dermatología (principal)
+                </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container font-label-md text-label-md text-on-surface-variant font-medium">
+                  Medicina General
+                </span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5">
+<span class="inline-block px-2 py-0.5 rounded font-label-md text-label-md font-semibold bg-surface-container-high text-on-surface tracking-wide" title="Hospital Internacional de Colombia">
+                  HIC
+                </span>
+<span class="inline-block px-2 py-0.5 rounded font-label-md text-label-md font-semibold bg-surface-container-high text-on-surface tracking-wide" title="Instituto Cardiovascular">
+                  ICV
+                </span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="inline-flex items-center gap-1.5 text-primary font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Activo</span>
+</div>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-space-md">
+<button class="font-label-lg text-label-lg font-semibold text-primary-container hover:text-primary transition-colors focus:outline-none focus:underline" onclick="openDrawer('Dr. Andrés Vargas', 'PRO-002', 'Dermatología', ['HIC', 'ICV'])" type="button">
+                  Editar asignaciones
+                </button>
+<span class="text-outline-variant font-light">|</span>
+<button class="font-label-lg text-label-lg font-medium text-error hover:text-on-error-container transition-colors focus:outline-none focus:underline" onclick="openDeactivateModal('Dr. Andrés Vargas', 'PRO-002')" type="button">
+                  Desactivar
+                </button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Sofía Herrera -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group opacity-85">
+<td class="py-space-md px-space-lg font-semibold text-on-surface">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-highest flex items-center justify-center text-outline font-label-lg font-bold">
+                  SH
+                </div>
+<div>
+<span class="block">Dra. Sofía Herrera</span>
+<span class="font-caption text-caption text-outline">sofia.herrera@citaclara.co</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md font-mono text-label-md text-on-surface-variant">
+              PRO-003
+            </td>
+<td class="py-space-md px-space-md font-mono text-label-md text-on-surface">
+              MP-51230
+            </td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-wrap gap-1.5 items-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-secondary-container/70 text-primary-container font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  Medicina General (principal)
+                </span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5">
+<span class="inline-block px-2 py-0.5 rounded font-label-md text-label-md font-semibold bg-surface-container-high text-on-surface-variant tracking-wide" title="Instituto Cardiovascular">
+                  ICV
+                </span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="inline-flex items-center gap-1.5 text-outline font-label-md text-label-md font-medium">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+<span>Inactivo</span>
+</div>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-space-md">
+<button class="font-label-lg text-label-lg font-semibold text-primary-container hover:text-primary transition-colors focus:outline-none focus:underline" onclick="openDrawer('Dra. Sofía Herrera', 'PRO-003', 'Medicina General', ['ICV'])" type="button">
+                  Editar asignaciones
+                </button>
+<span class="text-outline-variant font-light">|</span>
+<button class="font-label-lg text-label-lg font-medium text-primary hover:underline transition-colors focus:outline-none" onclick="toggleActivate('Dra. Sofía Herrera')" type="button">
+                  Activar
+                </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Utilitarian Metadata -->
+<div class="py-space-md px-space-lg bg-surface-container-lowest flex items-center justify-between text-outline font-caption text-caption">
+<span>Mostrando 3 de 34 profesionales configurados</span>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="px-2 font-label-md text-on-surface">Página 1 de 12</span>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive Sandbox Quick Toggles (For instant evaluation of states) -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm text-on-surface">
+<span class="material-symbols-outlined text-primary-container">science</span>
+<div>
+<p class="font-label-lg text-label-lg font-semibold">Simulador de Inspección de Componentes</p>
+<p class="font-caption text-caption text-on-surface-variant">Acceso directo para verificar los modales de validación, drawer de asignaciones y confirmación.</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="px-3 py-2 bg-surface-container-lowest text-primary font-label-md text-label-md font-semibold rounded hover:bg-surface shadow-sm" onclick="toggleModal('modal-nuevo-profesional', true)" type="button">
+        Abrir Modal "Nuevo Profesional"
+      </button>
+<button class="px-3 py-2 bg-surface-container-lowest text-primary font-label-md text-label-md font-semibold rounded hover:bg-surface shadow-sm" onclick="openDrawer('Dr. Andrés Vargas', 'PRO-002', 'Dermatología', ['HIC', 'ICV'])" type="button">
+        Abrir Drawer "Editar asignaciones"
+      </button>
+<button class="px-3 py-2 bg-surface-container-lowest text-error font-label-md text-label-md font-semibold rounded hover:bg-surface shadow-sm" onclick="openDeactivateModal('Dr. Andrés Vargas', 'PRO-002')" type="button">
+        Abrir Modal "Desactivar"
+      </button>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- 1. MODAL: NUEVO PROFESIONAL (Formulario completo con validaciones) -->
+<!-- ========================================================================= -->
+<div aria-labelledby="modal-nuevo-prof-title" aria-modal="true" class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto" id="modal-nuevo-profesional" role="dialog">
+<div class="bg-surface-container-lowest w-full max-w-2xl rounded-xl shadow-xl overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150">
+<!-- Modal Header -->
+<div class="p-space-lg bg-surface-container-lowest flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[24px]">person_add</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface" id="modal-nuevo-prof-title">Nuevo profesional</h2>
+<p class="font-caption text-caption text-on-surface-variant">Alta de médico facultativo y parametrización de turnos</p>
+</div>
+</div>
+<button aria-label="Cerrar ventana" class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" onclick="toggleModal('modal-nuevo-profesional', false)" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body (Form) -->
+<form class="p-space-lg space-y-space-xl max-h-[75vh] overflow-y-auto text-on-surface" id="form-nuevo-profesional">
+<!-- SECTION 1: DATOS PERSONALES -->
+<fieldset class="space-y-space-md">
+<legend class="font-caption text-caption uppercase text-primary font-bold tracking-[0.08em] flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-[16px]">account_box</span>
+            DATOS PERSONALES
+          </legend>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-lg">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-nombres">
+                Nombres <span class="text-error">*</span>
+</label>
+<input class="h-12 px-4 rounded-lg bg-surface font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prof-nombres" placeholder="Ej. Laura Marcela" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-apellidos">
+                Apellidos <span class="text-error">*</span>
+</label>
+<input class="h-12 px-4 rounded-lg bg-surface font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prof-apellidos" placeholder="Ej. Gómez Serrano" required="" type="text"/>
+</div>
+</div>
+</fieldset>
+<!-- SECTION 2: DOCUMENTO DE IDENTIDAD -->
+<fieldset class="space-y-space-md">
+<legend class="font-caption text-caption uppercase text-primary font-bold tracking-[0.08em] flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+            DOCUMENTO DE IDENTIDAD
+          </legend>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-lg">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-doc-tipo">
+                Tipo de documento <span class="text-error">*</span>
+</label>
+<select class="h-12 px-4 rounded-lg bg-surface font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prof-doc-tipo" required="">
+<option selected="" value="CC">Cédula de Ciudadanía (CC)</option>
+<option value="CE">Cédula de Extranjería (CE)</option>
+<option value="PA">Pasaporte (PA)</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-doc-numero">
+                Número de documento <span class="text-error">*</span>
+</label>
+<input class="h-12 px-4 rounded-lg bg-surface font-body-md text-body-md text-on-surface font-mono focus:outline-none focus:ring-2 focus:ring-primary-container" id="prof-doc-numero" inputmode="numeric" placeholder="1098765432" required="" type="text"/>
+</div>
+</div>
+</fieldset>
+<!-- SECTION 3: DATOS DE CONTACTO -->
+<fieldset class="space-y-space-md">
+<legend class="font-caption text-caption uppercase text-primary font-bold tracking-[0.08em] flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-[16px]">contact_phone</span>
+            DATOS DE CONTACTO
+          </legend>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-lg">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-email">
+                Correo electrónico institucional <span class="text-error">*</span>
+</label>
+<input class="h-12 px-4 rounded-lg bg-surface font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prof-email" placeholder="nombre.apellido@citaclara.co" required="" type="email"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-tel">
+                Teléfono de contacto <span class="text-error">*</span>
+</label>
+<input class="h-12 px-4 rounded-lg bg-surface font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prof-tel" placeholder="+57 300 123 4567" required="" type="tel"/>
+</div>
+</div>
+</fieldset>
+<!-- SECTION 4: ACCESO (Con password reveal y checklist estricto) -->
+<fieldset class="space-y-space-md">
+<legend class="font-caption text-caption uppercase text-primary font-bold tracking-[0.08em] flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-[16px]">lock_reset</span>
+            ACCESO DEL SISTEMA
+          </legend>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-password">
+              Contraseña temporal <span class="text-error">*</span>
+</label>
+<div class="relative">
+<input class="w-full h-12 pl-4 pr-12 rounded-lg bg-surface font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prof-password" oninput="validatePassword(this.value)" required="" type="password" value="Clave2024"/>
+<button aria-label="Mostrar u ocultar contraseña" class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface p-1 focus:outline-none" id="btn-toggle-pass" onclick="togglePasswordVisibility('prof-password', 'icon-pass')" type="button">
+<span class="material-symbols-outlined text-[20px]" id="icon-pass">visibility</span>
+</button>
+</div>
+<!-- Live Checklist of 3 strict requirements -->
+<div class="bg-surface p-3 rounded-lg mt-2 flex flex-col gap-1.5">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Requisitos mínimos de seguridad:</span>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<div class="flex items-center gap-1.5 font-caption text-caption text-primary font-medium" id="req-len">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Al menos 8 caracteres</span>
+</div>
+<div class="flex items-center gap-1.5 font-caption text-caption text-primary font-medium" id="req-letter">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Al menos una letra</span>
+</div>
+<div class="flex items-center gap-1.5 font-caption text-caption text-primary font-medium" id="req-num">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Al menos un número</span>
+</div>
+</div>
+</div>
+</div>
+</fieldset>
+<!-- SECTION 5: DATOS PROFESIONALES (Con error simulado) -->
+<fieldset class="space-y-space-md">
+<legend class="font-caption text-caption uppercase text-primary font-bold tracking-[0.08em] flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-[16px]">clinical_notes</span>
+            DATOS PROFESIONALES
+          </legend>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-lg">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-codigo">
+                Código profesional <span class="text-error">*</span>
+</label>
+<!-- State shown with validation error trigger as required in prompt specs -->
+<input aria-describedby="error-prof-codigo" aria-invalid="true" class="h-12 px-4 rounded-lg bg-error-container/40 font-mono text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-error" id="prof-codigo" type="text" value="PRO-001"/>
+<p class="font-caption text-caption text-error flex items-center gap-1 mt-1 font-medium" id="error-prof-codigo">
+<span class="material-symbols-outlined text-[16px]">error</span>
+                El código profesional ya está registrado
+              </p>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="prof-matricula">
+                Matrícula médica <span class="text-error">*</span>
+</label>
+<input class="h-12 px-4 rounded-lg bg-surface font-mono text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prof-matricula" placeholder="MP-88310" required="" type="text"/>
+</div>
+</div>
+</fieldset>
+<!-- SECTION 6: ASIGNACIONES (Especialidades y Sedes con Validación de alerta) -->
+<fieldset class="space-y-space-lg">
+<legend class="font-caption text-caption uppercase text-primary font-bold tracking-[0.08em] flex items-center gap-1.5 mb-1">
+<span class="material-symbols-outlined text-[16px]">domain_add</span>
+            ASIGNACIONES CLÍNICAS
+          </legend>
+<!-- Subsección Especialidades -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface">
+                Especialidades <span class="text-error">*</span>
+</label>
+<span class="font-caption text-caption text-outline">Selecciona las activas y marca la principal</span>
+</div>
+<!-- Validation notice banner -->
+<div class="bg-error-container/40 text-on-error-container p-2.5 rounded-lg mb-3 flex items-center gap-2 font-caption text-caption font-semibold">
+<span class="material-symbols-outlined text-[18px] text-error">warning</span>
+              Marca exactamente una especialidad principal
+            </div>
+<div class="bg-surface rounded-lg divide-y-0 p-2 space-y-1.5">
+<!-- Especialidad Item 1 -->
+<div class="p-2.5 rounded-lg flex items-center justify-between bg-surface-container-lowest">
+<label class="flex items-center gap-3 cursor-pointer select-none">
+<input checked="" class="w-5 h-5 rounded accent-primary text-primary focus:ring-0 cursor-pointer" name="esp-check" type="checkbox"/>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Cardiología</span>
+</label>
+<label class="flex items-center gap-1.5 text-label-md font-label-md text-primary-container cursor-pointer px-2 py-1 rounded hover:bg-secondary-container">
+<input checked="" class="accent-primary w-4 h-4 cursor-pointer" name="esp-principal" type="radio"/>
+<span class="flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                    Principal
+                  </span>
+</label>
+</div>
+<!-- Especialidad Item 2 -->
+<div class="p-2.5 rounded-lg flex items-center justify-between bg-surface-container-lowest">
+<label class="flex items-center gap-3 cursor-pointer select-none">
+<input checked="" class="w-5 h-5 rounded accent-primary text-primary focus:ring-0 cursor-pointer" name="esp-check" type="checkbox"/>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Dermatología</span>
+</label>
+<label class="flex items-center gap-1.5 text-label-md font-label-md text-outline cursor-pointer px-2 py-1 rounded hover:bg-surface-container">
+<input class="accent-primary w-4 h-4 cursor-pointer" name="esp-principal" type="radio"/>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">star</span>
+                    Principal
+                  </span>
+</label>
+</div>
+<!-- Especialidad Item 3 -->
+<div class="p-2.5 rounded-lg flex items-center justify-between bg-surface-container-lowest">
+<label class="flex items-center gap-3 cursor-pointer select-none">
+<input class="w-5 h-5 rounded accent-primary text-primary focus:ring-0 cursor-pointer" name="esp-check" type="checkbox"/>
+<span class="font-body-md text-body-md font-normal text-on-surface">Medicina General</span>
+</label>
+<label class="flex items-center gap-1.5 text-label-md font-label-md text-outline opacity-50 cursor-pointer px-2 py-1 rounded">
+<input class="accent-primary w-4 h-4" disabled="" name="esp-principal" type="radio"/>
+<span>Principal</span>
+</label>
+</div>
+<!-- Especialidad Item 4 -->
+<div class="p-2.5 rounded-lg flex items-center justify-between bg-surface-container-lowest">
+<label class="flex items-center gap-3 cursor-pointer select-none">
+<input class="w-5 h-5 rounded accent-primary text-primary focus:ring-0 cursor-pointer" name="esp-check" type="checkbox"/>
+<span class="font-body-md text-body-md font-normal text-on-surface">Neumología</span>
+</label>
+<label class="flex items-center gap-1.5 text-label-md font-label-md text-outline opacity-50 cursor-pointer px-2 py-1 rounded">
+<input class="accent-primary w-4 h-4" disabled="" name="esp-principal" type="radio"/>
+<span>Principal</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Subsección Sedes (Tarjetas Checkbox) -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface">
+                Sedes de atención <span class="text-error">*</span>
+</label>
+</div>
+<!-- Error banner requirement -->
+<div class="bg-error-container/40 text-on-error-container p-2.5 rounded-lg mb-3 flex items-center gap-2 font-caption text-caption font-semibold">
+<span class="material-symbols-outlined text-[18px] text-error">domain_disabled</span>
+              Asigna al menos una sede
+            </div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- Sede 1: HIC -->
+<label class="relative flex flex-col p-space-md bg-secondary-container/40 rounded-xl cursor-pointer hover:bg-secondary-container/60 transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold px-2 py-0.5 rounded bg-surface-container-lowest text-primary">HIC</span>
+<input checked="" class="w-5 h-5 rounded accent-primary cursor-pointer" type="checkbox"/>
+</div>
+<span class="font-title-lg text-title-lg font-bold text-on-surface mt-2">Hospital Internacional</span>
+<span class="font-caption text-caption text-on-surface-variant">Floridablanca, Santander</span>
+</label>
+<!-- Sede 2: ICV -->
+<label class="relative flex flex-col p-space-md bg-surface rounded-xl cursor-pointer hover:bg-surface-container-low transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">ICV</span>
+<input class="w-5 h-5 rounded accent-primary cursor-pointer" type="checkbox"/>
+</div>
+<span class="font-title-lg text-title-lg font-bold text-on-surface mt-2">Instituto Cardiovascular</span>
+<span class="font-caption text-caption text-on-surface-variant">Sede Principal, Floridablanca</span>
+</label>
+</div>
+</div>
+</fieldset>
+<!-- Form Actions -->
+<div class="pt-space-md flex items-center justify-end gap-space-md">
+<button class="h-12 px-6 rounded-lg text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg transition-colors" onclick="toggleModal('modal-nuevo-profesional', false)" type="button">
+            Cancelar
+          </button>
+<button class="h-12 px-space-xl bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all min-w-[170px]" id="btn-submit-profesional" onclick="simulateSave(this)" type="button">
+<span>Crear profesional</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- 2. DRAWER: EDITAR ASIGNACIONES (Cajón lateral derecho 440px) -->
+<!-- ========================================================================= -->
+<div aria-modal="true" class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden transition-opacity" id="drawer-asignaciones" role="dialog">
+<div class="fixed inset-y-0 right-0 w-full max-w-[440px] bg-surface-container-lowest shadow-2xl flex flex-col justify-between transform transition-transform duration-200">
+<!-- Drawer Header -->
+<div class="p-space-lg bg-surface-container-lowest">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[24px]">assignment_ind</span>
+<span class="font-caption text-caption text-outline uppercase font-bold tracking-wider">Configuración de Consultas</span>
+</div>
+<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface" onclick="toggleDrawer(false)" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface mt-2" id="drawer-prof-name">
+          Editar asignaciones — Dr. Andrés Vargas
+        </h3>
+<p class="font-mono text-caption text-caption text-outline mt-0.5" id="drawer-prof-code">
+          Código: PRO-002 · Matrícula Vigente
+        </p>
+</div>
+<!-- Drawer Content -->
+<div class="p-space-lg flex-1 overflow-y-auto space-y-space-xl">
+<!-- Especialidades Group -->
+<div>
+<div class="flex items-center justify-between mb-3">
+<label class="font-label-lg text-label-lg font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">clinical_notes</span>
+              ESPECIALIDADES ASIGNADAS
+            </label>
+<span class="font-caption text-caption text-outline">1 Principal obligatoria</span>
+</div>
+<div class="space-y-2">
+<!-- Dermatologia (Selected Principal) -->
+<div class="p-3 rounded-lg bg-secondary-container/40 flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer">
+<input checked="" class="w-5 h-5 rounded accent-primary" type="checkbox"/>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Dermatología</span>
+</label>
+<label class="flex items-center gap-1 font-label-md text-label-md font-bold text-primary-container bg-surface-container-lowest px-2 py-1 rounded shadow-xs cursor-pointer">
+<input checked="" class="accent-primary" name="drawer-esp" type="radio"/>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                Principal
+              </label>
+</div>
+<!-- Medicina General -->
+<div class="p-3 rounded-lg bg-surface flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer">
+<input checked="" class="w-5 h-5 rounded accent-primary" type="checkbox"/>
+<span class="font-body-md text-body-md font-medium text-on-surface">Medicina General</span>
+</label>
+<label class="flex items-center gap-1 font-label-md text-label-md text-outline hover:text-on-surface px-2 py-1 rounded cursor-pointer">
+<input class="accent-primary" name="drawer-esp" type="radio"/>
+<span>Principal</span>
+</label>
+</div>
+<!-- Cardiología -->
+<div class="p-3 rounded-lg bg-surface flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="w-5 h-5 rounded accent-primary" type="checkbox"/>
+<span class="font-body-md text-body-md font-medium text-on-surface">Cardiología</span>
+</label>
+<label class="flex items-center gap-1 font-label-md text-label-md text-outline opacity-40 px-2 py-1">
+<input class="accent-primary" disabled="" name="drawer-esp" type="radio"/>
+<span>Principal</span>
+</label>
+</div>
+<!-- Neumología -->
+<div class="p-3 rounded-lg bg-surface flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="w-5 h-5 rounded accent-primary" type="checkbox"/>
+<span class="font-body-md text-body-md font-medium text-on-surface">Neumología</span>
+</label>
+<label class="flex items-center gap-1 font-label-md text-label-md text-outline opacity-40 px-2 py-1">
+<input class="accent-primary" disabled="" name="drawer-esp" type="radio"/>
+<span>Principal</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Sedes Group -->
+<div>
+<label class="font-label-lg text-label-lg font-bold text-on-surface flex items-center gap-1.5 mb-3">
+<span class="material-symbols-outlined text-[18px] text-primary">domain</span>
+            SEDES HABILITADAS
+          </label>
+<div class="flex flex-col gap-2.5">
+<!-- HIC -->
+<label class="flex items-center justify-between p-3.5 rounded-xl bg-surface hover:bg-surface-container-low cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="w-9 h-9 rounded bg-surface-container-high flex items-center justify-center font-label-md font-bold text-on-surface">HIC</span>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-on-surface">Hospital Internacional</p>
+<p class="font-caption text-caption text-outline">Bloque A - Consultorios Piso 4</p>
+</div>
+</div>
+<input checked="" class="w-5 h-5 rounded accent-primary cursor-pointer" id="drawer-sede-hic" type="checkbox"/>
+</label>
+<!-- ICV -->
+<label class="flex items-center justify-between p-3.5 rounded-xl bg-surface hover:bg-surface-container-low cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="w-9 h-9 rounded bg-surface-container-high flex items-center justify-center font-label-md font-bold text-on-surface">ICV</span>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-on-surface">Instituto Cardiovascular</p>
+<p class="font-caption text-caption text-outline">Módulo Especialistas Piso 2</p>
+</div>
+</div>
+<input checked="" class="w-5 h-5 rounded accent-primary cursor-pointer" id="drawer-sede-icv" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Drawer Footer -->
+<div class="p-space-lg bg-surface-container-low flex items-center justify-end gap-space-sm">
+<button class="h-12 px-5 rounded-lg text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg" onclick="toggleDrawer(false)" type="button">
+          Cancelar
+        </button>
+<button class="h-12 px-6 bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg rounded-lg shadow-sm flex items-center justify-center gap-2" onclick="saveDrawerChanges(this)" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Guardar cambios</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- 3. MODAL: DESACTIVAR PROFESIONAL (Confirmación exacta según requerimiento) -->
+<!-- ========================================================================= -->
+<div aria-modal="true" class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-desactivar" role="alertdialog">
+<div class="bg-surface-container-lowest w-full max-w-md rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+<div class="p-space-lg">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-error-container text-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">person_off</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface">
+              Desactivar profesional
+            </h3>
+<p class="font-label-lg text-label-lg text-primary-container font-semibold mt-0.5" id="deactivate-target-name">
+              Dr. Andrés Vargas (PRO-002)
+            </p>
+</div>
+</div>
+<!-- Texto exacto obligatorio -->
+<div class="mt-space-md p-3.5 bg-surface rounded-lg">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+            El profesional dejará de aparecer en la búsqueda de citas. Sus datos, asignaciones y citas existentes se conservan.
+          </p>
+</div>
+</div>
+<div class="px-space-lg py-space-md bg-surface-container-low flex items-center justify-end gap-space-sm">
+<button class="h-12 px-5 rounded-lg text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg transition-colors" onclick="toggleModal('modal-desactivar', false)" type="button">
+          Cancelar
+        </button>
+<button class="h-12 px-6 bg-error hover:bg-on-error-container text-on-error font-label-lg text-label-lg rounded-lg shadow-sm transition-all" onclick="confirmDeactivation()" type="button">
+          Confirmar desactivación
+        </button>
+</div>
+</div>
+</div>
+<!-- Notification Toast Container -->
+<div class="fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 translate-y-20 opacity-0 transition-all duration-200 pointer-events-none" id="toast-notification">
+<span class="material-symbols-outlined text-inverse-primary text-[20px]">info</span>
+<span class="font-body-md text-body-md" id="toast-message">Operación ejecutada con éxito</span>
+</div>
+</div>
+<script>
+  // DOM references & Event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnOpenCreate = document.getElementById('btn-open-create-modal');
+    if (btnOpenCreate) {
+      btnOpenCreate.addEventListener('click', () => toggleModal('modal-nuevo-profesional', true));
+    }
+  });
+
+  // Modal switcher
+  function toggleModal(modalId, show) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    if (show) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    } else {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+
+  // Drawer switcher
+  function toggleDrawer(show) {
+    const drawer = document.getElementById('drawer-asignaciones');
+    if (!drawer) return;
+    if (show) {
+      drawer.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    } else {
+      drawer.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+
+  // Open Drawer with specific doctor context
+  function openDrawer(name, code, principalEsp, sedes) {
+    document.getElementById('drawer-prof-name').innerText = `Editar asignaciones — ${name}`;
+    document.getElementById('drawer-prof-code').innerText = `Código: ${code} · Matrícula Vigente`;
+    toggleDrawer(true);
+  }
+
+  // Open Deactivate confirmation modal
+  function openDeactivateModal(name, code) {
+    document.getElementById('deactivate-target-name').innerText = `${name} (${code})`;
+    toggleModal('modal-desactivar', true);
+  }
+
+  // Live password validator against 3 exact rules
+  function validatePassword(val) {
+    const reqLen = document.getElementById('req-len');
+    const reqLetter = document.getElementById('req-letter');
+    const reqNum = document.getElementById('req-num');
+
+    const hasLen = val.length >= 8;
+    const hasLetter = /[a-zA-Z]/.test(val);
+    const hasNum = /[0-9]/.test(val);
+
+    updateReqStyle(reqLen, hasLen);
+    updateReqStyle(reqLetter, hasLetter);
+    updateReqStyle(reqNum, hasNum);
+  }
+
+  function updateReqStyle(el, valid) {
+    if (!el) return;
+    const icon = el.querySelector('.material-symbols-outlined');
+    if (valid) {
+      el.className = "flex items-center gap-1.5 font-caption text-caption text-primary font-medium";
+      if (icon) icon.innerText = "check_circle";
+    } else {
+      el.className = "flex items-center gap-1.5 font-caption text-caption text-outline font-normal";
+      if (icon) icon.innerText = "radio_button_unchecked";
+    }
+  }
+
+  // Toggle password visibility
+  function togglePasswordVisibility(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    if (!input) return;
+    if (input.type === 'password') {
+      input.type = 'text';
+      if (icon) icon.innerText = 'visibility_off';
+    } else {
+      input.type = 'password';
+      if (icon) icon.innerText = 'visibility';
+    }
+  }
+
+  // Simulate Save with loading state
+  function simulateSave(button) {
+    const originalContent = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = `
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span>Guardando…</span>
+    `;
+
+    setTimeout(() => {
+      button.disabled = false;
+      button.innerHTML = originalContent;
+      toggleModal('modal-nuevo-profesional', false);
+      showToast('Profesional registrado correctamente en el directorio.');
+    }, 1200);
+  }
+
+  function saveDrawerChanges(button) {
+    const original = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = `
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <span>Guardando…</span>
+    `;
+    setTimeout(() => {
+      button.disabled = false;
+      button.innerHTML = original;
+      toggleDrawer(false);
+      showToast('Asignaciones y sedes actualizadas con éxito.');
+    }, 900);
+  }
+
+  function confirmDeactivation() {
+    toggleModal('modal-desactivar', false);
+    showToast('El profesional ha sido desactivado del agendamiento.');
+  }
+
+  function toggleActivate(name) {
+    showToast(`${name} activado(a) nuevamente para agenda.`);
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById('toast-notification');
+    const msg = document.getElementById('toast-message');
+    if (!toast || !msg) return;
+    msg.innerText = message;
+    toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+    setTimeout(() => {
+      toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+    }, 3500);
+  }
+</script></div></main></div></body></html>

@@ -6,10 +6,10 @@ import { saveTokens } from '../session/sessionManager';
 import { LoginFormErrors, LoginFormValues, validateLoginForm } from '../validation/validation';
 import { AuthLayout } from '../components/AuthLayout';
 import { Card } from '../components/Card';
-import { TextField } from '../components/TextField';
-import { PasswordField } from '../components/PasswordField';
-import { Button } from '../components/Button';
-import { AlertBanner } from '../components/AlertBanner';
+import { TextField } from '../../../shared/components/TextField';
+import { PasswordField } from '../../../shared/components/PasswordField';
+import { Button } from '../../../shared/components/Button';
+import { AlertBanner } from '../../../shared/components/AlertBanner';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ export const LoginPage: React.FC = () => {
       });
 
       saveTokens(tokens);
-      navigate('/inicio');
+      navigate('/', { replace: true });
     } catch (err: unknown) {
       if (err instanceof AuthError) {
         if (err.code === 'INVALID_CREDENTIALS' || err.status === 401) {

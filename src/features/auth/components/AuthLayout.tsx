@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrandMark } from './BrandMark';
+import { BrandMark } from '../../../shared/components/BrandMark';
 import { SiteCard } from './SiteCard';
 import { SiteChip } from './SiteChip';
 
