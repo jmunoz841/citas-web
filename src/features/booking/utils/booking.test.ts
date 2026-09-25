@@ -6,6 +6,7 @@ import {
   distinctProfessionals,
   EMPTY_DRAFT,
   groupByProfessional,
+  initials,
   isStepValid,
   slotLabel,
 } from './booking';
@@ -75,5 +76,11 @@ describe('reglas del borrador de reserva', () => {
       { id: 7, name: 'Andrés Vargas' },
       { id: 12, name: 'Laura Gómez' },
     ]);
+  });
+
+  it('las iniciales del avatar usan nombre y primer apellido en mayúsculas', () => {
+    // Demo Red→Green de S3: esta prueba se intentó primero con 'AVR' y el hook bloqueó el commit.
+    expect(initials('andrés vargas rojas')).toBe('AV');
+    expect(initials('  Laura   Gómez ')).toBe('LG');
   });
 });
