@@ -1,5 +1,5 @@
 import React from 'react';
-import { PasswordCriteria } from '../validation/validation';
+import { PasswordCriteria } from '../../features/auth/validation/validation';
 
 interface PasswordChecklistProps {
   criteria: PasswordCriteria;

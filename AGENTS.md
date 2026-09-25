@@ -6,8 +6,8 @@ Instrucciones para el agente principal del frontend. Generado con `../prompts/ag
 
 - Solo este repositorio. **No edites `citas-api`**; si el contrato REST no alcanza, reporta el cambio al orquestador.
 - Fuente funcional: `../PRD.md` y las HU **Aprobadas** o **En desarrollo** de `../citas-api/docs/wiki/scrum/`. No implementes pantallas ni flujos fuera de una HU.
-- Fuente visual: `docs/diseno/DESIGN.md` (prevalece) + capturas y HTML de `docs/diseno/stitch-v2/`. `stitch-v1/`, `resumen.md` y los `DESIGN.md` generados por Stitch son solo historial.
-- Contrato REST: `../citas-api/docs/contratos/` (hoy: `autenticacion.md`).
+- Fuente visual: `docs/diseno/DESIGN.md` (prevalece) + capturas y HTML de `docs/diseno/stitch-v2/` (login y registro) y `docs/diseno/stitch-v4/` (áreas autenticadas de S3, con las correcciones obligatorias de `APROBACION.md`). `stitch-v1/`, `stitch-v3/`, `resumen.md` y los `DESIGN.md` generados por Stitch son solo historial.
+- Contrato REST: `../citas-api/docs/contratos/` (`autenticacion.md`, `catalogos.md`, `administracion.md`, `disponibilidad.md`, `citas.md`).
 
 ## Stack real (no cambiar de framework)
 
@@ -52,21 +52,32 @@ Solo `import.meta.env`; nunca URLs ni credenciales escritas en el código.
 
 ```text
 src/
-  App.tsx                         rutas: / → /inicio o /login, /login, /registro, /inicio, * → /
+  App.tsx                         proveedores (sesión, toasts) y rutas por rol: / → inicio del rol o /login;
+                                  /admin/{solicitudes,especialidades,profesionales} (ADMIN), /agenda (PROFESSIONAL),
+                                  /inicio (USER), /login, /registro
   index.css                       tokens de DESIGN.md (@theme) + foco + reduced motion
+  shared/
+    api/apiClient.ts              apiRequest: token Bearer, un refresh ante 401, ProblemDetail → ApiError; red/5xx no cierran sesión
+    api/errors.ts                 ApiError (code, status, fieldErrors, isConnectionProblem); AuthError es su alias
+    api/config.ts                 apiBaseUrl() desde VITE_API_URL (obligatoria)
+    layout/AppShell.tsx           barra superior, riel por rol (240px / íconos en tablet / cajón en móvil), badge de solicitudes
+    components/                   Button, TextField, SelectField, AlertBanner, BrandMark, Modal, Toast, Feedback (PageHeader,
+                                  StatusLabel, SiteBadge, Chip, EmptyState, SkeletonRows), FormGroup, PasswordField,
+                                  PasswordChecklist, ErrorSummary
   features/auth/
-    api/types.ts                  DTOs del contrato, AuthError (code, status, fieldErrors), interfaz AuthApi
-    api/httpAuthApi.ts            cliente fetch contra VITE_API_URL; traduce problem+json a AuthError
-    api/authApi.ts                singleton del cliente HTTP (sin modo simulado desde S3)
+    api/                          DTOs y cliente de autenticación
     session/sessionManager.ts     access token en memoria, refresh token en sessionStorage; refresh con rotación y deduplicado
+    session/SessionContext.tsx    SessionProvider, useSession, RequireRole, RootRedirect, homePathFor
     validation/validation.ts      reglas espejo del backend (política de contraseña, email, documento, teléfono)
-    components/                   AuthLayout, BrandMark, SiteCard, SiteChip, Card, FormGroup, TextField, PasswordField,
-                                  SelectField, PasswordChecklist, Button, AlertBanner, ErrorSummary, SuccessState
-    pages/                        LoginPage, RegisterPage
-  pages/InicioPage.tsx            TEMPORAL: sesión + cerrar sesión (se reemplaza por el panel del paciente)
+    components/, pages/           AuthLayout, SiteCard, SiteChip, Card, SuccessState; LoginPage, RegisterPage
+  features/catalogs/              catálogos públicos (tipos de documento, sedes, regímenes, planes)
+  features/admin/                 HU-015 Solicitudes pendientes, HU-006 Especialidades, HU-008/009 Profesionales
+  features/agenda/                HU-010 Mi agenda (calendario semanal de bloques)
+  features/booking/               HU-012/013/014 Inicio del paciente y modal de reserva en 4 pasos
+  test/apiTestUtils.tsx           mockApi, problem, signIn, renderWithProviders para las pruebas
 ```
 
-Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{api,components,pages,...}`. Los componentes genéricos que empiecen a usarse fuera de `auth` se mueven a una carpeta compartida en ese momento, no antes.
+Organización por *feature*: una nueva capacidad va en `src/features/<feature>/{api,components,pages,...}`. Los componentes genéricos se mueven a `src/shared/` cuando otra feature los necesita, no antes.
 
 ## Reglas
 

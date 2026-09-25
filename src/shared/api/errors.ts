@@ -24,8 +24,8 @@ export class ApiError extends Error {
   readonly fieldErrors: Record<string, string>;
 
   constructor(problem: ProblemDetails) {
-    super(problem.detail || 'Ocurrió un error en la autenticación.');
-    this.name = 'AuthError';
+    super(problem.detail || 'Ocurrió un error inesperado. Inténtalo de nuevo.');
+    this.name = 'ApiError';
     this.status = problem.status;
     this.code = problem.code;
     this.detail = problem.detail;

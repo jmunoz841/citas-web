@@ -13,13 +13,13 @@ import {
 } from '../validation/validation';
 import { AuthLayout } from '../components/AuthLayout';
 import { Card } from '../components/Card';
-import { FormGroup } from '../components/FormGroup';
+import { FormGroup } from '../../../shared/components/FormGroup';
 import { TextField } from '../../../shared/components/TextField';
-import { PasswordField } from '../components/PasswordField';
+import { PasswordField } from '../../../shared/components/PasswordField';
 import { SelectField, SelectOption } from '../../../shared/components/SelectField';
-import { PasswordChecklist } from '../components/PasswordChecklist';
+import { PasswordChecklist } from '../../../shared/components/PasswordChecklist';
 import { Button } from '../../../shared/components/Button';
-import { ErrorSummary, ErrorSummaryItem } from '../components/ErrorSummary';
+import { ErrorSummary, ErrorSummaryItem } from '../../../shared/components/ErrorSummary';
 import { SuccessState } from '../components/SuccessState';
 import { AlertBanner } from '../../../shared/components/AlertBanner';
 

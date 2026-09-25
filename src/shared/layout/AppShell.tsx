@@ -53,8 +53,8 @@ const NavItems: React.FC<{ items: NavItem[]; compact?: boolean; onNavigate?: () 
         <NavLink
           aria-label={compact ? item.label : undefined}
           className={({ isActive }) =>
-            `relative flex items-center gap-3 min-h-[48px] focus-ring-custom transition-colors duration-150 ${
-              compact ? 'justify-center mx-2 rounded-lg' : 'pl-5 pr-4'
+            `relative flex items-center gap-2.5 min-h-[48px] focus-ring-custom transition-colors duration-150 ${
+              compact ? 'justify-center mx-2 rounded-lg' : 'pl-4 pr-3'
             } ${
               isActive
                 ? 'bg-[#E6F2F1] text-[#0F6E6E] font-semibold before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[3px] before:bg-[#0F6E6E]'
@@ -68,9 +68,9 @@ const NavItems: React.FC<{ items: NavItem[]; compact?: boolean; onNavigate?: () 
           <span aria-hidden="true" className="material-symbols-outlined text-[22px] shrink-0">
             {item.icon}
           </span>
-          {!compact && <span className="flex-1 text-[15px] whitespace-nowrap">{item.label}</span>}
+          {!compact && <span className="flex-1 text-[14px] whitespace-nowrap">{item.label}</span>}
           {!compact && item.badge != null && item.badge > 0 && (
-            <span className="min-w-[24px] h-6 px-1.5 rounded-md bg-[#E6F2F1] text-[#0F6E6E] text-xs font-semibold flex items-center justify-center tabular-nums">
+            <span className="min-w-[22px] h-[22px] px-1.5 rounded-md bg-[#E6F2F1] text-[#0F6E6E] text-xs font-semibold flex items-center justify-center tabular-nums">
               <span className="sr-only">, </span>
               {item.badge}
             </span>

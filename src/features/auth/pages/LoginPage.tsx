@@ -7,7 +7,7 @@ import { LoginFormErrors, LoginFormValues, validateLoginForm } from '../validati
 import { AuthLayout } from '../components/AuthLayout';
 import { Card } from '../components/Card';
 import { TextField } from '../../../shared/components/TextField';
-import { PasswordField } from '../components/PasswordField';
+import { PasswordField } from '../../../shared/components/PasswordField';
 import { Button } from '../../../shared/components/Button';
 import { AlertBanner } from '../../../shared/components/AlertBanner';
 
