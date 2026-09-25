@@ -1,7 +1,7 @@
 # DESIGN.md — CitaClara (fuente de verdad visual)
 
-- **Estado:** aprobado por Juan Muñoz el 2026-09-18 (Stitch v2).
-- **Pantallas aprobadas:** `stitch-v2/.../inicia_sesi_n_citaclara/` (Login) y `stitch-v2/.../crea_tu_cuenta_citaclara/` (Registro). Cada carpeta contiene `screen.png` (referencia visual) y `code.html` (referencia de estructura y estados).
+- **Estado:** aprobado por Juan Muñoz el 2026-09-18 (Stitch v2, login y registro) y extendido el 2026-09-25 (Stitch v4, áreas autenticadas de S3).
+- **Pantallas aprobadas:** `stitch-v2/.../inicia_sesi_n_citaclara/` (Login) y `stitch-v2/.../crea_tu_cuenta_citaclara/` (Registro); las seis pantallas de `stitch-v4/` listadas en `APROBACION.md`. Cada carpeta contiene `screen.png` (referencia visual) y `code.html` (referencia de estructura y estados).
 - **Prevalece este archivo** sobre `stitch-v*/.../DESIGN.md` y `stitch-v1/resumen.md`, generados por Stitch con valores y requisitos que no fueron aprobados (p. ej. `#005454`, superficies azuladas, OTP, SMS, métricas inventadas).
 - La implementación **no** reinterpreta este sistema. Cambios visuales requieren nueva iteración en Stitch y nueva aprobación.
 
@@ -89,6 +89,70 @@ Sedes (contenido fijo del PRD):
 - Pie: "¿Ya tienes cuenta?" + enlace "Inicia sesión".
 - Conflicto 409: error en el campo ("Este correo ya está registrado." / "Este documento ya está registrado.") y resumen arriba "Revisa los campos marcados:" con enlaces a los campos.
 - Éxito: reemplaza el formulario; ícono check en círculo (éxito), "¡Tu cuenta fue creada!", "Ya puedes iniciar sesión con tu correo y contraseña.", botón "Ir a iniciar sesión".
+
+## Áreas autenticadas (S3)
+
+Mismo sistema de color, tipografía y forma. El panel oscuro de sedes es exclusivo de login y registro: **no** aparece dentro de la app.
+
+Los textos de esta sección son los del prompt aprobado y coinciden con el HTML de `stitch-v4/`, salvo cuatro que el export no trae y que valen igual: los toasts "Cita aprobada…" y "Solicitud rechazada…", y los errores "Marca exactamente una especialidad principal" y "Asigna al menos una sede". Los toasts propios que Stitch puso en Profesionales ("Profesional registrado correctamente en el directorio.", etc.) no se usan.
+
+### Estructura de la app autenticada
+
+- **Barra superior** blanca con borde inferior `#D9DDE3`: marca (isotipo `#0F6E6E` + "Cita" 700 `#1C2430` + "Clara" 400 `#5B6573`), chip de rol en tinte `#E6F2F1` ("ADMINISTRADOR", "PROFESIONAL", "PACIENTE"); a la derecha, avatar circular `#0F6E6E` con ícono, nombre del usuario (el PROFESSIONAL añade debajo su especialidad principal en secundario) y botón de texto "Cerrar sesión".
+- **Riel de navegación** blanco de 240 px con ítems de ícono + texto. Activo: fondo `#E6F2F1`, texto `#0F6E6E` e indicador izquierdo de 3 px. Ítems por rol:
+  - ADMIN: "Solicitudes pendientes" (con badge del número real de citas `REQUESTED`), "Especialidades", "Profesionales".
+  - PROFESSIONAL: "Mi agenda".
+  - USER: "Inicio".
+- **Contenido** sobre `#F7F6F2`, ancho máximo 1200 px. Título de pantalla 32/40 y subtítulo en secundario.
+- **Responsive:** en tablet el riel pasa a íconos con tooltip; en móvil, botón de menú y riel en cajón.
+
+### Tablas
+
+Tarjeta blanca con borde `#D9DDE3` y radio 12 px; encabezados 14/20, 600, en secundario sobre blanco; filas de 56 px separadas por `#D9DDE3`; números tabulares en fechas, horas, códigos y matrículas. **Todas las acciones visibles a partir de 1280 px** (corrección obligatoria de la aprobación v4). En móvil cada fila pasa a tarjeta con acciones a ancho completo. Chips de sede "HIC"/"ICV" en tinte; especialidad principal con ícono de estrella y el texto "(principal)".
+
+### Pantalla: Solicitudes pendientes (ADMIN, HU-015)
+
+- Título "Solicitudes pendientes", subtítulo "Citas especializadas que esperan tu decisión."
+- Columnas: Paciente (iniciales en círculo + nombre), Especialidad, Profesional, Sede, Fecha (`dd/mm/aaaa`), Hora ("09:00 – 10:00"), Duración ("60 min"), Acciones: "Aprobar" (primario pequeño con check) y "Rechazar" (secundario con borde).
+- Diálogo "¿Aprobar esta cita?" con resumen y botones "Aprobar cita" / "Cancelar"; toast "Cita aprobada. El horario queda confirmado para el paciente."
+- Diálogo "Rechazar solicitud" con subtítulo "El motivo queda registrado en el historial de la cita.", resumen de la cita en tarjeta con ícono de calendario, textarea "Motivo del rechazo *" con ayuda "El paciente verá este motivo. Máximo 500 caracteres." y contador "0/500", botones "Cancelar" y "Rechazar solicitud" (destructivo en `#B42318` con ícono). Error: borde 1.5 px `#B42318`, fondo `#FEF3F2`, "El motivo del rechazo es obligatorio". Toast de éxito: "Solicitud rechazada. Los horarios quedaron libres."
+- Conflicto (409): alerta de advertencia "Esta solicitud ya fue resuelta" / "La cita ya no está pendiente de aprobación. Actualiza la lista."
+- Vacío: "No hay solicitudes pendientes" / "Cuando un paciente solicite una cita especializada aparecerá aquí." Carga: filas esqueleto.
+
+### Pantalla: Especialidades (ADMIN, HU-006)
+
+- Título "Especialidades", botón primario "Nueva especialidad". Columnas: Nombre, Duración, Tipo (chip "General" solo en Medicina General; "—" en las demás), Estado (ícono + "Activa"/"Inactiva"), Acciones ("Editar" | "Desactivar"/"Activar"). Sin borrado; nota al pie: "Las especialidades no pueden eliminarse para garantizar la trazabilidad del historial clínico."
+- Diálogo de alta/edición: "Nombre *" y "Duración de la cita *" como control segmentado "30 min"/"60 min" con ayuda "La agenda se organiza en bloques de 30 minutos". Error: "Ya existe una especialidad con ese nombre".
+- Confirmación de desactivar: "Los pacientes dejarán de verla al buscar citas. Las citas existentes se conservan."
+
+### Pantalla: Profesionales (ADMIN, HU-008, HU-009)
+
+- Título "Profesionales", botón "Nuevo profesional", pie "N profesionales". Columnas: Nombre (iniciales, nombre y correo), Código, Matrícula, Especialidades (chips), Sedes (chips), Estado, Acciones ("Editar asignaciones" | "Desactivar"/"Activar").
+- Formulario "Nuevo profesional" con los grupos del registro (DATOS PERSONALES, DOCUMENTO DE IDENTIDAD, DATOS DE CONTACTO, ACCESO con "Contraseña temporal *" y lista de requisitos, DATOS PROFESIONALES, ASIGNACIONES). En ASIGNACIONES: casillas de especialidades activas con un radio "Principal" por fila y tarjetas de sede HIC/ICV. Errores: "Marca exactamente una especialidad principal", "Asigna al menos una sede", "El código profesional ya está registrado".
+- "Editar asignaciones": cajón lateral derecho con el grupo ASIGNACIONES y "Guardar cambios".
+- Confirmación de desactivar: "El profesional dejará de aparecer en la búsqueda de citas. Sus datos, asignaciones y citas existentes se conservan."
+
+### Pantalla: Mi agenda (PROFESSIONAL, HU-010)
+
+- Título "Mi agenda", subtítulo "Publica los horarios en que atiendes. Cada bloque se divide en espacios de 30 minutos."
+- Barra: navegador de semana ("‹ 22 – 28 sep 2026 ›") y "Hoy"; segmentado "Todas · HIC · ICV" (solo sedes asignadas); botón "Publicar bloque".
+- Calendario semanal lunes a sábado, eje de 07:00 a 19:00 en filas de 30 min; día actual resaltado en `#0F6E6E`; días sin bloques con "Sin horarios" en gris. Bloque: fondo `#E6F2F1`, borde `#0F6E6E`, rango en `#0F6E6E` 600, chip de sede y "N espacios (30m)" con ícono.
+- Diálogo "Publicar bloque"/"Editar bloque": "Fecha *", "Hora de inicio *", "Hora de fin *" (pasos de 30 min), "Sede *" y ayuda en vivo "Se crearán N espacios de 30 minutos". Errores: "No se puede publicar disponibilidad en el pasado", "El bloque se cruza con otro que ya publicaste", "La hora de fin debe ser posterior a la de inicio". Conflicto: "Este bloque tiene citas reservadas o solicitadas y no se puede modificar." Cuenta inactiva: banner de advertencia y "Publicar bloque" deshabilitado.
+- Móvil: vista de un día con selector y bloques como tarjetas.
+
+### Pantalla: Inicio y reserva (USER, HU-012, HU-013, HU-014)
+
+- Inicio: saludo "Hola, {nombre}", subtítulo "Agenda una cita en HIC o ICV sin filas ni llamadas.", tarjeta "Agenda una cita" con botón "Agendar cita" y tarjetas de sede en superficie clara.
+- Modal "Agendar cita" (720 px; pantalla completa en móvil) con indicador de 4 pasos "Tipo de cita · Fecha y profesional · Horario · Confirmación" y pie "Atrás" / "Continuar".
+  1. Tarjetas de radio "Medicina General" (30 min, chip "Se confirma al instante") y "Especialidad" (chip de advertencia "Requiere aprobación"); si es especialidad, "Especialidad *"; "Sede preferida *": HIC / ICV / Cualquiera.
+  2. Calendario de fecha (sin días pasados) y "Profesional" opcional ("Cualquier profesional").
+  3. Horarios agrupados por profesional como chips (rango completo si dura 60 min); seleccionado en `#0F6E6E` con check. Vacío: "No hay horarios disponibles para este día. Prueba otra fecha u otra sede." Conflicto: "Ese horario acaba de ser reservado por otra persona. Elige otro."
+  4. Resumen; nota y botón según el tipo: "Tu cita quedará confirmada de inmediato." + "Confirmar cita", o "Enviaremos tu solicitud al administrador. El horario queda apartado mientras la revisa." + "Solicitar cita". Carga: "Reservando…".
+- Resultados: "¡Tu cita está confirmada!" (check de éxito) o "Solicitud enviada" (reloj en color de acción) / "Un administrador revisará tu solicitud. El horario queda apartado para ti.", con "Volver al inicio".
+
+### Excluido en las áreas autenticadas
+
+Simuladores de estados de los exports; métricas y contadores que la API no da; buscador, pestañas y paginación en las tablas; navegación "Mis citas", "Historial", "Pacientes" o "Configuración"; SLA, notificaciones "en tiempo real", "disponibilidad garantizada", "Abierto 24/7", soporte telefónico, versión de la app y migas de pan decorativas.
 
 ## Accesibilidad (obligatoria en implementación)
 

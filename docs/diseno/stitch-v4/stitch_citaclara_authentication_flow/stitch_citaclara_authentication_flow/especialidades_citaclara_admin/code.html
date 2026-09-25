@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container": "#F7F6F2", "on-error-container": "#93000a", "outline": "#6e7979", "surface": "#F7F6F2", "on-tertiary": "#ffffff", "on-error": "#ffffff", "error-container": "#ffdad6", "secondary": "#3d6569", "surface-container-low": "#F7F6F2", "on-secondary": "#ffffff", "primary": "#0F6E6E", "outline-variant": "#D9DDE3", "background": "#F7F6F2", "on-background": "#1C2430", "primary-container": "#0F6E6E", "error": "#ba1a1a", "secondary-container": "#E6F2F1", "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "on-surface-variant": "#5B6573", "on-surface": "#1C2430" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-2xl": "3rem", "gutter": "1.5rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-xl": "2rem", "margin-mobile": "1rem", "space-md": "1rem", "margin": "2rem", "gutter-mobile": "1rem" }, "fontFamily": { "caption": [ "Public Sans" ], "display-lg": [ "Public Sans" ], "label-md": [ "Public Sans" ], "display-lg-mobile": [ "Public Sans" ], "label-lg": [ "Public Sans" ], "body-md": [ "Public Sans" ], "title-lg": [ "Public Sans" ], "headline-lg": [ "Public Sans" ], "headline-md": [ "Public Sans" ], "body-lg": [ "Public Sans" ] }, "fontSize": { "caption": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "display-lg": [ "36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "display-lg-mobile": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "title-lg": [ "18px", { "lineHeight": "26px", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-md": [ "20px", { "lineHeight": "28px", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ] } } } }</script></head><body class="bg-[#F7F6F2] font-body-md text-[#1C2430] antialiased"><header class="fixed top-0 left-0 right-0 h-16 bg-[#FFFFFF] border-b border-[#D9DDE3] z-50"><div class="h-16 w-full px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-[#0F6E6E] flex items-center justify-center"><span class="material-symbols-outlined text-white text-[20px]">add</span></div><div class="flex items-baseline"><span class="font-title-lg text-title-lg font-bold text-[#1C2430] tracking-tight">Cita</span><span class="font-title-lg text-title-lg font-normal text-[#5B6573] tracking-tight">Clara</span></div></div><div class="h-4 w-px bg-[#D9DDE3] mx-space-xs"></div><span class="bg-[#E6F2F1] text-[#0F6E6E] font-label-md text-label-md px-space-sm py-space-xs rounded font-semibold tracking-wider uppercase">ADMINISTRADOR</span></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><span class="font-label-lg text-label-lg text-[#1C2430]">Admin Laboratorio</span><div class="w-8 h-8 rounded-full bg-[#0F6E6E] flex items-center justify-center"><span class="material-symbols-outlined text-white text-[18px]">person</span></div></div><a class="font-body-md text-body-md text-[#5B6573] hover:text-[#1C2430] transition-colors" href="#">Cerrar sesión</a></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-60 bg-[#FFFFFF] border-r border-[#D9DDE3] z-40 flex flex-col py-space-md"><nav class="flex-1 flex flex-col gap-space-xs"><a class="flex items-center justify-between py-space-sm px-space-md pl-4 text-[#5B6573] hover:bg-[#F7F6F2] hover:text-[#1C2430] transition-colors border-l-[3px] border-transparent" data-path="solicitudes-pendientes" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">inbox</span><span class="font-body-md text-body-md">Solicitudes pendientes</span></div><span class="bg-[#E6F2F1] text-[#0F6E6E] font-label-md text-label-md px-space-xs py-0.5 rounded font-semibold">12</span></a><a aria-current="page" class="flex items-center gap-space-sm py-space-sm px-space-md transition-colors bg-[#E6F2F1] text-[#0F6E6E] font-semibold border-l-[3px] border-[#0F6E6E] pl-[13px]" data-path="especialidades" href="#"><span class="material-symbols-outlined text-[20px]">clinical_notes</span><span class="font-body-md text-body-md">Especialidades</span></a><a class="flex items-center gap-space-sm py-space-sm px-space-md pl-4 text-[#5B6573] hover:bg-[#F7F6F2] hover:text-[#1C2430] transition-colors border-l-[3px] border-transparent" data-path="profesionales" href="#"><span class="material-symbols-outlined text-[20px]">stethoscope</span><span class="font-body-md text-body-md">Profesionales</span></a></nav></aside><div class="pl-60"><main class="w-full pt-16 bg-[#F7F6F2] min-h-screen"><div class="max-w-[1200px] mx-auto p-margin"><div class="flex flex-col w-full">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md mb-space-xl">
+<div>
+<h1 class="font-display-lg text-display-lg text-[#1C2430] tracking-tight leading-[40px]">Especialidades</h1>
+<p class="font-body-md text-body-md text-[#5B6573] mt-1">Gestión del catálogo de servicios, tiempos de consulta y disponibilidad para pacientes.</p>
+</div>
+<div class="flex items-center gap-space-sm self-start sm:self-auto">
+<button class="h-12 px-space-lg bg-[#0F6E6E] hover:bg-[#0B5858] active:bg-[#084747] text-white font-label-lg text-label-lg rounded-[8px] flex items-center gap-2 shadow-sm transition-colors cursor-pointer" id="open-new-modal" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Nueva especialidad</span>
+</button>
+</div>
+</div>
+<div class="bg-[#FFFFFF] rounded-[12px] border border-[#D9DDE3] shadow-sm overflow-hidden mb-space-2xl">
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-md text-[#1C2430] min-w-[760px]">
+<thead>
+<tr class="bg-[#FFFFFF] border-b border-[#D9DDE3] text-[#5B6573] text-[14px] leading-[20px] font-semibold h-12 uppercase tracking-wider">
+<th class="px-space-lg w-1/3">Nombre</th>
+<th class="px-space-md">Duración</th>
+<th class="px-space-md">Tipo</th>
+<th class="px-space-md">Estado</th>
+<th class="px-space-lg text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#D9DDE3]" id="specialties-table-body">
+<tr class="h-[56px] hover:bg-[#F7F6F2]/50 transition-colors" data-id="1">
+<td class="px-space-lg font-medium text-[#1C2430] flex items-center gap-3 h-[56px]">
+<span class="w-2 h-2 rounded-full bg-[#0F6E6E]"></span>
+<span class="font-semibold">Medicina General</span>
+</td>
+<td class="px-space-md text-[#1C2430]">
+<span class="font-body-md text-body-md">30 min</span>
+</td>
+<td class="px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-[4px] bg-[#E6F2F1] text-[#0F6E6E] font-label-md text-[12px] font-semibold tracking-wide">
+                General
+              </span>
+</td>
+<td class="px-space-md">
+<div class="inline-flex items-center gap-1.5 text-[#1E7B4F] font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Activa</span>
+</div>
+</td>
+<td class="px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-space-md">
+<button class="btn-edit font-label-lg text-label-lg font-semibold text-[#0F6E6E] hover:text-[#0B5858] transition-colors" data-duration="30" data-name="Medicina General" type="button">Editar</button>
+<span class="text-[#D9DDE3] font-caption">|</span>
+<button class="btn-toggle-status font-label-lg text-label-lg text-[#5B6573] hover:text-[#1C2430] transition-colors cursor-pointer" data-action="deactivate" data-id="1" data-name="Medicina General" type="button">Desactivar</button>
+</div>
+</td>
+</tr>
+<tr class="h-[56px] bg-[#FFFFFF] hover:bg-[#F7F6F2]/50 transition-colors" data-id="2">
+<td class="px-space-lg font-medium text-[#1C2430] flex items-center gap-3 h-[56px]">
+<span class="w-2 h-2 rounded-full bg-[#D9DDE3]"></span>
+<span class="font-semibold">Cardiología</span>
+</td>
+<td class="px-space-md text-[#1C2430]">
+<span class="font-body-md text-body-md">60 min</span>
+</td>
+<td class="px-space-md text-[#5B6573]">
+<span>—</span>
+</td>
+<td class="px-space-md">
+<div class="inline-flex items-center gap-1.5 text-[#1E7B4F] font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Activa</span>
+</div>
+</td>
+<td class="px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-space-md">
+<button class="btn-edit font-label-lg text-label-lg font-semibold text-[#0F6E6E] hover:text-[#0B5858] transition-colors" data-duration="60" data-name="Cardiología" type="button">Editar</button>
+<span class="text-[#D9DDE3] font-caption">|</span>
+<button class="btn-toggle-status font-label-lg text-label-lg text-[#5B6573] hover:text-[#1C2430] transition-colors cursor-pointer" data-action="deactivate" data-id="2" data-name="Cardiología" type="button">Desactivar</button>
+</div>
+</td>
+</tr>
+<tr class="h-[56px] hover:bg-[#F7F6F2]/50 transition-colors" data-id="3">
+<td class="px-space-lg font-medium text-[#1C2430] flex items-center gap-3 h-[56px]">
+<span class="w-2 h-2 rounded-full bg-[#D9DDE3]"></span>
+<span class="font-semibold">Dermatología</span>
+</td>
+<td class="px-space-md text-[#1C2430]">
+<span class="font-body-md text-body-md">30 min</span>
+</td>
+<td class="px-space-md text-[#5B6573]">
+<span>—</span>
+</td>
+<td class="px-space-md">
+<div class="inline-flex items-center gap-1.5 text-[#1E7B4F] font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Activa</span>
+</div>
+</td>
+<td class="px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-space-md">
+<button class="btn-edit font-label-lg text-label-lg font-semibold text-[#0F6E6E] hover:text-[#0B5858] transition-colors" data-duration="30" data-name="Dermatología" type="button">Editar</button>
+<span class="text-[#D9DDE3] font-caption">|</span>
+<button class="btn-toggle-status font-label-lg text-label-lg text-[#5B6573] hover:text-[#1C2430] transition-colors cursor-pointer" data-action="deactivate" data-id="3" data-name="Dermatología" type="button">Desactivar</button>
+</div>
+</td>
+</tr>
+<tr class="h-[56px] bg-[#FFFFFF] hover:bg-[#F7F6F2]/50 transition-colors" data-id="4">
+<td class="px-space-lg font-medium text-[#5B6573] flex items-center gap-3 h-[56px]">
+<span class="w-2 h-2 rounded-full bg-[#D9DDE3]"></span>
+<span class="font-semibold text-[#5B6573]">Neumología</span>
+</td>
+<td class="px-space-md text-[#5B6573]">
+<span class="font-body-md text-body-md">60 min</span>
+</td>
+<td class="px-space-md text-[#5B6573]">
+<span>—</span>
+</td>
+<td class="px-space-md">
+<div class="inline-flex items-center gap-1.5 text-[#5B6573] font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px] text-[#6e7979]">cancel</span>
+<span>Inactiva</span>
+</div>
+</td>
+<td class="px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-space-md">
+<button class="btn-edit font-label-lg text-label-lg font-semibold text-[#0F6E6E] hover:text-[#0B5858] transition-colors" data-duration="60" data-name="Neumología" type="button">Editar</button>
+<span class="text-[#D9DDE3] font-caption">|</span>
+<button class="btn-toggle-status font-label-lg text-label-lg font-semibold text-[#0F6E6E] hover:text-[#0B5858] transition-colors cursor-pointer" data-action="activate" data-id="4" data-name="Neumología" type="button">Activar</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-space-lg py-space-md bg-[#FFFFFF] border-t border-[#D9DDE3] flex flex-col sm:flex-row items-start sm:items-center justify-between text-caption font-caption text-[#5B6573] gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-[#0F6E6E]">info</span>
+<span>Las especialidades no pueden eliminarse para garantizar la trazabilidad del historial clínico.</span>
+</div>
+<div>Mostrando 4 de 4 registros</div>
+</div>
+</div>
+<div aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-space-md hidden" id="modal-form-container" role="dialog">
+<div class="fixed inset-0 bg-[#0F3B3F]/40 backdrop-blur-[2px] transition-opacity" id="modal-backdrop"></div>
+<div class="relative w-full max-w-[520px] bg-white rounded-[12px] border border-[#D9DDE3] shadow-xl overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-150">
+<div class="px-space-lg pt-space-lg pb-space-sm flex items-center justify-between border-b border-[#D9DDE3]">
+<h2 class="font-headline-md text-headline-md font-semibold text-[#1C2430]" id="modal-title">Nueva especialidad</h2>
+<button class="text-[#5B6573] hover:text-[#1C2430] p-1 rounded-lg" id="close-form-modal" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-space-lg space-y-space-lg">
+<div class="flex flex-col">
+<div class="flex items-center justify-between mb-1.5">
+<label class="font-label-lg text-label-lg text-[#1C2430]" for="specialty-name-input">Nombre *</label>
+<button class="font-caption text-caption text-[#0F6E6E] underline hover:text-[#0B5858]" id="toggle-error-demo" type="button">
+              Simular error validación
+            </button>
+</div>
+<input class="h-12 px-4 rounded-[8px] border border-[#D9DDE3] bg-white text-[#1C2430] font-body-md text-body-md transition-colors outline-none focus:border-[#0F6E6E]" id="specialty-name-input" placeholder="Ej. Oftalmología pediátrica" type="text"/>
+<div class="hidden mt-2 p-2.5 rounded-[6px] bg-[#FEF3F2] flex items-center gap-2 text-[#B42318]" id="name-error-box">
+<span class="material-symbols-outlined text-[18px]">error</span>
+<span class="font-caption text-caption font-semibold">Ya existe una especialidad con ese nombre</span>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="font-label-lg text-label-lg text-[#1C2430] mb-1.5">Duración de la cita *</label>
+<div class="grid grid-cols-2 p-1 bg-[#F7F6F2] border border-[#D9DDE3] rounded-[8px] gap-1" id="duration-selector">
+<button class="duration-opt h-10 rounded-[6px] font-label-lg text-label-lg font-semibold flex items-center justify-center transition-all bg-[#0F6E6E] text-white shadow-sm" data-val="30" type="button">
+              30 min
+            </button>
+<button class="duration-opt h-10 rounded-[6px] font-label-lg text-label-lg font-semibold flex items-center justify-center transition-all text-[#5B6573] hover:text-[#1C2430]" data-val="60" type="button">
+              60 min
+            </button>
+</div>
+<span class="font-caption text-caption text-[#5B6573] mt-2 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">schedule</span>
+            La agenda se organiza en bloques de 30 minutos.
+          </span>
+</div>
+</div>
+<div class="px-space-lg py-space-md bg-[#FFFFFF] border-t border-[#D9DDE3] flex items-center justify-end gap-space-sm">
+<button class="h-12 px-space-md text-[#5B6573] hover:text-[#1C2430] font-label-lg text-label-lg font-semibold rounded-[8px] transition-colors" id="cancel-form-modal" type="button">
+          Cancelar
+        </button>
+<button class="h-12 px-space-lg bg-[#0F6E6E] hover:bg-[#0B5858] text-white font-label-lg text-label-lg font-semibold rounded-[8px] transition-colors shadow-sm" id="submit-form-modal" type="button">
+          Crear especialidad
+        </button>
+</div>
+</div>
+</div>
+<div aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-space-md hidden" id="modal-confirm-container" role="dialog">
+<div class="fixed inset-0 bg-[#0F3B3F]/40 backdrop-blur-[2px] transition-opacity" id="confirm-backdrop"></div>
+<div class="relative w-full max-w-[460px] bg-white rounded-[12px] border border-[#D9DDE3] shadow-xl p-space-lg z-10 animate-in fade-in zoom-in-95 duration-150">
+<div class="w-12 h-12 rounded-full bg-error-container text-error flex items-center justify-center mb-space-md">
+<span class="material-symbols-outlined text-[26px]">power_settings_new</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-semibold text-[#1C2430] mb-space-xs" id="confirm-title">Desactivar especialidad</h3>
+<p class="font-body-md text-body-md text-[#5B6573] mb-space-lg leading-relaxed">
+        Los pacientes dejarán de verla al buscar citas. Las citas existentes se conservan.
+      </p>
+<div class="flex items-center justify-end gap-space-sm">
+<button class="h-12 px-space-md text-[#5B6573] hover:text-[#1C2430] font-label-lg text-label-lg font-semibold rounded-[8px]" id="cancel-confirm-modal" type="button">
+          Cancelar
+        </button>
+<button class="h-12 px-space-lg bg-[#BA1A1A] hover:bg-[#93000A] text-white font-label-lg text-label-lg font-semibold rounded-[8px] transition-colors shadow-sm" id="action-confirm-modal" type="button">
+          Desactivar especialidad
+        </button>
+</div>
+</div>
+</div>
+<div class="fixed bottom-6 right-6 z-50 flex items-center gap-space-sm bg-[#1C2430] text-white px-space-lg py-3.5 rounded-[8px] shadow-xl transition-all duration-300 transform translate-y-16 opacity-0 pointer-events-none" id="toast-notification">
+<span class="material-symbols-outlined text-[#85D4D3] text-[20px]">check_circle</span>
+<span class="font-body-md text-body-md font-medium text-white" id="toast-message">Especialidad actualizada correctamente.</span>
+</div>
+</div>
+<script>
+  (function() {
+    const modalForm = document.getElementById('modal-form-container');
+    const modalConfirm = document.getElementById('modal-confirm-container');
+    const toast = document.getElementById('toast-notification');
+    const toastMessage = document.getElementById('toast-message');
+    const modalTitle = document.getElementById('modal-title');
+    const submitBtn = document.getElementById('submit-form-modal');
+    const nameInput = document.getElementById('specialty-name-input');
+    const nameErrorBox = document.getElementById('name-error-box');
+    const toggleErrorBtn = document.getElementById('toggle-error-demo');
+    const durationBtns = document.querySelectorAll('.duration-opt');
+
+    let activeDuration = '30';
+    let currentActionTargetId = null;
+
+    function showToast(message) {
+      toastMessage.textContent = message || 'Especialidad actualizada correctamente.';
+      toast.classList.remove('translate-y-16', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-16', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    function resetFormState() {
+      nameInput.value = '';
+      nameErrorBox.classList.add('hidden');
+      nameInput.classList.remove('bg-[#FEF3F2]', 'text-[#B42318]');
+      setDuration('30');
+    }
+
+    function setDuration(val) {
+      activeDuration = val;
+      durationBtns.forEach(btn => {
+        if (btn.getAttribute('data-val') === val) {
+          btn.className = 'duration-opt h-10 rounded-[6px] font-label-lg text-label-lg font-semibold flex items-center justify-center transition-all bg-[#0F6E6E] text-white shadow-sm';
+        } else {
+          btn.className = 'duration-opt h-10 rounded-[6px] font-label-lg text-label-lg font-semibold flex items-center justify-center transition-all text-[#5B6573] hover:text-[#1C2430]';
+        }
+      });
+    }
+
+    durationBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setDuration(btn.getAttribute('data-val'));
+      });
+    });
+
+    // Toggle error preview for demonstration
+    toggleErrorBtn.addEventListener('click', () => {
+      const isHidden = nameErrorBox.classList.contains('hidden');
+      if (isHidden) {
+        nameErrorBox.classList.remove('hidden');
+        nameInput.classList.add('bg-[#FEF3F2]', 'text-[#B42318]');
+        nameInput.value = 'Cardiología';
+      } else {
+        nameErrorBox.classList.add('hidden');
+        nameInput.classList.remove('bg-[#FEF3F2]', 'text-[#B42318]');
+      }
+    });
+
+    // New specialty trigger
+    document.getElementById('open-new-modal').addEventListener('click', () => {
+      resetFormState();
+      modalTitle.textContent = 'Nueva especialidad';
+      submitBtn.textContent = 'Crear especialidad';
+      modalForm.classList.remove('hidden');
+    });
+
+    // Close Modals
+    const closeForm = () => modalForm.classList.add('hidden');
+    document.getElementById('close-form-modal').addEventListener('click', closeForm);
+    document.getElementById('cancel-form-modal').addEventListener('click', closeForm);
+    document.getElementById('modal-backdrop').addEventListener('click', closeForm);
+
+    const closeConfirm = () => modalConfirm.classList.add('hidden');
+    document.getElementById('cancel-confirm-modal').addEventListener('click', closeConfirm);
+    document.getElementById('confirm-backdrop').addEventListener('click', closeConfirm);
+
+    // Edit Specialty triggers
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        resetFormState();
+        const row = e.target.closest('tr');
+        const name = e.target.getAttribute('data-name');
+        const duration = e.target.getAttribute('data-duration');
+
+        modalTitle.textContent = 'Editar especialidad';
+        submitBtn.textContent = 'Guardar cambios';
+        nameInput.value = name;
+        setDuration(duration);
+        modalForm.classList.remove('hidden');
+      });
+    });
+
+    // Submit form modal action
+    submitBtn.addEventListener('click', () => {
+      if (!nameInput.value.trim()) {
+        nameErrorBox.classList.remove('hidden');
+        nameErrorBox.querySelector('span:last-child').textContent = 'El nombre de la especialidad es obligatorio';
+        return;
+      }
+      closeForm();
+      showToast('Especialidad actualizada correctamente.');
+    });
+
+    // Handle Activar / Desactivar
+    document.querySelectorAll('.btn-toggle-status').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const action = e.target.getAttribute('data-action');
+        const id = e.target.getAttribute('data-id');
+        const name = e.target.getAttribute('data-name');
+        currentActionTargetId = id;
+
+        if (action === 'deactivate') {
+          modalConfirm.classList.remove('hidden');
+        } else {
+          // Activar directamente
+          showToast(`Especialidad ${name} activada correctamente.`);
+        }
+      });
+    });
+
+    // Confirm Deactivation
+    document.getElementById('action-confirm-modal').addEventListener('click', () => {
+      closeConfirm();
+      showToast('Especialidad actualizada correctamente.');
+    });
+  })();
+</script></div></main></div></body></html>
