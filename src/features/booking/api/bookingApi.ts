@@ -118,3 +118,8 @@ export async function fetchMyAppointments(query: MyAppointmentsQuery = {}): Prom
 export function fetchMyAppointment(id: number): Promise<PatientAppointment> {
   return apiRequest<PatientAppointment>(`/api/v1/appointments/${id}`);
 }
+
+/** Cancela una cita propia futura que siga REQUESTED o APPROVED (HU-017). */
+export function cancelMyAppointment(id: number): Promise<AppointmentResponse> {
+  return apiRequest<AppointmentResponse>(`/api/v1/appointments/${id}/cancel`, { method: 'POST' });
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { AppointmentStatus, fetchMyAppointment, fetchMyAppointments, PatientAppointment } from '../api/bookingApi';
+import { AppointmentStatus, cancelMyAppointment, fetchMyAppointment, fetchMyAppointments, PatientAppointment } from '../api/bookingApi';
+import { Button } from '../../../shared/components/Button';
 import { AlertBanner } from '../../../shared/components/AlertBanner';
 import { EmptyState, PageHeader, SiteBadge, SkeletonRows } from '../../../shared/components/Feedback';
 import { LoadErrorBanner, TableCard, Td, TextAction, Th } from '../../admin/components/AdminUi';
@@ -37,6 +38,8 @@ export const MyAppointmentsPage: React.FC = () => {
   const [selected, setSelected] = useState<PatientAppointment | null>(null);
   const [detailStatus, setDetailStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [retryToken, setRetryToken] = useState(0);
+  const [confirmingCancel, setConfirmingCancel] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,6 +58,7 @@ export const MyAppointmentsPage: React.FC = () => {
   }, [statusFilter, from, to, retryToken]);
 
   const showDetail = (id: number) => {
+    setConfirmingCancel(false);
     setDetailStatus('loading');
     setSelected(null);
     fetchMyAppointment(id)
@@ -63,6 +67,17 @@ export const MyAppointmentsPage: React.FC = () => {
         setDetailStatus('idle');
       })
       .catch(() => setDetailStatus('error'));
+  };
+
+  const cancelSelected = () => {
+    if (!selected) return;
+    setCancelling(true);
+    cancelMyAppointment(selected.id).then((result) => {
+      const cancelled = { ...selected, status: result.status };
+      setSelected(cancelled);
+      setItems((current) => current.map((item) => item.id === cancelled.id ? cancelled : item));
+      setConfirmingCancel(false);
+    }).catch(() => setDetailStatus('error')).finally(() => setCancelling(false));
   };
 
   return (
@@ -104,7 +119,7 @@ export const MyAppointmentsPage: React.FC = () => {
 
       {detailStatus === 'loading' && <div aria-busy="true" className="h-28 rounded-xl bg-white border border-[#D9DDE3] animate-pulse" role="status"><span className="sr-only">Cargando detalle</span></div>}
       {detailStatus === 'error' && <AlertBanner description="No pudimos cargar el detalle de esta cita." title="Error de conexion" />}
-      {selected && <section aria-label="Detalle de cita" className="bg-white border border-[#D9DDE3] rounded-xl p-5 shadow-[0_2px_8px_rgba(28,36,48,0.06)]"><div className="flex items-start justify-between gap-4"><div><h2 className="text-xl font-bold text-[#1C2430]">{selected.specialtyName}</h2><p className="text-[#5B6573] mt-1">{selected.professionalName} · {selected.siteName}</p></div><StatusBadge status={selected.status} /></div><dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 text-sm"><div><dt className="text-[#5B6573]">Fecha y hora</dt><dd className="font-semibold mt-1">{formatDate(selected.date)} · {formatTimeRange(selected.startTime, selected.endTime)}</dd></div><div><dt className="text-[#5B6573]">Duracion</dt><dd className="font-semibold mt-1">{formatDuration(selected.durationMinutes)}</dd></div></dl>{selected.rejectionReason && <AlertBanner description={selected.rejectionReason} title="Motivo de rechazo" />}</section>}
+      {selected && <section aria-label="Detalle de cita" className="bg-white border border-[#D9DDE3] rounded-xl p-5 shadow-[0_2px_8px_rgba(28,36,48,0.06)]"><div className="flex items-start justify-between gap-4"><div><h2 className="text-xl font-bold text-[#1C2430]">{selected.specialtyName}</h2><p className="text-[#5B6573] mt-1">{selected.professionalName} · {selected.siteName}</p></div><StatusBadge status={selected.status} /></div><dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 text-sm"><div><dt className="text-[#5B6573]">Fecha y hora</dt><dd className="font-semibold mt-1">{formatDate(selected.date)} · {formatTimeRange(selected.startTime, selected.endTime)}</dd></div><div><dt className="text-[#5B6573]">Duracion</dt><dd className="font-semibold mt-1">{formatDuration(selected.durationMinutes)}</dd></div></dl>{selected.rejectionReason && <AlertBanner description={selected.rejectionReason} title="Motivo de rechazo" />}{(selected.status === 'REQUESTED' || selected.status === 'APPROVED') && <div className="mt-5 flex flex-wrap gap-3">{confirmingCancel ? <><p className="w-full text-sm text-[#5B6573]">Al cancelar, el horario volvera a estar disponible.</p><Button disabled={cancelling} fullWidth={false} onClick={() => setConfirmingCancel(false)} type="button" variant="secondary">Volver</Button><Button fullWidth={false} isLoading={cancelling} loadingText="Cancelando..." onClick={cancelSelected} type="button" variant="danger">Confirmar cancelacion</Button></> : <Button fullWidth={false} onClick={() => setConfirmingCancel(true)} type="button" variant="danger">Cancelar cita</Button>}</div>}</section>}
     </div>
   );
 };
