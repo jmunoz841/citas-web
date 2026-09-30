@@ -123,3 +123,16 @@ export function fetchMyAppointment(id: number): Promise<PatientAppointment> {
 export function cancelMyAppointment(id: number): Promise<AppointmentResponse> {
   return apiRequest<AppointmentResponse>(`/api/v1/appointments/${id}/cancel`, { method: 'POST' });
 }
+
+export interface AppointmentHistoryEntry {
+  status: AppointmentStatus;
+  source: string;
+  actorUserId: number | null;
+  changedAt: string;
+  reason: string | null;
+}
+
+export async function fetchMyAppointmentHistory(id: number): Promise<AppointmentHistoryEntry[]> {
+  const res = await apiRequest<ItemsResponse<AppointmentHistoryEntry>>(`/api/v1/appointments/${id}/history`);
+  return res.items ?? [];
+}

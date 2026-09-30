@@ -1,4 +1,4 @@
-import { apiRequest, ItemsResponse } from '../../../shared/api/apiClient';
+import { apiRequest, ItemsResponse } from "../../../shared/api/apiClient";
 
 // DTOs de `citas-api/docs/contratos/disponibilidad.md` (HU-010).
 
@@ -12,7 +12,11 @@ export interface ProfessionalProfile {
   firstNames: string;
   lastNames: string;
   active: boolean;
-  primarySpecialty: { id: number; name: string; durationMinutes: number } | null;
+  primarySpecialty: {
+    id: number;
+    name: string;
+    durationMinutes: number;
+  } | null;
   sites: Site[];
 }
 
@@ -33,11 +37,21 @@ export interface BlockInput {
   endTime: string;
   siteCode: string;
 }
+export interface ProfessionalAppointment {
+  id: number;
+  patientName: string;
+  specialtyName: string;
+  siteCode: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  durationMinutes: number;
+}
 
-const BLOCKS = '/api/v1/professional/availability-blocks';
+const BLOCKS = "/api/v1/professional/availability-blocks";
 
 export function getMyProfile(): Promise<ProfessionalProfile> {
-  return apiRequest<ProfessionalProfile>('/api/v1/professional/me');
+  return apiRequest<ProfessionalProfile>("/api/v1/professional/me");
 }
 
 /** Todos los bloques propios; la semana y la sede se filtran en el cliente. */
@@ -47,13 +61,39 @@ export async function listMyBlocks(): Promise<AvailabilityBlock[]> {
 }
 
 export function createBlock(input: BlockInput): Promise<AvailabilityBlock> {
-  return apiRequest<AvailabilityBlock>(BLOCKS, { method: 'POST', body: input });
+  return apiRequest<AvailabilityBlock>(BLOCKS, { method: "POST", body: input });
 }
 
-export function updateBlock(id: number, input: BlockInput): Promise<AvailabilityBlock> {
-  return apiRequest<AvailabilityBlock>(`${BLOCKS}/${id}`, { method: 'PATCH', body: input });
+export function updateBlock(
+  id: number,
+  input: BlockInput,
+): Promise<AvailabilityBlock> {
+  return apiRequest<AvailabilityBlock>(`${BLOCKS}/${id}`, {
+    method: "PATCH",
+    body: input,
+  });
 }
 
 export function deleteBlock(id: number): Promise<void> {
-  return apiRequest<void>(`${BLOCKS}/${id}`, { method: 'DELETE' });
+  return apiRequest<void>(`${BLOCKS}/${id}`, { method: "DELETE" });
+}
+export async function listMyAppointments(
+  from: string,
+  to: string,
+  siteCode?: string,
+): Promise<ProfessionalAppointment[]> {
+  const res = await apiRequest<ItemsResponse<ProfessionalAppointment>>(
+    "/api/v1/professional/appointments",
+    { query: { from, to, siteCode } },
+  );
+  return res.items ?? [];
+}
+export function closeMyAppointment(
+  id: number,
+  result: "COMPLETED" | "NO_SHOW",
+): Promise<{ id: number; status: string }> {
+  return apiRequest(`/api/v1/professional/appointments/${id}/close`, {
+    method: "POST",
+    query: { result },
+  });
 }
