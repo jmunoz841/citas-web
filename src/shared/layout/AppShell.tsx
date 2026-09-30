@@ -39,7 +39,10 @@ function navFor(role: Role, pendingCount: number | null): NavItem[] {
   if (role === 'PROFESSIONAL') {
     return [{ to: '/agenda', label: 'Mi agenda', icon: 'calendar_month' }];
   }
-  return [{ to: '/inicio', label: 'Inicio', icon: 'home' }];
+  return [
+    { to: '/inicio', label: 'Inicio', icon: 'home' },
+    { to: '/mis-citas', label: 'Mis citas', icon: 'calendar_month' },
+  ];
 }
 
 const NavItems: React.FC<{ items: NavItem[]; compact?: boolean; onNavigate?: () => void }> = ({
