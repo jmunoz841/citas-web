@@ -13,6 +13,7 @@ import { AgendaPage } from './features/agenda/pages/AgendaPage';
 import { PatientHomePage } from './features/booking/pages/PatientHomePage';
 import { MyAppointmentsPage } from './features/booking/pages/MyAppointmentsPage';
 import { ProfilePage } from './features/auth/pages/ProfilePage';
+import { InsuranceCatalogPage } from './features/admin/pages/InsuranceCatalogPage';
 
 /** Ruta protegida por rol dentro de la estructura común de la app. */
 const Protected: React.FC<{ role: Role; children: React.ReactNode }> = ({ role, children }) => (
@@ -37,6 +38,7 @@ export default function App() {
             <Route element={<Protected role="ADMIN"><RequestsPage /></Protected>} path="/admin/solicitudes" />
             <Route element={<Protected role="ADMIN"><SpecialtiesPage /></Protected>} path="/admin/especialidades" />
             <Route element={<Protected role="ADMIN"><ProfessionalsPage /></Protected>} path="/admin/profesionales" />
+            <Route element={<Protected role="ADMIN"><InsuranceCatalogPage /></Protected>} path="/admin/eps" />
 
             <Route element={<Protected role="PROFESSIONAL"><AgendaPage /></Protected>} path="/agenda" />
 

@@ -34,6 +34,7 @@ function navFor(role: Role, pendingCount: number | null): NavItem[] {
       { to: '/admin/solicitudes', label: 'Solicitudes pendientes', icon: 'inbox', badge: pendingCount },
       { to: '/admin/especialidades', label: 'Especialidades', icon: 'medical_services' },
       { to: '/admin/profesionales', label: 'Profesionales', icon: 'stethoscope' },
+      { to: '/admin/eps', label: 'EPS y planes', icon: 'health_and_safety' },
     ];
   }
   if (role === 'PROFESSIONAL') {

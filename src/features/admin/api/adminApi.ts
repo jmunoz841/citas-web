@@ -47,6 +47,8 @@ export interface SpecialtyInput {
   name: string;
   durationMinutes: DurationMinutes;
 }
+export interface InsuranceProvider { id: number; name: string; active: boolean; }
+export interface InsurancePlan { id: number; epsId: number; name: string; active: boolean; }
 
 // --- Profesionales (HU-008, HU-009) ---
 
@@ -118,4 +120,12 @@ export const adminApi = {
 
   setProfessionalActive: (id: number, active: boolean) =>
     apiRequest<Professional>(`${ADMIN}/professionals/${id}/active`, { method: 'PATCH', body: { active } }),
+  listEps: () => apiRequest<ItemsResponse<InsuranceProvider>>(`${ADMIN}/eps`).then((r) => r.items),
+  createEps: (name: string) => apiRequest<InsuranceProvider>(`${ADMIN}/eps`, { method: 'POST', body: { name } }),
+  updateEps: (id: number, name: string) => apiRequest<InsuranceProvider>(`${ADMIN}/eps/${id}`, { method: 'PATCH', body: { name } }),
+  setEpsActive: (id: number, active: boolean) => apiRequest<InsuranceProvider>(`${ADMIN}/eps/${id}/active`, { method: 'PATCH', body: { active } }),
+  listPlans: (id: number) => apiRequest<ItemsResponse<InsurancePlan>>(`${ADMIN}/eps/${id}/plans`).then((r) => r.items),
+  createPlan: (id: number, name: string) => apiRequest<InsurancePlan>(`${ADMIN}/eps/${id}/plans`, { method: 'POST', body: { name } }),
+  updatePlan: (id: number, name: string) => apiRequest<InsurancePlan>(`${ADMIN}/eps/plans/${id}`, { method: 'PATCH', body: { name } }),
+  setPlanActive: (id: number, active: boolean) => apiRequest<InsurancePlan>(`${ADMIN}/eps/plans/${id}/active`, { method: 'PATCH', body: { active } }),
 };
