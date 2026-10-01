@@ -42,6 +42,7 @@ function navFor(role: Role, pendingCount: number | null): NavItem[] {
   return [
     { to: '/inicio', label: 'Inicio', icon: 'home' },
     { to: '/mis-citas', label: 'Mis citas', icon: 'calendar_month' },
+    { to: '/perfil', label: 'Mi perfil', icon: 'person' },
   ];
 }
 

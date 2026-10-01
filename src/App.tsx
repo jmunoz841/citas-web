@@ -12,6 +12,7 @@ import { ProfessionalsPage } from './features/admin/pages/ProfessionalsPage';
 import { AgendaPage } from './features/agenda/pages/AgendaPage';
 import { PatientHomePage } from './features/booking/pages/PatientHomePage';
 import { MyAppointmentsPage } from './features/booking/pages/MyAppointmentsPage';
+import { ProfilePage } from './features/auth/pages/ProfilePage';
 
 /** Ruta protegida por rol dentro de la estructura común de la app. */
 const Protected: React.FC<{ role: Role; children: React.ReactNode }> = ({ role, children }) => (
@@ -41,6 +42,7 @@ export default function App() {
 
             <Route element={<Protected role="USER"><PatientHomePage /></Protected>} path="/inicio" />
             <Route element={<Protected role="USER"><MyAppointmentsPage /></Protected>} path="/mis-citas" />
+            <Route element={<Protected role="USER"><ProfilePage /></Protected>} path="/perfil" />
 
             <Route element={<Navigate replace to="/" />} path="*" />
           </Routes>
