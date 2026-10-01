@@ -5,6 +5,7 @@ import {
   LoginRequest,
   ProblemDetails,
   RefreshRequest,
+  ResetPasswordRequest,
   RegisterRequest,
   RegisterResponse,
   SessionResponse,
@@ -118,6 +119,18 @@ export class HttpAuthApi implements AuthApi {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
+    });
+  }
+
+  async requestPasswordReset(email: string): Promise<void> {
+    return this.executeFetch<void>(`${this.baseUrl}/api/v1/auth/password-reset-requests`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }),
+    });
+  }
+
+  async resetPassword(data: ResetPasswordRequest): Promise<void> {
+    return this.executeFetch<void>(`${this.baseUrl}/api/v1/auth/password-resets`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data),
     });
   }
 

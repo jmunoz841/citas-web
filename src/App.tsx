@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LoginPage } from './features/auth/pages/LoginPage';
 import { RegisterPage } from './features/auth/pages/RegisterPage';
+import { PasswordRecoveryPage, ResetPasswordPage } from './features/auth/pages/PasswordRecoveryPage';
 import { RequireRole, Role, RootRedirect, SessionProvider } from './features/auth/session/SessionContext';
 import { AppShell } from './shared/layout/AppShell';
 import { ToastProvider } from './shared/components/Toast';
@@ -28,6 +29,8 @@ export default function App() {
             <Route element={<RootRedirect />} path="/" />
             <Route element={<LoginPage />} path="/login" />
             <Route element={<RegisterPage />} path="/registro" />
+            <Route element={<PasswordRecoveryPage />} path="/recuperar-contrasena" />
+            <Route element={<ResetPasswordPage />} path="/restablecer-contrasena" />
 
             <Route element={<Navigate replace to="/admin/solicitudes" />} path="/admin" />
             <Route element={<Protected role="ADMIN"><RequestsPage /></Protected>} path="/admin/solicitudes" />
