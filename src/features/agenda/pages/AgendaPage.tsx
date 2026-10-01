@@ -59,6 +59,7 @@ export const AgendaPage: React.FC = () => {
   const [appointments, setAppointments] = useState<ProfessionalAppointment[]>(
     [],
   );
+  const [closingAppointmentId, setClosingAppointmentId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [inactive, setInactive] = useState(false);
@@ -103,10 +104,23 @@ export const AgendaPage: React.FC = () => {
     siteFilter === ALL_SITES
       ? appointments
       : appointments.filter((a) => a.siteCode === siteFilter);
-  const closeAppointment = (id: number, result: "COMPLETED" | "NO_SHOW") => {
-    void closeMyAppointment(id, result).then(() =>
-      setAppointments((current) => current.filter((a) => a.id !== id)),
-    );
+  const canCloseAppointment = (appointment: ProfessionalAppointment) => {
+    const now = new Date();
+    const currentTime = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+    return appointment.date < toIsoDate(now) || (appointment.date === toIsoDate(now) && appointment.startTime <= currentTime);
+  };
+  const closeAppointment = (appointment: ProfessionalAppointment, result: "COMPLETED" | "NO_SHOW") => {
+    if (!canCloseAppointment(appointment)) return;
+    const action = result === "COMPLETED" ? "atendida" : "no asistió";
+    if (!window.confirm(`¿Confirmas que la cita de ${appointment.patientName} fue ${action}?`)) return;
+    setClosingAppointmentId(appointment.id);
+    void closeMyAppointment(appointment.id, result)
+      .then(() => {
+        setAppointments((current) => current.filter((item) => item.id !== appointment.id));
+        showToast(`Cita marcada como ${action}.`);
+      })
+      .catch((error: unknown) => showToast(error instanceof ApiError ? error.detail : "No pudimos actualizar la cita.", "error"))
+      .finally(() => setClosingAppointmentId(null));
   };
   const sites = profile?.sites ?? [];
 
@@ -198,7 +212,7 @@ export const AgendaPage: React.FC = () => {
         </div>
       </AlertBanner>
     );
-  } else if (weekBlocks.length === 0) {
+  } else if (weekBlocks.length === 0 && visibleAppointments.length === 0) {
     content = (
       <div className="bg-white border border-[#D9DDE3] rounded-xl">
         <EmptyState
@@ -235,8 +249,12 @@ export const AgendaPage: React.FC = () => {
   } else {
     content = (
       <WeekCalendar
+        appointments={visibleAppointments}
         blocks={visibleBlocks}
+        canCloseAppointment={canCloseAppointment}
+        closingAppointmentId={closingAppointmentId}
         days={days}
+        onCloseAppointment={closeAppointment}
         onSelectBlock={openBlock}
         today={todayIso}
       />
@@ -304,7 +322,9 @@ export const AgendaPage: React.FC = () => {
                 <Button
                   fullWidth={false}
                   size="sm"
-                  onClick={() => closeAppointment(a.id, "COMPLETED")}
+                  disabled={!canCloseAppointment(a) || closingAppointmentId === a.id}
+                  title={canCloseAppointment(a) ? undefined : "Disponible desde la hora de inicio"}
+                  onClick={() => closeAppointment(a, "COMPLETED")}
                   type="button"
                 >
                   Atendida
@@ -313,7 +333,9 @@ export const AgendaPage: React.FC = () => {
                   fullWidth={false}
                   size="sm"
                   variant="secondary"
-                  onClick={() => closeAppointment(a.id, "NO_SHOW")}
+                  disabled={!canCloseAppointment(a) || closingAppointmentId === a.id}
+                  title={canCloseAppointment(a) ? undefined : "Disponible desde la hora de inicio"}
+                  onClick={() => closeAppointment(a, "NO_SHOW")}
                   type="button"
                 >
                   No asistió

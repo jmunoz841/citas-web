@@ -1,5 +1,5 @@
 import React from 'react';
-import { AvailabilityBlock } from '../api/agendaApi';
+import { AvailabilityBlock, ProfessionalAppointment } from '../api/agendaApi';
 import { blockAccessibleName, blockRange } from '../utils/blocks';
 import { formatLongDay, formatShortDay, minutesToTime, timeToMinutes, toIsoDate, weekdayName } from '../utils/dates';
 
@@ -12,16 +12,24 @@ interface WeekCalendarProps {
   days: Date[];
   today: string;
   blocks: AvailabilityBlock[];
+  appointments: ProfessionalAppointment[];
+  canCloseAppointment: (appointment: ProfessionalAppointment) => boolean;
+  closingAppointmentId: number | null;
+  onCloseAppointment: (appointment: ProfessionalAppointment, result: 'COMPLETED' | 'NO_SHOW') => void;
   onSelectBlock: (block: AvailabilityBlock, trigger: HTMLElement) => void;
 }
 
 /** Eje 07:00–19:00; se amplía si algún bloque visible queda fuera. */
-function axisRange(blocks: AvailabilityBlock[]): [number, number] {
+function axisRange(blocks: AvailabilityBlock[], appointments: ProfessionalAppointment[]): [number, number] {
   let start = DEFAULT_START;
   let end = DEFAULT_END;
   for (const b of blocks) {
     start = Math.min(start, Math.floor(timeToMinutes(b.startTime) / 60) * 60);
     end = Math.max(end, Math.ceil(timeToMinutes(b.endTime) / 60) * 60);
+  }
+  for (const appointment of appointments) {
+    start = Math.min(start, Math.floor(timeToMinutes(appointment.startTime) / 60) * 60);
+    end = Math.max(end, Math.ceil(timeToMinutes(appointment.endTime) / 60) * 60);
   }
   return [start, end];
 }
@@ -58,8 +66,8 @@ export const BlockTile: React.FC<{
 );
 
 /** Calendario semanal de lunes a sábado (tablet y escritorio). En tablet se desplaza en horizontal. */
-export const WeekCalendar: React.FC<WeekCalendarProps> = ({ days, today, blocks, onSelectBlock }) => {
-  const [axisStart, axisEnd] = axisRange(blocks);
+export const WeekCalendar: React.FC<WeekCalendarProps> = ({ days, today, blocks, appointments, canCloseAppointment, closingAppointmentId, onCloseAppointment, onSelectBlock }) => {
+  const [axisStart, axisEnd] = axisRange(blocks, appointments);
   const rows = (axisEnd - axisStart) / 30;
   const height = rows * ROW_PX;
   const hours = Array.from({ length: (axisEnd - axisStart) / 60 + 1 }, (_, i) => axisStart + i * 60);
@@ -103,6 +111,7 @@ export const WeekCalendar: React.FC<WeekCalendarProps> = ({ days, today, blocks,
           {days.map((day) => {
             const iso = toIsoDate(day);
             const dayBlocks = blocks.filter((b) => b.date === iso);
+            const dayAppointments = appointments.filter((appointment) => appointment.date === iso);
             return (
               <div
                 key={iso}
@@ -114,7 +123,7 @@ export const WeekCalendar: React.FC<WeekCalendarProps> = ({ days, today, blocks,
                   backgroundPositionY: ROW_PX / 2,
                 }}
               >
-                {dayBlocks.length === 0 && (
+                {dayBlocks.length === 0 && dayAppointments.length === 0 && (
                   <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center text-sm text-[#8E9A9D]">Sin horarios</span>
                 )}
                 {dayBlocks.map((block) => {
@@ -129,6 +138,22 @@ export const WeekCalendar: React.FC<WeekCalendarProps> = ({ days, today, blocks,
                       onSelect={onSelectBlock}
                       style={{ top: top + 1, height: blockHeight - 2 }}
                     />
+                  );
+                })}
+                {dayAppointments.map((appointment) => {
+                  const top = ((timeToMinutes(appointment.startTime) - axisStart) / 30) * ROW_PX + ROW_PX / 2;
+                  const appointmentHeight = Math.max((timeToMinutes(appointment.endTime) - timeToMinutes(appointment.startTime)) / 30, 1) * ROW_PX;
+                  const available = canCloseAppointment(appointment);
+                  const closing = closingAppointmentId === appointment.id;
+                  return (
+                    <article key={appointment.id} aria-label={`Cita con ${appointment.patientName}`} className="absolute z-10 left-3 right-3 rounded-lg border border-[#805AD5]/45 bg-[#F3EEFF] px-2 py-1.5 text-xs shadow-sm" style={{ top: top + 1, minHeight: appointmentHeight - 2 }}>
+                      <p className="font-semibold text-[#4C2A85] tabular-nums">{appointment.startTime.slice(0, 5)} · {appointment.patientName}</p>
+                      <p className="text-[#5B6573] truncate">{appointment.specialtyName}</p>
+                      <div className="mt-1 flex gap-1">
+                        <button disabled={!available || closing} title={available ? undefined : 'Disponible desde la hora de inicio'} className="rounded bg-[#4C2A85] px-1.5 py-0.5 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50" onClick={() => onCloseAppointment(appointment, 'COMPLETED')} type="button">Atendida</button>
+                        <button disabled={!available || closing} title={available ? undefined : 'Disponible desde la hora de inicio'} className="rounded border border-[#805AD5] px-1.5 py-0.5 font-semibold text-[#4C2A85] disabled:cursor-not-allowed disabled:opacity-50" onClick={() => onCloseAppointment(appointment, 'NO_SHOW')} type="button">No asistió</button>
+                      </div>
+                    </article>
                   );
                 })}
               </div>
