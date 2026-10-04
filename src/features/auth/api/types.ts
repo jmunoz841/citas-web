@@ -39,6 +39,11 @@ export interface RefreshRequest {
   refreshToken: string;
 }
 
+export interface ResetPasswordRequest {
+  token: string;
+  password: string;
+}
+
 export interface SessionResponse {
   userId: number;
   email: string;
@@ -56,5 +61,7 @@ export interface AuthApi {
   login(data: LoginRequest): Promise<AuthTokens>;
   refresh(refreshToken: string): Promise<AuthTokens>;
   logout(refreshToken: string): Promise<void>;
+  requestPasswordReset(email: string): Promise<void>;
+  resetPassword(data: ResetPasswordRequest): Promise<void>;
   getSession(accessToken: string): Promise<SessionResponse>;
 }

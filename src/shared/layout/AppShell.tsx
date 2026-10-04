@@ -34,12 +34,17 @@ function navFor(role: Role, pendingCount: number | null): NavItem[] {
       { to: '/admin/solicitudes', label: 'Solicitudes pendientes', icon: 'inbox', badge: pendingCount },
       { to: '/admin/especialidades', label: 'Especialidades', icon: 'medical_services' },
       { to: '/admin/profesionales', label: 'Profesionales', icon: 'stethoscope' },
+      { to: '/admin/eps', label: 'EPS y planes', icon: 'health_and_safety' },
     ];
   }
   if (role === 'PROFESSIONAL') {
     return [{ to: '/agenda', label: 'Mi agenda', icon: 'calendar_month' }];
   }
-  return [{ to: '/inicio', label: 'Inicio', icon: 'home' }];
+  return [
+    { to: '/inicio', label: 'Inicio', icon: 'home' },
+    { to: '/mis-citas', label: 'Mis citas', icon: 'calendar_month' },
+    { to: '/perfil', label: 'Mi perfil', icon: 'person' },
+  ];
 }
 
 const NavItems: React.FC<{ items: NavItem[]; compact?: boolean; onNavigate?: () => void }> = ({
@@ -99,11 +104,20 @@ export const AppShell: React.FC<{ role: Role; children: React.ReactNode }> = ({ 
   const [subtitle, setSubtitle] = useState<string | null>(null);
   const [loggingOut, setLoggingOut] = useState(false);
 
+  // Badge de la bandeja: citas especializadas solicitadas + reprogramaciones pendientes (HU-022).
   const refreshPendingCount = useCallback(() => {
     if (role !== 'ADMIN') return;
-    apiRequest<ItemsResponse<unknown>>('/api/v1/admin/appointments/requests')
-      .then((res) => setPendingCount(res.items.length))
-      .catch(() => setPendingCount(null));
+    void Promise.allSettled([
+      apiRequest<ItemsResponse<unknown>>('/api/v1/admin/appointments/requests'),
+      apiRequest<ItemsResponse<unknown>>('/api/v1/admin/reschedule-requests'),
+    ]).then(([requests, reschedules]) => {
+      if (requests.status === 'rejected') {
+        setPendingCount(null);
+        return;
+      }
+      const extra = reschedules.status === 'fulfilled' ? reschedules.value.items.length : 0;
+      setPendingCount(requests.value.items.length + extra);
+    });
   }, [role]);
 
   useEffect(() => {

@@ -163,3 +163,20 @@ export function validateLoginForm(values: LoginFormValues): LoginFormErrors {
 
   return errors;
 }
+
+export interface ResetPasswordFormValues { token: string; password: string; confirmPassword: string; }
+export type ResetPasswordFormErrors = Partial<Record<keyof ResetPasswordFormValues, string>>;
+const RESET_CODE_REQUIRED = 'Ingresa el código de recuperación.';
+
+export function validateResetPasswordForm(values: ResetPasswordFormValues): ResetPasswordFormErrors {
+  const errors: ResetPasswordFormErrors = {};
+  if (!values.token.trim()) errors.token = RESET_CODE_REQUIRED;
+  const passwordError = validateRegisterField('password', {
+    firstNames: 'x', lastNames: 'x', documentType: 'CC', documentNumber: '123', email: 'a@b.co', phone: '3001234567',
+    password: values.password, confirmPassword: values.confirmPassword,
+  });
+  if (passwordError) errors.password = passwordError;
+  const confirmationError = values.confirmPassword !== values.password ? 'Las contraseñas no coinciden.' : undefined;
+  if (confirmationError) errors.confirmPassword = confirmationError;
+  return errors;
+}

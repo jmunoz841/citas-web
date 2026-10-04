@@ -174,15 +174,12 @@ export const LoginPage: React.FC = () => {
             onChange={(e) => handleFieldChange('password', e.target.value)}
             placeholder="••••••••••••"
             rightLink={
-              <button
-                aria-disabled="true"
+              <Link
                 className="text-xs text-[#0F6E6E] hover:text-[#084747] font-medium hover:underline transition-colors focus-visible:outline-none focus-visible:underline cursor-pointer"
-                onClick={(e) => e.preventDefault()}
-                title="Disponible próximamente"
-                type="button"
+                to="/recuperar-contrasena"
               >
                 ¿Olvidaste tu contraseña?
-              </button>
+              </Link>
             }
             value={values.password}
           />
