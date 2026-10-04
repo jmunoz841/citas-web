@@ -3,19 +3,15 @@ import { AlertBanner } from '../../../shared/components/AlertBanner';
 import { Button } from '../../../shared/components/Button';
 import { Modal } from '../../../shared/components/Modal';
 import { ApiError } from '../../../shared/api/errors';
-import { adminApi, AppointmentRequest, MAX_REASON_LENGTH } from '../api/adminApi';
+import { adminApi, AppointmentRequest, MAX_REASON_LENGTH, RescheduleRequest } from '../api/adminApi';
 import { ErrorMessage, toErrorMessage } from './AdminUi';
 import { formatDate, formatDuration, formatTimeRange } from './format';
 
 const REASON_REQUIRED = 'El motivo del rechazo es obligatorio';
 
-/** 409 INVALID_STATUS_TRANSITION: otro ADMIN ya resolvió la cita. */
-const ConflictAlert: React.FC<{ onRefresh: () => void }> = ({ onRefresh }) => (
-  <AlertBanner
-    description="La cita ya no está pendiente de aprobación. Actualiza la lista."
-    title="Esta solicitud ya fue resuelta"
-    tone="warning"
-  >
+/** 409: otro ADMIN ya resolvió la solicitud, o venció (D-033). */
+const ConflictAlert: React.FC<{ description: string; onRefresh: () => void }> = ({ description, onRefresh }) => (
+  <AlertBanner description={description} title="Esta solicitud ya fue resuelta" tone="warning">
     <div>
       <Button fullWidth={false} leadingIcon="refresh" onClick={onRefresh} size="sm" type="button" variant="secondary">
         Actualizar lista
@@ -25,12 +21,12 @@ const ConflictAlert: React.FC<{ onRefresh: () => void }> = ({ onRefresh }) => (
 );
 
 function isConflict(error: unknown): boolean {
-  return error instanceof ApiError && (error.code === 'INVALID_STATUS_TRANSITION' || error.status === 409);
+  return error instanceof ApiError && error.status === 409;
 }
 
-interface DialogProps {
-  /** El padre monta el diálogo con `key` por cita, así cada apertura parte de cero. */
-  request: AppointmentRequest;
+interface DialogProps<T> {
+  /** El padre monta el diálogo con `key` por solicitud, así cada apertura parte de cero. */
+  request: T;
   onClose: () => void;
   /** La decisión quedó registrada: quitar la fila, avisar y recontar el badge. */
   onResolved: (id: number) => void;
@@ -38,34 +34,47 @@ interface DialogProps {
   onRefreshList: () => void;
 }
 
-export const ApproveDialog: React.FC<DialogProps> = ({ request, onClose, onResolved, onRefreshList }) => {
+interface ApproveDialogBaseProps {
+  title: string;
+  icon: string;
+  confirmText: string;
+  busyText: string;
+  conflictText: string;
+  rows: [string, string][];
+  onConfirm: () => Promise<unknown>;
+  onClose: () => void;
+  onResolved: () => void;
+  onRefreshList: () => void;
+}
+
+const ApproveDialogBase: React.FC<ApproveDialogBaseProps> = ({
+  title,
+  icon,
+  confirmText,
+  busyText,
+  conflictText,
+  rows,
+  onConfirm,
+  onClose,
+  onResolved,
+  onRefreshList,
+}) => {
   const [busy, setBusy] = useState(false);
   const [conflict, setConflict] = useState(false);
   const [error, setError] = useState<ErrorMessage | null>(null);
-
-
 
   const handleApprove = async () => {
     setBusy(true);
     setError(null);
     try {
-      await adminApi.approve(request.id);
-      onResolved(request.id);
+      await onConfirm();
+      onResolved();
     } catch (err) {
       if (isConflict(err)) setConflict(true);
       else setError(toErrorMessage(err));
       setBusy(false);
     }
   };
-
-  const rows: [string, string][] = [
-    ['Paciente', request.patientName],
-    ['Especialidad', request.specialtyName],
-    ['Profesional', request.professionalName],
-    ['Sede', request.siteCode],
-    ['Horario', `${formatDate(request.date)} ${formatTimeRange(request.startTime, request.endTime)}`],
-    ['Duración', formatDuration(request.durationMinutes)],
-  ];
 
   return (
     <Modal
@@ -80,22 +89,22 @@ export const ApproveDialog: React.FC<DialogProps> = ({ request, onClose, onResol
             fullWidth={false}
             isLoading={busy}
             leadingIcon="check"
-            loadingText="Aprobando…"
+            loadingText={busyText}
             onClick={handleApprove}
             type="button"
           >
-            Aprobar cita
+            {confirmText}
           </Button>
         </>
       }
-      icon="event_available"
+      icon={icon}
       maxWidth="520px"
       onClose={onClose}
       open
-      title="¿Aprobar esta cita?"
+      title={title}
     >
       <div className="flex flex-col gap-4">
-        {conflict && <ConflictAlert onRefresh={onRefreshList} />}
+        {conflict && <ConflictAlert description={conflictText} onRefresh={onRefreshList} />}
         {error && <AlertBanner description={error.description} title={error.title} />}
         <dl className="rounded-lg border border-[#D9DDE3] bg-[#F7F6F2] p-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
           {rows.map(([label, value]) => (
@@ -110,7 +119,31 @@ export const ApproveDialog: React.FC<DialogProps> = ({ request, onClose, onResol
   );
 };
 
-export const RejectDialog: React.FC<DialogProps> = ({ request, onClose, onResolved, onRefreshList }) => {
+interface RejectDialogBaseProps {
+  title: string;
+  confirmText: string;
+  conflictText: string;
+  subtitle: string;
+  summary: React.ReactNode;
+  placeholder: string;
+  onConfirm: (reason: string) => Promise<unknown>;
+  onClose: () => void;
+  onResolved: () => void;
+  onRefreshList: () => void;
+}
+
+const RejectDialogBase: React.FC<RejectDialogBaseProps> = ({
+  title,
+  confirmText,
+  conflictText,
+  subtitle,
+  summary,
+  placeholder,
+  onConfirm,
+  onClose,
+  onResolved,
+  onRefreshList,
+}) => {
   const [reason, setReason] = useState('');
   const [reasonError, setReasonError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -121,8 +154,6 @@ export const RejectDialog: React.FC<DialogProps> = ({ request, onClose, onResolv
   const helperId = `${fieldId}-helper`;
   const errorId = `${fieldId}-error`;
   const counterId = `${fieldId}-counter`;
-
-
 
   const handleReject = async () => {
     const trimmed = reason.trim();
@@ -135,8 +166,8 @@ export const RejectDialog: React.FC<DialogProps> = ({ request, onClose, onResolv
     setError(null);
     setReasonError(null);
     try {
-      await adminApi.reject(request.id, trimmed);
-      onResolved(request.id);
+      await onConfirm(trimmed);
+      onResolved();
     } catch (err) {
       if (isConflict(err)) {
         setConflict(true);
@@ -170,7 +201,7 @@ export const RejectDialog: React.FC<DialogProps> = ({ request, onClose, onResolv
             type="button"
             variant="danger"
           >
-            Rechazar solicitud
+            {confirmText}
           </Button>
         </>
       }
@@ -179,22 +210,18 @@ export const RejectDialog: React.FC<DialogProps> = ({ request, onClose, onResolv
       maxWidth="520px"
       onClose={onClose}
       open
-      subtitle="El motivo queda registrado en el historial de la cita."
-      title="Rechazar solicitud"
+      subtitle={subtitle}
+      title={title}
     >
       <div className="flex flex-col gap-5">
-        {conflict && <ConflictAlert onRefresh={onRefreshList} />}
+        {conflict && <ConflictAlert description={conflictText} onRefresh={onRefreshList} />}
         {error && <AlertBanner description={error.description} title={error.title} />}
 
         <div className="flex items-start gap-3 rounded-lg border border-[#D9DDE3] bg-[#F7F6F2] p-4 text-sm text-[#1C2430]">
           <span aria-hidden="true" className="material-symbols-outlined text-[20px] text-[#5B6573] shrink-0">
             calendar_month
           </span>
-          <p className="tabular-nums">
-            <span className="font-semibold">{request.patientName}</span> · {request.specialtyName} · Sede {request.siteCode}{' '}
-            · {formatDate(request.date)}, {formatTimeRange(request.startTime, request.endTime)} (
-            {formatDuration(request.durationMinutes)})
-          </p>
+          <p className="tabular-nums">{summary}</p>
         </div>
 
         <div className="flex flex-col gap-1.5">
@@ -227,7 +254,7 @@ export const RejectDialog: React.FC<DialogProps> = ({ request, onClose, onResolv
               setReason(e.target.value);
               if (reasonError && e.target.value.trim()) setReasonError(null);
             }}
-            placeholder="Indica de forma clara y respetuosa por qué no se puede aceptar la cita…"
+            placeholder={placeholder}
             rows={4}
             value={reason}
           />
@@ -244,3 +271,113 @@ export const RejectDialog: React.FC<DialogProps> = ({ request, onClose, onResolv
     </Modal>
   );
 };
+
+// --- Citas especializadas (HU-015) ---
+
+const REQUEST_CONFLICT = 'La cita ya no está pendiente de aprobación. Actualiza la lista.';
+
+export const ApproveDialog: React.FC<DialogProps<AppointmentRequest>> = ({ request, onClose, onResolved, onRefreshList }) => (
+  <ApproveDialogBase
+    busyText="Aprobando…"
+    confirmText="Aprobar cita"
+    conflictText={REQUEST_CONFLICT}
+    icon="event_available"
+    onClose={onClose}
+    onConfirm={() => adminApi.approve(request.id)}
+    onRefreshList={onRefreshList}
+    onResolved={() => onResolved(request.id)}
+    rows={[
+      ['Paciente', request.patientName],
+      ['Especialidad', request.specialtyName],
+      ['Profesional', request.professionalName],
+      ['Sede', request.siteCode],
+      ['Horario', `${formatDate(request.date)} ${formatTimeRange(request.startTime, request.endTime)}`],
+      ['Duración', formatDuration(request.durationMinutes)],
+    ]}
+    title="¿Aprobar esta cita?"
+  />
+);
+
+export const RejectDialog: React.FC<DialogProps<AppointmentRequest>> = ({ request, onClose, onResolved, onRefreshList }) => (
+  <RejectDialogBase
+    confirmText="Rechazar solicitud"
+    conflictText={REQUEST_CONFLICT}
+    onClose={onClose}
+    onConfirm={(reason) => adminApi.reject(request.id, reason)}
+    onRefreshList={onRefreshList}
+    onResolved={() => onResolved(request.id)}
+    placeholder="Indica de forma clara y respetuosa por qué no se puede aceptar la cita…"
+    subtitle="El motivo queda registrado en el historial de la cita."
+    summary={
+      <>
+        <span className="font-semibold">{request.patientName}</span> · {request.specialtyName} · Sede {request.siteCode} ·{' '}
+        {formatDate(request.date)}, {formatTimeRange(request.startTime, request.endTime)} (
+        {formatDuration(request.durationMinutes)})
+      </>
+    }
+    title="Rechazar solicitud"
+  />
+);
+
+// --- Reprogramaciones (HU-019) ---
+
+const RESCHEDULE_CONFLICT =
+  'La reprogramación ya no está pendiente: otro administrador la resolvió o llegó la hora de la cita. Actualiza la lista.';
+
+/** "26/09/2026 09:00 · HIC" */
+export function describeSlot(date: string, startTime: string, siteCode: string): string {
+  return `${formatDate(date)} ${startTime.slice(0, 5)} · ${siteCode}`;
+}
+
+export const ApproveRescheduleDialog: React.FC<DialogProps<RescheduleRequest>> = ({
+  request,
+  onClose,
+  onResolved,
+  onRefreshList,
+}) => (
+  <ApproveDialogBase
+    busyText="Aprobando…"
+    confirmText="Aprobar reprogramación"
+    conflictText={RESCHEDULE_CONFLICT}
+    icon="event_repeat"
+    onClose={onClose}
+    onConfirm={() => adminApi.approveReschedule(request.id)}
+    onRefreshList={onRefreshList}
+    onResolved={() => onResolved(request.id)}
+    rows={[
+      ['Paciente', request.patientName],
+      ['Especialidad', request.specialtyName],
+      ['Profesional', request.professionalName],
+      ['Horario actual', describeSlot(request.originalDate, request.originalStartTime, request.originalSiteCode)],
+      ['Nuevo horario', describeSlot(request.requestedDate, request.requestedStartTime, request.requestedSiteCode)],
+      ['Duración', formatDuration(request.durationMinutes)],
+    ]}
+    title="¿Aprobar esta reprogramación?"
+  />
+);
+
+export const RejectRescheduleDialog: React.FC<DialogProps<RescheduleRequest>> = ({
+  request,
+  onClose,
+  onResolved,
+  onRefreshList,
+}) => (
+  <RejectDialogBase
+    confirmText="Rechazar reprogramación"
+    conflictText={RESCHEDULE_CONFLICT}
+    onClose={onClose}
+    onConfirm={(reason) => adminApi.rejectReschedule(request.id, reason)}
+    onRefreshList={onRefreshList}
+    onResolved={() => onResolved(request.id)}
+    placeholder="Indica de forma clara y respetuosa por qué no se puede cambiar el horario…"
+    subtitle="La cita conserva su horario actual y el paciente verá el motivo."
+    summary={
+      <>
+        <span className="font-semibold">{request.patientName}</span> · {request.specialtyName} · de{' '}
+        {describeSlot(request.originalDate, request.originalStartTime, request.originalSiteCode)} a{' '}
+        {describeSlot(request.requestedDate, request.requestedStartTime, request.requestedSiteCode)}
+      </>
+    }
+    title="Rechazar reprogramación"
+  />
+);

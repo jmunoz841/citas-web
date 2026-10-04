@@ -28,6 +28,52 @@ export interface DecisionResponse {
   status: 'APPROVED' | 'REJECTED';
 }
 
+// --- Reprogramaciones (HU-019) y bandeja (HU-022) ---
+
+/** Filtros opcionales y combinables de la bandeja; fechas `yyyy-mm-dd` inclusivas. */
+export interface InboxFilter {
+  siteCode?: string;
+  professionalId?: number;
+  specialtyId?: number;
+  from?: string;
+  to?: string;
+}
+
+export interface RescheduleRequest {
+  id: number;
+  appointmentId: number;
+  status: 'PENDING';
+  patientName: string;
+  professionalName: string;
+  specialtyName: string;
+  durationMinutes: number;
+  originalDate: string;
+  originalStartTime: string;
+  originalSiteCode: string;
+  requestedDate: string;
+  requestedStartTime: string;
+  requestedSiteCode: string;
+  requestedAt: string;
+}
+
+export interface RescheduleDecisionResponse {
+  id: number;
+  appointmentId: number;
+  status: 'APPROVED' | 'REJECTED';
+  decisionReason: string | null;
+}
+
+/** Quita los filtros vacíos: la API ignora los ausentes. */
+function inboxQuery(filter: InboxFilter = {}) {
+  return {
+    siteCode: filter.siteCode || undefined,
+    professionalId: filter.professionalId,
+    specialtyId: filter.specialtyId,
+    from: filter.from || undefined,
+    to: filter.to || undefined,
+  };
+}
+
 /** Máximo del motivo de rechazo (RN-04). */
 export const MAX_REASON_LENGTH = 500;
 
@@ -86,13 +132,29 @@ export interface CreateProfessionalInput {
 const ADMIN = '/api/v1/admin';
 
 export const adminApi = {
-  listRequests: () =>
-    apiRequest<ItemsResponse<AppointmentRequest>>(`${ADMIN}/appointments/requests`).then((r) => r.items),
+  listRequests: (filter?: InboxFilter) =>
+    apiRequest<ItemsResponse<AppointmentRequest>>(`${ADMIN}/appointments/requests`, {
+      query: inboxQuery(filter),
+    }).then((r) => r.items),
 
   approve: (id: number) => apiRequest<DecisionResponse>(`${ADMIN}/appointments/${id}/approve`, { method: 'POST' }),
 
   reject: (id: number, reason: string) =>
     apiRequest<DecisionResponse>(`${ADMIN}/appointments/${id}/reject`, { method: 'POST', body: { reason } }),
+
+  listReschedules: (filter?: InboxFilter) =>
+    apiRequest<ItemsResponse<RescheduleRequest>>(`${ADMIN}/reschedule-requests`, {
+      query: inboxQuery(filter),
+    }).then((r) => r.items),
+
+  approveReschedule: (id: number) =>
+    apiRequest<RescheduleDecisionResponse>(`${ADMIN}/reschedule-requests/${id}/approve`, { method: 'POST' }),
+
+  rejectReschedule: (id: number, reason: string) =>
+    apiRequest<RescheduleDecisionResponse>(`${ADMIN}/reschedule-requests/${id}/reject`, {
+      method: 'POST',
+      body: { reason },
+    }),
 
   /** Todas las especialidades, incluidas las inactivas. */
   listSpecialties: () => apiRequest<ItemsResponse<Specialty>>(`${ADMIN}/specialties`).then((r) => r.items),

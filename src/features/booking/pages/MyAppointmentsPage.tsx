@@ -7,7 +7,10 @@ import {
   fetchMyAppointmentHistory,
   fetchMyAppointments,
   PatientAppointment,
+  RescheduleInfo,
+  RescheduleResponse,
 } from "../api/bookingApi";
+import { RescheduleForm } from "../components/RescheduleForm";
 import { Button } from "../../../shared/components/Button";
 import { AlertBanner } from "../../../shared/components/AlertBanner";
 import {
@@ -57,7 +60,64 @@ function StatusBadge({ status }: { status: AppointmentStatus }) {
   );
 }
 
-/** Listado y detalle de las citas del USER (HU-016). */
+/** "08/10/2026 14:00 · ICV" */
+function describeRequested(reschedule: RescheduleInfo): string {
+  return `${formatDate(reschedule.requestedDate)} ${reschedule.requestedStartTime.slice(0, 5)} · ${reschedule.requestedSiteCode}`;
+}
+
+/** Estado y motivo de la última reprogramación (HU-018, HU-019). */
+function RescheduleStatusBanner({ reschedule }: { reschedule: RescheduleInfo }) {
+  const requested = describeRequested(reschedule);
+  switch (reschedule.status) {
+    case "PENDING":
+      return (
+        <AlertBanner
+          className="mt-4"
+          description={`Pediste cambiar tu cita al ${requested}. Conservas tu horario actual hasta que el administrador decida.`}
+          title="Reprogramación pendiente de aprobación"
+          tone="info"
+        />
+      );
+    case "APPROVED":
+      return (
+        <AlertBanner
+          className="mt-4"
+          description={`Tu cita se movió al ${requested}.`}
+          title="Reprogramación aprobada"
+          tone="success"
+        />
+      );
+    case "REJECTED":
+      return (
+        <AlertBanner
+          className="mt-4"
+          description={`${reschedule.decisionReason ?? "Sin motivo"}. Conservas tu horario actual.`}
+          title="Reprogramación rechazada"
+          tone="warning"
+        />
+      );
+    case "CANCELLED":
+      return (
+        <AlertBanner
+          className="mt-4"
+          description={`Tu solicitud para el ${requested} se cerró sin decisión porque la cita se canceló o llegó la hora antes de que el administrador respondiera.`}
+          title="Reprogramación cerrada"
+          tone="warning"
+        />
+      );
+    default:
+      return null;
+  }
+}
+
+/** Una cita aprobada y futura sin solicitud pendiente se puede reprogramar (HU-018). */
+function canReschedule(appointment: PatientAppointment, now: Date = new Date()): boolean {
+  if (appointment.status !== "APPROVED") return false;
+  if (appointment.reschedule?.status === "PENDING") return false;
+  return new Date(`${appointment.date}T${appointment.startTime}`) > now;
+}
+
+/** Listado y detalle de las citas del USER (HU-016, HU-017, HU-018). */
 export const MyAppointmentsPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "">("");
   const [from, setFrom] = useState("");
@@ -74,6 +134,30 @@ export const MyAppointmentsPage: React.FC = () => {
   const [confirmingCancel, setConfirmingCancel] = useState(false);
   const [cancelling, setCancelling] = useState(false);
   const [history, setHistory] = useState<AppointmentHistoryEntry[]>([]);
+  const [rescheduling, setRescheduling] = useState(false);
+
+  const replaceSelected = (updated: PatientAppointment) => {
+    setSelected(updated);
+    setItems((current) =>
+      current.map((item) => (item.id === updated.id ? updated : item)),
+    );
+  };
+
+  const handleRescheduleRequested = (response: RescheduleResponse) => {
+    if (!selected) return;
+    setRescheduling(false);
+    replaceSelected({
+      ...selected,
+      reschedule: {
+        id: response.id,
+        status: response.status,
+        requestedDate: response.requestedDate,
+        requestedStartTime: response.requestedStartTime,
+        requestedSiteCode: response.requestedSiteCode,
+        decisionReason: null,
+      },
+    });
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -99,6 +183,7 @@ export const MyAppointmentsPage: React.FC = () => {
 
   const showDetail = (id: number) => {
     setConfirmingCancel(false);
+    setRescheduling(false);
     setDetailStatus("loading");
     setSelected(null);
     Promise.all([fetchMyAppointment(id), fetchMyAppointmentHistory(id)])
@@ -115,11 +200,12 @@ export const MyAppointmentsPage: React.FC = () => {
     setCancelling(true);
     cancelMyAppointment(selected.id)
       .then((result) => {
-        const cancelled = { ...selected, status: result.status };
-        setSelected(cancelled);
-        setItems((current) =>
-          current.map((item) => (item.id === cancelled.id ? cancelled : item)),
-        );
+        // Cancelar la cita también cancela su reprogramación pendiente (D-033).
+        const reschedule: RescheduleInfo | null =
+          selected.reschedule?.status === "PENDING"
+            ? { ...selected.reschedule, status: "CANCELLED" }
+            : (selected.reschedule ?? null);
+        replaceSelected({ ...selected, status: result.status, reschedule });
         setConfirmingCancel(false);
       })
       .catch(() => setDetailStatus("error"))
@@ -230,6 +316,17 @@ export const MyAppointmentsPage: React.FC = () => {
                       </Td>
                       <Td>
                         <StatusBadge status={appointment.status} />
+                        {appointment.reschedule?.status === "PENDING" && (
+                          <span className="mt-1 flex items-center gap-1 text-xs text-[#0F6E6E]">
+                            <span
+                              aria-hidden="true"
+                              className="material-symbols-outlined text-[14px]"
+                            >
+                              event_repeat
+                            </span>
+                            Reprogramación pendiente
+                          </span>
+                        )}
                       </Td>
                       <Td className="w-px">
                         <TextAction
@@ -300,6 +397,9 @@ export const MyAppointmentsPage: React.FC = () => {
               title="Motivo de rechazo"
             />
           )}
+          {selected.reschedule && (
+            <RescheduleStatusBanner reschedule={selected.reschedule} />
+          )}
           <section
             aria-labelledby="history-title"
             className="mt-5 border-t border-[#D9DDE3] pt-4"
@@ -330,7 +430,15 @@ export const MyAppointmentsPage: React.FC = () => {
               </ol>
             )}
           </section>
-          {(selected.status === "REQUESTED" ||
+          {rescheduling && (
+            <RescheduleForm
+              appointment={selected}
+              onCancel={() => setRescheduling(false)}
+              onRequested={handleRescheduleRequested}
+            />
+          )}
+          {!rescheduling &&
+            (selected.status === "REQUESTED" ||
             selected.status === "APPROVED") && (
             <div className="mt-5 flex flex-wrap gap-3">
               {confirmingCancel ? (
@@ -359,14 +467,27 @@ export const MyAppointmentsPage: React.FC = () => {
                   </Button>
                 </>
               ) : (
-                <Button
-                  fullWidth={false}
-                  onClick={() => setConfirmingCancel(true)}
-                  type="button"
-                  variant="danger"
-                >
-                  Cancelar cita
-                </Button>
+                <>
+                  {canReschedule(selected) && (
+                    <Button
+                      fullWidth={false}
+                      leadingIcon="event_repeat"
+                      onClick={() => setRescheduling(true)}
+                      type="button"
+                      variant="secondary"
+                    >
+                      Reprogramar
+                    </Button>
+                  )}
+                  <Button
+                    fullWidth={false}
+                    onClick={() => setConfirmingCancel(true)}
+                    type="button"
+                    variant="danger"
+                  >
+                    Cancelar cita
+                  </Button>
+                </>
               )}
             </div>
           )}

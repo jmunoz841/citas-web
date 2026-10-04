@@ -104,11 +104,20 @@ export const AppShell: React.FC<{ role: Role; children: React.ReactNode }> = ({ 
   const [subtitle, setSubtitle] = useState<string | null>(null);
   const [loggingOut, setLoggingOut] = useState(false);
 
+  // Badge de la bandeja: citas especializadas solicitadas + reprogramaciones pendientes (HU-022).
   const refreshPendingCount = useCallback(() => {
     if (role !== 'ADMIN') return;
-    apiRequest<ItemsResponse<unknown>>('/api/v1/admin/appointments/requests')
-      .then((res) => setPendingCount(res.items.length))
-      .catch(() => setPendingCount(null));
+    void Promise.allSettled([
+      apiRequest<ItemsResponse<unknown>>('/api/v1/admin/appointments/requests'),
+      apiRequest<ItemsResponse<unknown>>('/api/v1/admin/reschedule-requests'),
+    ]).then(([requests, reschedules]) => {
+      if (requests.status === 'rejected') {
+        setPendingCount(null);
+        return;
+      }
+      const extra = reschedules.status === 'fulfilled' ? reschedules.value.items.length : 0;
+      setPendingCount(requests.value.items.length + extra);
+    });
   }, [role]);
 
   useEffect(() => {

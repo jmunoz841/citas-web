@@ -98,6 +98,40 @@ export interface PatientAppointment {
   endTime: string;
   durationMinutes: number;
   rejectionReason: string | null;
+  /** Para buscar franjas del mismo profesional y especialidad al reprogramar (HU-018). */
+  professionalId: number;
+  specialtyId: number;
+  /** Última solicitud de reprogramación, o `null` si nunca se pidió. */
+  reschedule: RescheduleInfo | null;
+}
+
+export type RescheduleStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELLED';
+
+export interface RescheduleInfo {
+  id: number;
+  status: RescheduleStatus;
+  requestedDate: string;
+  requestedStartTime: string;
+  requestedSiteCode: string;
+  decisionReason: string | null;
+}
+
+export interface RescheduleBody {
+  siteCode: string;
+  date: string;
+  startTime: string;
+}
+
+export interface RescheduleResponse {
+  id: number;
+  appointmentId: number;
+  status: RescheduleStatus;
+  originalDate: string;
+  originalStartTime: string;
+  originalSiteCode: string;
+  requestedDate: string;
+  requestedStartTime: string;
+  requestedSiteCode: string;
 }
 
 export interface MyAppointmentsQuery {
@@ -122,6 +156,14 @@ export function fetchMyAppointment(id: number): Promise<PatientAppointment> {
 /** Cancela una cita propia futura que siga REQUESTED o APPROVED (HU-017). */
 export function cancelMyAppointment(id: number): Promise<AppointmentResponse> {
   return apiRequest<AppointmentResponse>(`/api/v1/appointments/${id}/cancel`, { method: 'POST' });
+}
+
+/**
+ * Solicita reprogramar una cita propia APPROVED y futura (HU-018). La cita conserva su horario
+ * hasta que el ADMIN decida; la nueva franja queda retenida.
+ */
+export function requestReschedule(id: number, body: RescheduleBody): Promise<RescheduleResponse> {
+  return apiRequest<RescheduleResponse>(`/api/v1/appointments/${id}/reschedule-requests`, { method: 'POST', body });
 }
 
 export interface AppointmentHistoryEntry {
